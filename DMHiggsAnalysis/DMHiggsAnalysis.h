@@ -3,6 +3,9 @@
 
 #include "HGamAnalysisFramework/HgammaAnalysis.h"
 
+
+#define MAXPARTICLES 99
+
 class DMHiggsAnalysis : public HgammaAnalysis
 {
   // put your configuration variables here as public variables.
@@ -16,9 +19,15 @@ public:
   // protected from being send from the submission node to the worker
   // node (done by the //!)
 private:
-  // Tree *myTree; //!
+  TTree *myEvents; //!
   // TH1 *myHist; //!
 
+  //photons
+  int nPhotons;
+  float photonPx[MAXPARTICLES];
+  float photonPy[MAXPARTICLES];
+  float photonPz[MAXPARTICLES];
+  float photonE[MAXPARTICLES];
 
 
 public:
