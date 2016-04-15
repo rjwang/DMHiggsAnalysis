@@ -24,9 +24,9 @@ private:
 
   //photons
   int nPhotons;
-  float photonPx[MAXPARTICLES];
-  float photonPy[MAXPARTICLES];
-  float photonPz[MAXPARTICLES];
+  float photonPt[MAXPARTICLES];
+  float photonEta[MAXPARTICLES];
+  float photonPhi[MAXPARTICLES];
   float photonE[MAXPARTICLES];
 
 

@@ -42,9 +42,9 @@ EL::StatusCode DMHiggsAnalysis::createOutput()
   myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
   myEvents->SetDirectory(outfile);
   myEvents->Branch("nPhotons", &nPhotons,"nPhotons/I");
-  myEvents->Branch("photonPx", photonPx,"photonPx[nPhotons]/F");
-  myEvents->Branch("photonPy", photonPy,"photonPy[nPhotons]/F");
-  myEvents->Branch("photonPz", photonPz,"photonPz[nPhotons]/F");
+  myEvents->Branch("photonPt", photonPt,"photonPt[nPhotons]/F");
+  myEvents->Branch("photonEta", photonEta,"photonEta[nPhotons]/F");
+  myEvents->Branch("photonPhi", photonPhi,"photonPhi[nPhotons]/F");
   myEvents->Branch("photonE",  photonE, "photonE[nPhotons]/F");
 
 
@@ -71,9 +71,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
     nPhotons=0;
     for(size_t gn=0; gn<photons.size(); gn++) {
-        photonPx[nPhotons] = photons[0]->p4().Px();
-        photonPy[nPhotons] = photons[0]->p4().Py();
-        photonPz[nPhotons] = photons[0]->p4().Pz();
+        photonPt[nPhotons] = photons[0]->p4().Pt();
+        photonEta[nPhotons] = photons[0]->p4().Eta();
+        photonPhi[nPhotons] = photons[0]->p4().Phi();
         photonE[nPhotons] = photons[0]->p4().E();
 
         nPhotons++;
