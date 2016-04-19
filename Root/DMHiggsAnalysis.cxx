@@ -34,58 +34,417 @@ EL::StatusCode DMHiggsAnalysis::createOutput()
     // gets called after the Handlers are initialized, so that the systematic
     // registry is already filled.
 
-    histoStore()->createTH1F("m_yy", 60, 110, 140);
-
-
+  histoStore()->createTH1F("m_yy", 60, 110, 140);
+  
+  
   //Create a TTree
-  TFile *outfile = wk()->getOutputFile("MxAOD");
-  myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
-  myEvents->SetDirectory(outfile);
+  //  TFile *outfile = wk()->getOutputFile("MxAOD");
+  
+  
+    return EL::StatusCode::SUCCESS;
+}
+
+
+void DMHiggsAnalysis::declareVariables(){
+
+
+  myEvents->Branch("mcID",&mcID_var,"mcID_var/I"); 
+  myEvents->Branch("NPV",&NPV_var,"NPV_var/I"); 
+  myEvents->Branch("mu",&mu_var,"mu_var/I"); 
+  myEvents->Branch("isMC",&isMC_var,"isMC_var/I"); 
+  myEvents->Branch("initWeight",&initWeight_var,"initWeight_var/I"); 
+  // myEvents->Branch("myy",&myy_var,"/I"); 
+  // myEvents->Branch("phi_yy_met",&phi_yy_met_var,"/F"); 
+  // myEvents->Branch("phi_yyj_met",&phi_yyj_met_var,"/F"); 
+  // myEvents->Branch("phi_yyjj_met",&phi_yyjj_met_var,"/F"); 
+  // myEvents->Branch("phi_jj_met",&phi_jj_met_var,"/F"); 
+  // myEvents->Branch("phi_yy_jj",&phi_yy_jj_var,"/F"); 
+  // myEvents->Branch("phi_y1_j",&phi_y1_j_var,"/F"); 
+  // myEvents->Branch("phi_y2_j",&phi_y2_j_var,"/F"); 
+  // myEvents->Branch("phi_y1_met",&phi_y1_met_var,"/F"); 
+  // myEvents->Branch("phi_y2_met",&phi_y2_met_var,"/F");  
+  // myEvents->Branch("phi_y1_y2",&phi_y1_y2_var,"/F");  
+  // myEvents->Branch("phi_j1_j2",&phi_j1_j2_var,"/F");  
+  // myEvents->Branch("phi_allparticles_met",&phi_allparticles_met_var,"/F"); 
+  myEvents->Branch("metSig",&metSig_var,"metSig_var/F"); 
+  myEvents->Branch("passVertex",&passVertex_var,"passVertex_var/I"); 
+  myEvents->Branch("passHiggsSelection",&passHiggsSelection_var,"passHiggsSelection_var/I"); 
+  myEvents->Branch("passQualityCuts",&passQualityCuts_var,"passQualityCuts_var/I"); 
+
+
   myEvents->Branch("nPhotons", &nPhotons,"nPhotons/I");
+  //  myEvents->Branch("photonAuthor", photonAuthor,"photonAuthor[nPhotons]/I");
   myEvents->Branch("photonPt", photonPt,"photonPt[nPhotons]/F");
   myEvents->Branch("photonEta", photonEta,"photonEta[nPhotons]/F");
   myEvents->Branch("photonPhi", photonPhi,"photonPhi[nPhotons]/F");
   myEvents->Branch("photonE",  photonE, "photonE[nPhotons]/F");
+  myEvents->Branch("photons_Eps",photons_Eps,"photon_Eps[nPhotons]/F");
+  myEvents->Branch("photons_E1",photons_E1,"photons_E1[nPhotons]/F");
+  myEvents->Branch("photons_E2",photons_E2,"photons_E2[nPhotons]/F");
+  myEvents->Branch("photons_E3",photons_E3,"photons_E3[nPhotons]/F");
+  myEvents->Branch("photons_conversion",photons_conversionType,"photons_conversionType[nPhotons]/I");
+  myEvents->Branch("photons_conversionRadius",photons_conversionRadius,"photons_conversionRadius[nPhotons]/F");
+  myEvents->Branch("photon_isTight", photons_isTight,"photons_isTight[nPhotons]/F");
+  myEvents->Branch("photon_isFixedCutTight",  photons_isFixedCutTight, "photons_isFixedCutTight[nPhotons]/F");
+  myEvents->Branch("photons_isFixedCutCaloOnly",photons_isFixedCutLoose,"photons_isFixedCutCaloOnly[nPhotons]/F");
+  myEvents->Branch("photons_isFixedCutLoose",photons_isFixedCutLoose,"photons_isFixedCutLoose[nPhotons]/F");
+  myEvents->Branch("photons_topoCone20",photons_topoCone20,"photons_topoCone20[nPhotons]/F");
+  myEvents->Branch("photons_topoCone40",photons_topoCone40,"photons_topoCone40[nPhotons]/F");
+  myEvents->Branch("photons_Cone20",photons_Cone20,"photons_Cone20[nPhotons]/F");
+  myEvents->Branch("photons_Cone40",photons_Cone40,"photons_Cone40[nPhotons]/F");
+
+  myEvents->Branch("nElectrons", &nElectrons,"nElectrons/I");
+  //  myEvents->Branch("electronAuthor", electronAuthor,"electronAuthor[nElectrons]/I");
+  myEvents->Branch("electronPt", electronPt,"electronPt[nElectrons]/F");
+  myEvents->Branch("electronEta", electronEta,"electronEta[nElectrons]/F");
+  myEvents->Branch("electronPhi", electronPhi,"electronPhi[nElectrons]/F");
+  myEvents->Branch("electronE",  electronE, "electronE[nElectrons]/F");
+  myEvents->Branch("electrons_Eps",electrons_Eps,"electron_Eps[nElectrons]/F");
+  myEvents->Branch("electrons_E1",electrons_E1,"electrons_E1[nElectrons]/F");
+  myEvents->Branch("electrons_E2",electrons_E2,"electrons_E2[nElectrons]/F");
+  myEvents->Branch("electrons_E3",electrons_E3,"electrons_E3[nElectrons]/F");
+  myEvents->Branch("electrons_charge",electrons_charge,"electrons_charge[nElectrons]/F");
+  myEvents->Branch("electron_isTight", electrons_isTight,"electrons_isTight[nElectrons]/I");
+  myEvents->Branch("electrons_ptvarCone20",electrons_ptvarCone20,"electrons_ptvarCone20[nElectrons]/F");
+  myEvents->Branch("electrons_topoCone20",electrons_topoCone20,"electrons_topoCone20[nElectrons]/F");
 
 
 
-    return EL::StatusCode::SUCCESS;
+}
+
+
+void DMHiggsAnalysis::clearVectors(){
+
+
+  for( int iparticle = 0 ; iparticle < MAXPARTICLES ; ++iparticle){
+
+    //    photonAuthor[iparticle] =  - 9999;
+    photonPt[iparticle] =  - 9999;
+    photonE[iparticle] =  - 9999;
+    photonEta[iparticle] =  - 9999;
+    photonPhi[iparticle] =  - 9999;
+    photons_Eps[iparticle] =  - 9999;
+    photons_E1[iparticle] =  - 9999;
+    photons_E2[iparticle] =  - 9999;
+    photons_E3[iparticle] =  - 9999;
+
+    photons_conversionType[iparticle] =  - 9999;
+    photons_isTight[iparticle] =  - 9999;
+    //    photons_isLoose[iparticle] =  - 9999;
+    //    photons_isLoosePrime[iparticle] =  - 9999;
+
+    photons_isFixedCutTight[iparticle] =  - 9999;
+    photons_isFixedCutTightCaloOnly[iparticle] =  - 9999;
+    photons_isFixedCutLoose[iparticle] =  - 9999;
+    photons_Cone20[iparticle] =  - 9999;
+    photons_Cone40[iparticle] =  - 9999;
+    photons_topoCone20[iparticle] =  - 9999;
+    photons_topoCone40[iparticle] =  - 9999;
+
+    //electronAuthor[iparticle] =  - 9999;
+    electronPt[iparticle] =  - 9999;
+    electronE[iparticle] =  - 9999;
+    electronEta[iparticle] =  - 9999;
+    electronPhi[iparticle] =  - 9999;
+    electrons_Eps[iparticle] =  - 9999;
+    electrons_E1[iparticle] =  - 9999;
+    electrons_E2[iparticle] =  - 9999;
+    electrons_E3[iparticle] =  - 9999;
+
+    electrons_isTight[iparticle] =  - 9999;
+    electrons_topoCone20[iparticle] =  - 9999;
+    electrons_ptvarCone20[iparticle] =  - 9999;
+  }
+
+}
+
+EL::StatusCode DMHiggsAnalysis::initialize()
+{
+
+
+  HgammaAnalysis::initialize();
+  outFile = TFile::Open("NTuple.root","RECREATE");
+
+
+
+  myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
+
+
+  wk()->addOutput(outFile);
+
+  
+  //myEvents->SetDirectory(outFile);
+
+  declareVariables();
+
+
+
+
+
+  return EL::StatusCode::SUCCESS;
+}
+EL::StatusCode DMHiggsAnalysis::execute()
+{
+  // Here you do everything that needs to be done on every single
+  // events, e.g. read input variables, apply cuts, and fill
+  // histograms and trees.  This is where most of your actual analysis
+  // code will go.
+
+  // Important to keep this, so that internal tools / event variables
+  // are filled properly.
+
+  HgammaAnalysis::execute();
+
+
+  SG::AuxElement::Accessor<int> NPV("numberOfPrimaryVertices");
+  SG::AuxElement::Accessor<float> mu("mu");
+  SG::AuxElement::Accessor<float> initWeight("weightInitial");
+  //  SG::AuxElement::Accessor<float> XsecLumiEffKWeight("XsecLumiEffKWeight");
+  //  SG::AuxElement::Accessor<float> TotalWeight("TotalWeight");
+  SG::AuxElement::Accessor<float> myy("m_yy");
+  SG::AuxElement::Accessor<float> met_sumet("sumet_TST");
+  SG::AuxElement::Accessor<float> met_phi("phi_TST");
+  SG::AuxElement::Accessor<float> met_TST("met_TST");
+  SG::AuxElement::Accessor<float> phi_allparticles_met("DeltaPhi_allPart_MET");
+  SG::AuxElement::Accessor<float> photons_ePS("E0_raw");
+  SG::AuxElement::Accessor<float> photons_e1("E1_raw");
+  SG::AuxElement::Accessor<float> photons_e2("E2_raw");
+  SG::AuxElement::Accessor<float> photons_e3("E3_raw");
+  SG::AuxElement::Accessor<int> photons_converted("conversionType");
+  SG::AuxElement::Accessor<float> photons_convertedRadius("conversionRadius");
+  SG::AuxElement::Accessor<float> hardestVertex("hardestVertexZ");
+  SG::AuxElement::Accessor<float> selectedVertex("selectedVertexZ");
+  SG::AuxElement::Accessor<char> passHiggsSelection("isPassed");
+  SG::AuxElement::Accessor<char> passQualityCuts("isPassedBasic");
+  SG::AuxElement::Accessor<char> passDoubleHiggsSelection("isPassedLowHighMyy");
+
+  SG::AuxElement::Accessor<float> ptvarCone20("ptvarcone20");
+  SG::AuxElement::Accessor<float> topoetCone20("topoetcone20");
+  SG::AuxElement::Accessor<float> topoetCone40("topoetcone40");
+  SG::AuxElement::Accessor<float> ptCone20("ptcone20");
+  SG::AuxElement::Accessor<float> ptCone40("ptcone40");
+  SG::AuxElement::Accessor<char> isisoFixedCutTight("isisoFixedCutTight");
+  SG::AuxElement::Accessor<char> isisoFixedCutLoose("isisoFixedCutLoose");
+  SG::AuxElement::Accessor<char> isisoFixedCutTightCaloOnly("isisoFixedCutTightCaloOnly");
+  SG::AuxElement::Accessor<char> isisoFixedCutLooseCaloOnly("isisoFixedCutLooseCaloOnly");
+  SG::AuxElement::Accessor<char> isTight("isTight");
+
+
+
+
+
+  // photons
+
+
+
+
+  //if (photons.size() < 2) return EL::StatusCode::SUCCESS;
+  //TLorentzVector h = photons[0]->p4() + photons[1]->p4();
+  //histoStore()->fillTH1F("m_yy", h.M()/HG::GeV);
+
+
+  const xAOD::EventInfo* HGameventInfo = 0 ;
+
+  if(event()->retrieve(HGameventInfo,"HGamEventInfo").isFailure() )
+    HG::fatal("Cannot retrieve event Info .");
+
+
+
+  const xAOD::EventInfo* eventInfo = 0 ;
+
+  if(event()->retrieve(eventInfo,"EventInfo").isFailure() )
+    HG::fatal("Cannot retrieve event Info .");
+
+
+
+  TLorentzVector etmissVector;
+
+
+  mcID_var = isMC() ? eventInfo->mcChannelNumber() : -999;
+  NPV_var = NPV(*HGameventInfo);
+  mu_var = mu(*HGameventInfo);
+  isMC_var = isMC();
+  initWeight_var = initWeight(*HGameventInfo);
+  //  XsecLumiEffKWeight_var = XsecLumiEffKWeight(*HGameventInfo);
+  //  TotalWeight_var =TotalWeight( ;
+  myy_var = myy(*HGameventInfo);
+  metSig_var = met_TST(*HGameventInfo)/met_sumet(*HGameventInfo);
+  passVertex_var = fabs(hardestVertex(*HGameventInfo) - selectedVertex(*HGameventInfo)) < 0.3 ? 1 : 0;
+  passHiggsSelection_var = passHiggsSelection(*HGameventInfo) == 1 ?  1 : 0;
+  passQualityCuts_var = passQualityCuts(*HGameventInfo) == 1 ? 1 : 0 ;
+
+
+  xAOD::PhotonContainer photons = photonHandler()->getCorrectedContainer() ;
+  xAOD::ElectronContainer electrons = electronHandler()->getCorrectedContainer() ;
+  xAOD::MuonContainer muons = muonHandler()->getCorrectedContainer() ;
+  xAOD::JetContainer jets = jetHandler()->getCorrectedContainer() ;
+
+  xAOD::MissingETContainer etmiss = etmissHandler()->getCorrectedContainer(&photons,&jets,&electrons,&muons);
+
+
+  TLorentzVector photon_lead;
+  TLorentzVector photon_sublead;
+  TLorentzVector jet_lead;
+  TLorentzVector jet_sublead;
+
+  if( photons.size() > 0 ) photon_lead = (photons)[0]->p4();
+  if( photons.size() > 1 ) photon_sublead = (photons)[1]->p4();
+
+
+  if( jets.size() > 0 ) jet_lead = jets[0]->p4();
+  if( jets.size() > 1 ) jet_sublead = jets[1]->p4();
+
+  TLorentzVector allparticles;
+
+  for(xAOD::Jet* jet : jets){
+    TLorentzVector test=jet->p4();
+    allparticles = allparticles+test;
+  }
+  for(xAOD::Photon* photon: photons){
+    TLorentzVector test = photon->p4();
+    allparticles = allparticles +test;
+  }
+  for(xAOD::Electron* electron: electrons){
+    TLorentzVector test = electron->p4();
+    allparticles = allparticles +test;
+  }
+  for(xAOD::Muon* muon: muons){
+    TLorentzVector test = muon->p4();
+    allparticles = allparticles +test;
+  }
+
+
+
+  // switch( photons.size() ) {
+
+
+  // case 0 :
+
+  //   break;
+  // case 1 :
+
+
+  //   phi_y1_met_var = (photon_lead).DeltaPhi(etmissVector);
+  //   if( jets.size() > 0 )phi_y1_j_var = (photon_lead).DeltaPhi(jet_lead);
+
+  //   break;
+  // case 2 : 
+
+  //   phi_y2_met_var = (photon_sublead).DeltaPhi(etmissVector);
+  //   phi_yy_met_var = (photon_lead + photon_sublead).DeltaPhi(etmissVector);
+  //   phi_y1_y2_var = (photon_lead).DeltaPhi(photon_sublead);
+
+
+  //   if( jets.size() > 0 ){
+  //     phi_yyj_met_var = (photon_lead + photon_sublead + jet_lead).DeltaPhi(etmissVector);
+  //     phi_y2_j_var = (photon_sublead).DeltaPhi(jet_lead);
+  //   }
+  //   if( jets.size() > 1 ){
+  //     phi_yyjj_met_var = (photon_lead + photon_sublead + jet_lead + jet_sublead).DeltaPhi(etmissVector);
+  //     phi_yy_jj_var = (photon_lead + photon_sublead).DeltaPhi(jet_lead + jet_sublead);
+  //   }
+
+
+
+  // default : 
+
+  //   phi_y2_met_var = (photon_sublead).DeltaPhi(etmissVector);
+  //   phi_yy_met_var = (photon_lead + photon_sublead).DeltaPhi(etmissVector);
+  //   phi_y1_y2_var = (photon_lead).DeltaPhi(photon_sublead);
+
+
+  //   if( jets.size() > 0 ){
+  //     phi_yyj_met_var = (photon_lead + photon_sublead + jet_lead).DeltaPhi(etmissVector);
+  //     phi_y2_j_var = (photon_sublead).DeltaPhi(jet_lead);
+  //   }
+  //   if( jets.size() > 1 ){
+  //     phi_yyjj_met_var = (photon_lead + photon_sublead + jet_lead + jet_sublead).DeltaPhi(etmissVector);
+  //     phi_yy_jj_var = (photon_lead + photon_sublead).DeltaPhi(jet_lead + jet_sublead);
+  //   }
+
+
+  //   break;
+
+  // }
+
+
+
+
+  // phi_allparticles_met_var = allparticles.DeltaPhi(etmissVector);
+
+
+  nPhotons=0;
+
+
+  for(size_t gn=0; gn<photons.size(); gn++) {
+    //    photonAuthor[nPhotons] = photons[gn]->author();
+    photonPt[nPhotons] = photons[gn]->p4().Pt();
+    photonEta[nPhotons] = photons[gn]->p4().Eta();
+    photonPhi[nPhotons] = photons[gn]->p4().Phi();
+    photonE[nPhotons] = photons[gn]->p4().E();
+    photons_Eps[nPhotons] = photons_ePS( *photons[gn] ); 
+    photons_E1[nPhotons] = photons_e1( *photons[gn] ); 
+    photons_E2[nPhotons] = photons_e2( *photons[gn] ); 
+    photons_E3[nPhotons] = photons_e3( *photons[gn] ); 
+    photons_conversionType[nPhotons] = photons_converted( *photons[gn] ); 
+    photons_conversionRadius[nPhotons] = photons_convertedRadius( *photons[gn] ); 
+    photons_topoCone20[nPhotons] = topoetCone20( *photons[gn] ); 
+    photons_topoCone40[nPhotons] = topoetCone40( *photons[gn] ); 
+    photons_Cone20[nPhotons] = ptCone20( *photons[gn] ); 
+    photons_Cone40[nPhotons] = ptCone40( *photons[gn] ); 
+    photons_isFixedCutTight[nPhotons] = isisoFixedCutTight( *photons[gn] ) == 1 ? 1 : 0; 
+    photons_isFixedCutTightCaloOnly[nPhotons] = isisoFixedCutTightCaloOnly( *photons[gn] ) == 1 ? 1 : 0; 
+    photons_isFixedCutLooseCaloOnly[nPhotons] = isisoFixedCutLooseCaloOnly( *photons[gn] ) == 1 ? 1 : 0; 
+    photons_isFixedCutLoose[nPhotons] = isisoFixedCutLoose( *photons[gn] ) == 1 ? 1 : 0;
+    photons_isTight[nPhotons] = isTight( *photons[gn] ) == 1 ? 1 : 0;    
+
+    nPhotons++;
+  }
+
+  nElectrons=0;
+
+
+  for(size_t gn=0; gn<electrons.size(); gn++) {
+    //    electronAuthor[nElectrons] = electrons[gn]->author();
+    electronPt[nElectrons] = electrons[gn]->pt();
+    electronEta[nElectrons] = electrons[gn]->eta();
+    electronPhi[nElectrons] = electrons[gn]->phi();
+    electronE[nElectrons] = electrons[gn]->e();
+    electrons_Eps[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(0) : 0. ; 
+    electrons_E1[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(1) : 0. ; 
+    electrons_E2[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(2) : 0. ; 
+    electrons_E3[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(3) : 0. ;
+    
+    electrons_topoCone20[nElectrons] = topoetCone20( *electrons[gn] ); 
+    electrons_ptvarCone20[nElectrons] = ptvarCone20( *electrons[gn] );
+    electrons_isTight[nElectrons] = isTight( *electrons[gn] ) == 1 ? 1 : 0; 
+    electrons_charge[nElectrons] = electrons[gn]->charge() ;   
+
+    nElectrons++;
+  }
+
+
+
+  myEvents->Fill();
+  return EL::StatusCode::SUCCESS;
 }
 
 
 
 
-EL::StatusCode DMHiggsAnalysis::execute()
-{
-    // Here you do everything that needs to be done on every single
-    // events, e.g. read input variables, apply cuts, and fill
-    // histograms and trees.  This is where most of your actual analysis
-    // code will go.
 
-    // Important to keep this, so that internal tools / event variables
-    // are filled properly.
-    HgammaAnalysis::execute();
+EL::StatusCode DMHiggsAnalysis::finalize() {
 
-    // photons
-    xAOD::PhotonContainer photons = photonHandler()->getCorrectedContainer();
 
-    nPhotons=0;
-    for(size_t gn=0; gn<photons.size(); gn++) {
-        photonPt[nPhotons] = photons[0]->p4().Pt();
-        photonEta[nPhotons] = photons[0]->p4().Eta();
-        photonPhi[nPhotons] = photons[0]->p4().Phi();
-        photonE[nPhotons] = photons[0]->p4().E();
-
-        nPhotons++;
-    }
-
-    //if (photons.size() < 2) return EL::StatusCode::SUCCESS;
-    //TLorentzVector h = photons[0]->p4() + photons[1]->p4();
-    //histoStore()->fillTH1F("m_yy", h.M()/HG::GeV);
+  outFile->cd();
+  myEvents->Write();
+  outFile->Close();
+  
 
 
 
+  HgammaAnalysis::finalize();
 
-    myEvents->Fill();
-    return EL::StatusCode::SUCCESS;
+  return EL::StatusCode::SUCCESS;
+
 }
