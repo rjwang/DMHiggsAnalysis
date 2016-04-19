@@ -19,15 +19,80 @@ public:
   // protected from being send from the submission node to the worker
   // node (done by the //!)
 private:
+
+  TFile* outFile;//!
   TTree *myEvents; //!
   // TH1 *myHist; //!
 
+  float mcID_var;
+  int NPV_var;
+  float mu_var;
+  int isMC_var;
+  float initWeight_var;
+  //  float XsecLumiEffKWeight_var = XsecLumiEffKWeight(*eventInfo);
+  //  float TotalWeight_var =TotalWeight(;
+  float myy_var;
+  /* float phi_yy_met_var; */
+  /* float phi_yyj_met_var; */
+  /* float phi_jj_met_var; */
+  /* float phi_yyjj_met_var; */
+  /* float phi_yy_jj_var; */
+  /* float phi_y1_j_var; */
+  /* float phi_y2_j_var;  */
+  /* float phi_y1_met_var; */
+  /* float phi_y2_met_var; */
+  /* float phi_y1_y2_var; */
+  /* float phi_j1_j2_var; */
+  /* float phi_allparticles_met_var; */
+  float metSig_var;
+  int passVertex_var;
+  int passHiggsSelection_var;
+  int passQualityCuts_var;
+
   //photons
   int nPhotons;
+  int photonAuthor[MAXPARTICLES];
   float photonPt[MAXPARTICLES];
   float photonEta[MAXPARTICLES];
   float photonPhi[MAXPARTICLES];
   float photonE[MAXPARTICLES];
+  float photons_Eps[MAXPARTICLES];
+  float photons_E1[MAXPARTICLES];
+  float photons_E2[MAXPARTICLES];
+  float photons_E3[MAXPARTICLES];
+  int photons_conversionType[MAXPARTICLES];
+  float photons_conversionRadius[MAXPARTICLES];
+  int photons_isTight[MAXPARTICLES];
+  //   int photons_isLoose[MAXPARTICLES];
+  int photons_isFixedCutTight[MAXPARTICLES];
+  int photons_isFixedCutTightCaloOnly[MAXPARTICLES];
+  int photons_isFixedCutLooseCaloOnly[MAXPARTICLES];
+  int photons_isFixedCutLoose[MAXPARTICLES];
+  float photons_Cone20[MAXPARTICLES];
+  float photons_Cone40[MAXPARTICLES];
+  float photons_topoCone20[MAXPARTICLES];
+  float photons_topoCone40[MAXPARTICLES];
+
+  //electrons
+  int nElectrons;
+  int electronAuthor[MAXPARTICLES];
+  float electronPt[MAXPARTICLES];
+  float electronEta[MAXPARTICLES];
+  float electronPhi[MAXPARTICLES];
+  float electronE[MAXPARTICLES];
+  float electrons_Eps[MAXPARTICLES];
+  float electrons_E1[MAXPARTICLES];
+  float electrons_E2[MAXPARTICLES];
+  float electrons_E3[MAXPARTICLES];
+  float electrons_charge[MAXPARTICLES];
+  int electrons_isTight[MAXPARTICLES];
+  //   int electrons_isLoose[MAXPARTICLES];
+
+  float electrons_topoCone20[MAXPARTICLES];
+  float electrons_ptvarCone20[MAXPARTICLES];
+
+
+
 
 
 public:
@@ -37,8 +102,14 @@ public:
   virtual ~DMHiggsAnalysis();
 
   // these are the functions inherited from HgammaAnalysis
+
+  void declareVariables();
+  void clearVectors();
+
   virtual EL::StatusCode createOutput();
+  virtual EL::StatusCode initialize();
   virtual EL::StatusCode execute();
+  virtual EL::StatusCode finalize();
 
 
   // this is needed to distribute the algorithm to the workers
