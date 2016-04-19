@@ -79,9 +79,9 @@ void DMHiggsAnalysis::declareVariables(){
 
   myEvents->Branch("nPhotons", &nPhotons,"nPhotons/I");
   //  myEvents->Branch("photonAuthor", photonAuthor,"photonAuthor[nPhotons]/I");
-  myEvents->Branch("photonPt", photonPt,"photonPt[nPhotons]/F");
-  myEvents->Branch("photonEta", photonEta,"photonEta[nPhotons]/F");
-  myEvents->Branch("photonPhi", photonPhi,"photonPhi[nPhotons]/F");
+  myEvents->Branch("photonPx", photonPx,"photonPx[nPhotons]/F");
+  myEvents->Branch("photonPy", photonPy,"photonPy[nPhotons]/F");
+  myEvents->Branch("photonPz", photonPz,"photonPz[nPhotons]/F");
   myEvents->Branch("photonE",  photonE, "photonE[nPhotons]/F");
   myEvents->Branch("photons_Eps",photons_Eps,"photon_Eps[nPhotons]/F");
   myEvents->Branch("photons_E1",photons_E1,"photons_E1[nPhotons]/F");
@@ -100,9 +100,9 @@ void DMHiggsAnalysis::declareVariables(){
 
   myEvents->Branch("nElectrons", &nElectrons,"nElectrons/I");
   //  myEvents->Branch("electronAuthor", electronAuthor,"electronAuthor[nElectrons]/I");
-  myEvents->Branch("electronPt", electronPt,"electronPt[nElectrons]/F");
-  myEvents->Branch("electronEta", electronEta,"electronEta[nElectrons]/F");
-  myEvents->Branch("electronPhi", electronPhi,"electronPhi[nElectrons]/F");
+  myEvents->Branch("electronPx", electronPx,"electronPx[nElectrons]/F");
+  myEvents->Branch("electronPy", electronPy,"electronPy[nElectrons]/F");
+  myEvents->Branch("electronPz", electronPz,"electronPz[nElectrons]/F");
   myEvents->Branch("electronE",  electronE, "electronE[nElectrons]/F");
   myEvents->Branch("electrons_Eps",electrons_Eps,"electron_Eps[nElectrons]/F");
   myEvents->Branch("electrons_E1",electrons_E1,"electrons_E1[nElectrons]/F");
@@ -116,9 +116,9 @@ void DMHiggsAnalysis::declareVariables(){
 
   myEvents->Branch("nMuons", &nMuons,"nMuons/I");
   //  myEvents->Branch("muonAuthor", muonAuthor,"muonAuthor[nMuons]/I");
-  myEvents->Branch("muonPt", muonPt,"muonPt[nMuons]/F");
-  myEvents->Branch("muonEta", muonEta,"muonEta[nMuons]/F");
-  myEvents->Branch("muonPhi", muonPhi,"muonPhi[nMuons]/F");
+  myEvents->Branch("muonPx", muonPx,"muonPx[nMuons]/F");
+  myEvents->Branch("muonPy", muonPy,"muonPy[nMuons]/F");
+  myEvents->Branch("muonPz", muonPz,"muonPz[nMuons]/F");
   myEvents->Branch("muonE",  muonE, "muonE[nMuons]/F");
   myEvents->Branch("muons_charge",muons_charge,"muons_charge[nMuons]/F");
   myEvents->Branch("muon_passIPcut", muons_passIPcut,"muons_passIPcut[nMuons]/I");
@@ -127,9 +127,9 @@ void DMHiggsAnalysis::declareVariables(){
 
 
   myEvents->Branch("nJets", &nJets,"nJets/I");
-  myEvents->Branch("jetPt", jetPt,"jetPt[nJets]/F");
-  myEvents->Branch("jetEta", jetEta,"jetEta[nJets]/F");
-  myEvents->Branch("jetPhi", jetPhi,"jetPhi[nJets]/F");
+  myEvents->Branch("jetPx", jetPx,"jetPx[nJets]/F");
+  myEvents->Branch("jetPy", jetPy,"jetPy[nJets]/F");
+  myEvents->Branch("jetPz", jetPz,"jetPz[nJets]/F");
   myEvents->Branch("jetJvt",  jetJvt, "jetJvt[nJets]/F");
   myEvents->Branch("jetPassSelection",  jetPassSelection, "jetPassSelection[nJets]/I");
 
@@ -145,10 +145,10 @@ void DMHiggsAnalysis::clearVectors(){
   for( int iparticle = 0 ; iparticle < MAXPARTICLES ; ++iparticle){
 
     //    photonAuthor[iparticle] =  - 9999;
-    photonPt[iparticle] =  - 9999;
+    photonPx[iparticle] =  - 9999;
     photonE[iparticle] =  - 9999;
-    photonEta[iparticle] =  - 9999;
-    photonPhi[iparticle] =  - 9999;
+    photonPy[iparticle] =  - 9999;
+    photonPz[iparticle] =  - 9999;
     photons_Eps[iparticle] =  - 9999;
     photons_E1[iparticle] =  - 9999;
     photons_E2[iparticle] =  - 9999;
@@ -168,10 +168,10 @@ void DMHiggsAnalysis::clearVectors(){
     photons_topoCone40[iparticle] =  - 9999;
 
     //electronAuthor[iparticle] =  - 9999;
-    electronPt[iparticle] =  - 9999;
+    electronPx[iparticle] =  - 9999;
     electronE[iparticle] =  - 9999;
-    electronEta[iparticle] =  - 9999;
-    electronPhi[iparticle] =  - 9999;
+    electronPy[iparticle] =  - 9999;
+    electronPz[iparticle] =  - 9999;
     electrons_Eps[iparticle] =  - 9999;
     electrons_E1[iparticle] =  - 9999;
     electrons_E2[iparticle] =  - 9999;
@@ -182,20 +182,20 @@ void DMHiggsAnalysis::clearVectors(){
     electrons_ptvarCone20[iparticle] =  - 9999;
 
     //muonAuthor[iparticle] =  - 9999;
-    muonPt[iparticle] =  - 9999;
+    muonPx[iparticle] =  - 9999;
     muonE[iparticle] =  - 9999;
-    muonEta[iparticle] =  - 9999;
-    muonPhi[iparticle] =  - 9999;
+    muonPy[iparticle] =  - 9999;
+    muonPz[iparticle] =  - 9999;
 
     muons_passIPcut[iparticle] =  - 9999;
     muons_topoCone20[iparticle] =  - 9999;
     muons_ptvarCone20[iparticle] =  - 9999;
 
     //jetAuthor[iparticle] =  - 9999;
-    jetPt[iparticle] =  - 9999;
+    jetPx[iparticle] =  - 9999;
     jetJvt[iparticle] =  - 9999;
-    jetEta[iparticle] =  - 9999;
-    jetPhi[iparticle] =  - 9999;
+    jetPy[iparticle] =  - 9999;
+    jetPz[iparticle] =  - 9999;
     jetPassSelection[iparticle] =  - 9999;
   }
 
@@ -244,7 +244,7 @@ EL::StatusCode DMHiggsAnalysis::execute()
   SG::AuxElement::Accessor<int> NPV("numberOfPrimaryVertices");
   SG::AuxElement::Accessor<float> mu("mu");
   SG::AuxElement::Accessor<float> initWeight("weightInitial");
-  SG::AuxElement::Accessor<float> crossSectionBRflterEff("crossSectionBRflterEff");
+  SG::AuxElement::Accessor<float> crossSectionBRflterEff("crossSectionBRfilterEff");
   //  SG::AuxElement::Accessor<float> TotalWeight("TotalWeight");
   SG::AuxElement::Accessor<float> myy("m_yy");
   SG::AuxElement::Accessor<float> met_sumet("sumet_TST");
@@ -433,9 +433,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
   for(size_t gn=0; gn<photons.size(); gn++) {
     //    photonAuthor[nPhotons] = photons[gn]->author();
-    photonPt[nPhotons] = photons[gn]->p4().Pt();
-    photonEta[nPhotons] = photons[gn]->p4().Eta();
-    photonPhi[nPhotons] = photons[gn]->p4().Phi();
+    photonPx[nPhotons] = photons[gn]->p4().Px();
+    photonPy[nPhotons] = photons[gn]->p4().Py();
+    photonPz[nPhotons] = photons[gn]->p4().Pz();
     photonE[nPhotons] = photons[gn]->p4().E();
     photons_Eps[nPhotons] = photons_ePS( *photons[gn] ); 
     photons_E1[nPhotons] = photons_e1( *photons[gn] ); 
@@ -461,9 +461,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
   for(size_t gn=0; gn<electrons.size(); gn++) {
     //    electronAuthor[nElectrons] = electrons[gn]->author();
-    electronPt[nElectrons] = electrons[gn]->pt();
-    electronEta[nElectrons] = electrons[gn]->eta();
-    electronPhi[nElectrons] = electrons[gn]->phi();
+    electronPx[nElectrons] = electrons[gn]->p4().Px();
+    electronPy[nElectrons] = electrons[gn]->p4().Py();
+    electronPz[nElectrons] = electrons[gn]->p4().Pz();
     electronE[nElectrons] = electrons[gn]->e();
     electrons_Eps[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(0) : 0. ; 
     electrons_E1[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(1) : 0. ; 
@@ -484,9 +484,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
   for(size_t gn=0; gn<muons.size(); gn++) {
 
-    muonPt[nMuons] = muons[gn]->pt();
-    muonEta[nMuons] = muons[gn]->eta();
-    muonPhi[nMuons] = muons[gn]->phi();
+    muonPx[nMuons] = muons[gn]->p4().Px();
+    muonPy[nMuons] = muons[gn]->p4().Py();
+    muonPz[nMuons] = muons[gn]->p4().Pz();
     muonE[nMuons] = muons[gn]->e();
     
     muons_topoCone20[nMuons] = topoetCone20( *muons[gn] ); 
@@ -503,9 +503,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
   for(size_t gn=0; gn<jets.size(); gn++) {
     //    jetAuthor[nJets] = jets[gn]->author();
-    jetPt[nJets] = jets[gn]->pt();
-    jetEta[nJets] = jets[gn]->eta();
-    jetPhi[nJets] = jets[gn]->phi();
+    jetPx[nJets] = jets[gn]->px();
+    jetPy[nJets] = jets[gn]->py();
+    jetPz[nJets] = jets[gn]->pz();
     jetJvt[nJets] = Jvt( *jets[gn] );
     jetPassSelection[nJets] = ( jetHandler()->passPtEtaCuts( jets[gn]) && jetHandler()->passJVFCut( jets[gn]) ) && jetHandler()->passJVTCut( jets[gn] ) ? 1 : 0;
     nJets++;

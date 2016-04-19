@@ -60,9 +60,9 @@ private:
   //photons
   int nPhotons;
   int photonAuthor[MAXPARTICLES];
-  float photonPt[MAXPARTICLES];
-  float photonEta[MAXPARTICLES];
-  float photonPhi[MAXPARTICLES];
+  float photonPx[MAXPARTICLES];
+  float photonPy[MAXPARTICLES];
+  float photonPz[MAXPARTICLES];
   float photonE[MAXPARTICLES];
   float photons_Eps[MAXPARTICLES];
   float photons_E1[MAXPARTICLES];
@@ -84,9 +84,9 @@ private:
   //electrons
   int nElectrons;
   int electronAuthor[MAXPARTICLES];
-  float electronPt[MAXPARTICLES];
-  float electronEta[MAXPARTICLES];
-  float electronPhi[MAXPARTICLES];
+  float electronPx[MAXPARTICLES];
+  float electronPy[MAXPARTICLES];
+  float electronPz[MAXPARTICLES];
   float electronE[MAXPARTICLES];
   float electrons_Eps[MAXPARTICLES];
   float electrons_E1[MAXPARTICLES];
@@ -102,9 +102,9 @@ private:
 
   //muons
   int nMuons;
-  float muonPt[MAXPARTICLES];
-  float muonEta[MAXPARTICLES];
-  float muonPhi[MAXPARTICLES];
+  float muonPx[MAXPARTICLES];
+  float muonPy[MAXPARTICLES];
+  float muonPz[MAXPARTICLES];
   float muonE[MAXPARTICLES];
   float muons_Eps[MAXPARTICLES];
   float muons_E1[MAXPARTICLES];
@@ -120,9 +120,9 @@ private:
 
   //jets
   int nJets;
-  float jetPt[MAXPARTICLES];
-  float jetEta[MAXPARTICLES];
-  float jetPhi[MAXPARTICLES];
+  float jetPx[MAXPARTICLES];
+  float jetPy[MAXPARTICLES];
+  float jetPz[MAXPARTICLES];
   float jetJvt[MAXPARTICLES];
   int jetPassSelection[MAXPARTICLES];
 
