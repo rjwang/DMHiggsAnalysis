@@ -24,12 +24,20 @@ private:
   TTree *myEvents; //!
   // TH1 *myHist; //!
 
+
+
+  // General sample information 
+  int RunNumber;
+  int EventNumber;
+  int LumiBlock;
+  float mcEventWeights_var;
+
   float mcID_var;
   int NPV_var;
   float mu_var;
   int isMC_var;
   float initWeight_var;
-  //  float XsecLumiEffKWeight_var = XsecLumiEffKWeight(*eventInfo);
+  float xsecBrFilterEff_var;
   //  float TotalWeight_var =TotalWeight(;
   float myy_var;
   /* float phi_yy_met_var; */
@@ -92,7 +100,41 @@ private:
   float electrons_ptvarCone20[MAXPARTICLES];
 
 
+  //muons
+  int nMuons;
+  float muonPt[MAXPARTICLES];
+  float muonEta[MAXPARTICLES];
+  float muonPhi[MAXPARTICLES];
+  float muonE[MAXPARTICLES];
+  float muons_Eps[MAXPARTICLES];
+  float muons_E1[MAXPARTICLES];
+  float muons_E2[MAXPARTICLES];
+  float muons_E3[MAXPARTICLES];
+  float muons_charge[MAXPARTICLES];
+  int muons_passIPcut[MAXPARTICLES];
 
+
+  float muons_topoCone20[MAXPARTICLES];
+  float muons_ptvarCone20[MAXPARTICLES];
+
+
+  //jets
+  int nJets;
+  float jetPt[MAXPARTICLES];
+  float jetEta[MAXPARTICLES];
+  float jetPhi[MAXPARTICLES];
+  float jetJvt[MAXPARTICLES];
+  int jetPassSelection[MAXPARTICLES];
+
+
+  // Met
+  float met;
+  float sumet;
+  float phi_met;
+
+
+
+  std::map<std::string,TH1F*> m_histCutFlow; //!
 
 
 public:

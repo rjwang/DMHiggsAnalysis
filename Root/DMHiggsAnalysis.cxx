@@ -47,12 +47,17 @@ EL::StatusCode DMHiggsAnalysis::createOutput()
 
 void DMHiggsAnalysis::declareVariables(){
 
+  myEvents->Branch("RunNumber",&RunNumber,"RunNumber/I"); 
+  myEvents->Branch("LumiBlock",&LumiBlock,"LumiBlock/I"); 
+  myEvents->Branch("EventNumber",&EventNumber,"EventNumber/I"); 
+  myEvents->Branch("mcEventWeights",&mcEventWeights_var,"mcEventWeights_var/F");
 
   myEvents->Branch("mcID",&mcID_var,"mcID_var/I"); 
   myEvents->Branch("NPV",&NPV_var,"NPV_var/I"); 
   myEvents->Branch("mu",&mu_var,"mu_var/I"); 
   myEvents->Branch("isMC",&isMC_var,"isMC_var/I"); 
   myEvents->Branch("initWeight",&initWeight_var,"initWeight_var/I"); 
+  myEvents->Branch("xsectionBRfilterEff",&xsecBrFilterEff_var,"xsecBrFilterEff_var/F");
   // myEvents->Branch("myy",&myy_var,"/I"); 
   // myEvents->Branch("phi_yy_met",&phi_yy_met_var,"/F"); 
   // myEvents->Branch("phi_yyj_met",&phi_yyj_met_var,"/F"); 
@@ -109,7 +114,28 @@ void DMHiggsAnalysis::declareVariables(){
   myEvents->Branch("electrons_topoCone20",electrons_topoCone20,"electrons_topoCone20[nElectrons]/F");
 
 
+  myEvents->Branch("nMuons", &nMuons,"nMuons/I");
+  //  myEvents->Branch("muonAuthor", muonAuthor,"muonAuthor[nMuons]/I");
+  myEvents->Branch("muonPt", muonPt,"muonPt[nMuons]/F");
+  myEvents->Branch("muonEta", muonEta,"muonEta[nMuons]/F");
+  myEvents->Branch("muonPhi", muonPhi,"muonPhi[nMuons]/F");
+  myEvents->Branch("muonE",  muonE, "muonE[nMuons]/F");
+  myEvents->Branch("muons_charge",muons_charge,"muons_charge[nMuons]/F");
+  myEvents->Branch("muon_passIPcut", muons_passIPcut,"muons_passIPcut[nMuons]/I");
+  myEvents->Branch("muons_ptvarCone20",muons_ptvarCone20,"muons_ptvarCone20[nMuons]/F");
+  myEvents->Branch("muons_topoCone20",muons_topoCone20,"muons_topoCone20[nMuons]/F");
 
+
+  myEvents->Branch("nJets", &nJets,"nJets/I");
+  myEvents->Branch("jetPt", jetPt,"jetPt[nJets]/F");
+  myEvents->Branch("jetEta", jetEta,"jetEta[nJets]/F");
+  myEvents->Branch("jetPhi", jetPhi,"jetPhi[nJets]/F");
+  myEvents->Branch("jetJvt",  jetJvt, "jetJvt[nJets]/F");
+  myEvents->Branch("jetPassSelection",  jetPassSelection, "jetPassSelection[nJets]/I");
+
+  myEvents->Branch("met", &met,"met/F");
+  myEvents->Branch("sumet", &sumet,"sumet/F");
+  myEvents->Branch("phi_met", &phi_met,"phi_met/F");
 }
 
 
@@ -154,6 +180,23 @@ void DMHiggsAnalysis::clearVectors(){
     electrons_isTight[iparticle] =  - 9999;
     electrons_topoCone20[iparticle] =  - 9999;
     electrons_ptvarCone20[iparticle] =  - 9999;
+
+    //muonAuthor[iparticle] =  - 9999;
+    muonPt[iparticle] =  - 9999;
+    muonE[iparticle] =  - 9999;
+    muonEta[iparticle] =  - 9999;
+    muonPhi[iparticle] =  - 9999;
+
+    muons_passIPcut[iparticle] =  - 9999;
+    muons_topoCone20[iparticle] =  - 9999;
+    muons_ptvarCone20[iparticle] =  - 9999;
+
+    //jetAuthor[iparticle] =  - 9999;
+    jetPt[iparticle] =  - 9999;
+    jetJvt[iparticle] =  - 9999;
+    jetEta[iparticle] =  - 9999;
+    jetPhi[iparticle] =  - 9999;
+    jetPassSelection[iparticle] =  - 9999;
   }
 
 }
@@ -169,15 +212,12 @@ EL::StatusCode DMHiggsAnalysis::initialize()
 
   myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
 
-
   wk()->addOutput(outFile);
 
-  
+
   //myEvents->SetDirectory(outFile);
 
   declareVariables();
-
-
 
 
 
@@ -196,10 +236,15 @@ EL::StatusCode DMHiggsAnalysis::execute()
   HgammaAnalysis::execute();
 
 
+  SG::AuxElement::Accessor<unsigned int> runNumber("runNumber");
+  SG::AuxElement::Accessor<unsigned int> lumiBlock("lumiBlock");
+  SG::AuxElement::Accessor<unsigned long long> eventNumber("eventNumber");
+  SG::AuxElement::Accessor< std::vector<float> > mcEventWeights("mcEventWeights");
+
   SG::AuxElement::Accessor<int> NPV("numberOfPrimaryVertices");
   SG::AuxElement::Accessor<float> mu("mu");
   SG::AuxElement::Accessor<float> initWeight("weightInitial");
-  //  SG::AuxElement::Accessor<float> XsecLumiEffKWeight("XsecLumiEffKWeight");
+  SG::AuxElement::Accessor<float> crossSectionBRflterEff("crossSectionBRflterEff");
   //  SG::AuxElement::Accessor<float> TotalWeight("TotalWeight");
   SG::AuxElement::Accessor<float> myy("m_yy");
   SG::AuxElement::Accessor<float> met_sumet("sumet_TST");
@@ -228,15 +273,13 @@ EL::StatusCode DMHiggsAnalysis::execute()
   SG::AuxElement::Accessor<char> isisoFixedCutTightCaloOnly("isisoFixedCutTightCaloOnly");
   SG::AuxElement::Accessor<char> isisoFixedCutLooseCaloOnly("isisoFixedCutLooseCaloOnly");
   SG::AuxElement::Accessor<char> isTight("isTight");
+  SG::AuxElement::Accessor<char> passIPcut("passIPCut");
 
-
+  SG::AuxElement::Accessor<float> Jvt("Jvt");
 
 
 
   // photons
-
-
-
 
   //if (photons.size() < 2) return EL::StatusCode::SUCCESS;
   //TLorentzVector h = photons[0]->p4() + photons[1]->p4();
@@ -256,17 +299,19 @@ EL::StatusCode DMHiggsAnalysis::execute()
     HG::fatal("Cannot retrieve event Info .");
 
 
+  RunNumber = runNumber( *eventInfo );
+  LumiBlock = lumiBlock( *eventInfo );
+  EventNumber = eventNumber( *eventInfo );
 
   TLorentzVector etmissVector;
 
-
+  mcEventWeights_var = isMC() ?  mcEventWeights( *eventInfo )[0] : 1.; 
+  xsecBrFilterEff_var = crossSectionBRflterEff.isAvailable( *HGameventInfo ) ?  crossSectionBRflterEff( *HGameventInfo )  : 1.; 
   mcID_var = isMC() ? eventInfo->mcChannelNumber() : -999;
   NPV_var = NPV(*HGameventInfo);
   mu_var = mu(*HGameventInfo);
   isMC_var = isMC();
   initWeight_var = initWeight(*HGameventInfo);
-  //  XsecLumiEffKWeight_var = XsecLumiEffKWeight(*HGameventInfo);
-  //  TotalWeight_var =TotalWeight( ;
   myy_var = myy(*HGameventInfo);
   metSig_var = met_TST(*HGameventInfo)/met_sumet(*HGameventInfo);
   passVertex_var = fabs(hardestVertex(*HGameventInfo) - selectedVertex(*HGameventInfo)) < 0.3 ? 1 : 0;
@@ -274,12 +319,22 @@ EL::StatusCode DMHiggsAnalysis::execute()
   passQualityCuts_var = passQualityCuts(*HGameventInfo) == 1 ? 1 : 0 ;
 
 
+  std::string inputfileName = wk()->inputFileName();
+  std::string cutFlowName ;
+
+  cutFlowName = "CutFlow_" + inputfileName;
+  cutFlowName.replace(cutFlowName.find(".MxAOD") , -1, "") ;
+  cutFlowName.append("_weighted");
+
+  if( m_eventCounter == 1 ) m_histCutFlow[inputfileName] = (TH1F*) HG::getHistogramFromFile(cutFlowName,inputfileName);
+
   xAOD::PhotonContainer photons = photonHandler()->getCorrectedContainer() ;
   xAOD::ElectronContainer electrons = electronHandler()->getCorrectedContainer() ;
   xAOD::MuonContainer muons = muonHandler()->getCorrectedContainer() ;
   xAOD::JetContainer jets = jetHandler()->getCorrectedContainer() ;
 
-  xAOD::MissingETContainer etmiss = etmissHandler()->getCorrectedContainer(&photons,&jets,&electrons,&muons);
+
+  overlapHandler()->removeOverlap(photons,jets,electrons, muons);
 
 
   TLorentzVector photon_lead;
@@ -424,6 +479,44 @@ EL::StatusCode DMHiggsAnalysis::execute()
   }
 
 
+  nMuons=0;
+
+
+  for(size_t gn=0; gn<muons.size(); gn++) {
+
+    muonPt[nMuons] = muons[gn]->pt();
+    muonEta[nMuons] = muons[gn]->eta();
+    muonPhi[nMuons] = muons[gn]->phi();
+    muonE[nMuons] = muons[gn]->e();
+    
+    muons_topoCone20[nMuons] = topoetCone20( *muons[gn] ); 
+    muons_ptvarCone20[nMuons] = ptvarCone20( *muons[gn] );
+    muons_charge[nMuons] = muons[gn]->charge() ;   
+    muons_passIPcut[nMuons] = passIPcut( *muons[gn] );   
+
+    nMuons++;
+  }
+
+
+  nJets=0;
+
+
+  for(size_t gn=0; gn<jets.size(); gn++) {
+    //    jetAuthor[nJets] = jets[gn]->author();
+    jetPt[nJets] = jets[gn]->pt();
+    jetEta[nJets] = jets[gn]->eta();
+    jetPhi[nJets] = jets[gn]->phi();
+    jetJvt[nJets] = Jvt( *jets[gn] );
+    jetPassSelection[nJets] = ( jetHandler()->passPtEtaCuts( jets[gn]) && jetHandler()->passJVFCut( jets[gn]) ) && jetHandler()->passJVTCut( jets[gn] ) ? 1 : 0;
+    nJets++;
+  }
+
+
+
+
+  met = met_TST(*HGameventInfo);
+  sumet = met_sumet(*HGameventInfo);
+  phi_met = met_phi(*HGameventInfo);
 
   myEvents->Fill();
   return EL::StatusCode::SUCCESS;
@@ -438,6 +531,13 @@ EL::StatusCode DMHiggsAnalysis::finalize() {
 
   outFile->cd();
   myEvents->Write();
+  for( auto it : m_histCutFlow ){
+    outFile->cd();
+    std::cout << " Writing the cutflow histogram of sample  : " + TString(it.first) << std::endl;
+    if( !it.second ) continue;
+      //HG::fatal("Cut flow histogram is empty.");
+    it.second->Write();
+  }
   outFile->Close();
   
 
