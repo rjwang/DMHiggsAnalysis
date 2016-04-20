@@ -47,12 +47,17 @@ EL::StatusCode DMHiggsAnalysis::createOutput()
 
 void DMHiggsAnalysis::declareVariables(){
 
+  myEvents->Branch("RunNumber",&RunNumber,"RunNumber/I"); 
+  myEvents->Branch("LumiBlock",&LumiBlock,"LumiBlock/I"); 
+  myEvents->Branch("EventNumber",&EventNumber,"EventNumber/I"); 
+  myEvents->Branch("mcEventWeights",&mcEventWeights_var,"mcEventWeights_var/F");
 
   myEvents->Branch("mcID",&mcID_var,"mcID_var/I"); 
   myEvents->Branch("NPV",&NPV_var,"NPV_var/I"); 
   myEvents->Branch("mu",&mu_var,"mu_var/I"); 
   myEvents->Branch("isMC",&isMC_var,"isMC_var/I"); 
   myEvents->Branch("initWeight",&initWeight_var,"initWeight_var/I"); 
+  myEvents->Branch("xsectionBRfilterEff",&xsecBrFilterEff_var,"xsecBrFilterEff_var/F");
   // myEvents->Branch("myy",&myy_var,"/I"); 
   // myEvents->Branch("phi_yy_met",&phi_yy_met_var,"/F"); 
   // myEvents->Branch("phi_yyj_met",&phi_yyj_met_var,"/F"); 
@@ -74,9 +79,9 @@ void DMHiggsAnalysis::declareVariables(){
 
   myEvents->Branch("nPhotons", &nPhotons,"nPhotons/I");
   //  myEvents->Branch("photonAuthor", photonAuthor,"photonAuthor[nPhotons]/I");
-  myEvents->Branch("photonPt", photonPt,"photonPt[nPhotons]/F");
-  myEvents->Branch("photonEta", photonEta,"photonEta[nPhotons]/F");
-  myEvents->Branch("photonPhi", photonPhi,"photonPhi[nPhotons]/F");
+  myEvents->Branch("photonPx", photonPx,"photonPx[nPhotons]/F");
+  myEvents->Branch("photonPy", photonPy,"photonPy[nPhotons]/F");
+  myEvents->Branch("photonPz", photonPz,"photonPz[nPhotons]/F");
   myEvents->Branch("photonE",  photonE, "photonE[nPhotons]/F");
   myEvents->Branch("photons_Eps",photons_Eps,"photon_Eps[nPhotons]/F");
   myEvents->Branch("photons_E1",photons_E1,"photons_E1[nPhotons]/F");
@@ -95,9 +100,9 @@ void DMHiggsAnalysis::declareVariables(){
 
   myEvents->Branch("nElectrons", &nElectrons,"nElectrons/I");
   //  myEvents->Branch("electronAuthor", electronAuthor,"electronAuthor[nElectrons]/I");
-  myEvents->Branch("electronPt", electronPt,"electronPt[nElectrons]/F");
-  myEvents->Branch("electronEta", electronEta,"electronEta[nElectrons]/F");
-  myEvents->Branch("electronPhi", electronPhi,"electronPhi[nElectrons]/F");
+  myEvents->Branch("electronPx", electronPx,"electronPx[nElectrons]/F");
+  myEvents->Branch("electronPy", electronPy,"electronPy[nElectrons]/F");
+  myEvents->Branch("electronPz", electronPz,"electronPz[nElectrons]/F");
   myEvents->Branch("electronE",  electronE, "electronE[nElectrons]/F");
   myEvents->Branch("electrons_Eps",electrons_Eps,"electron_Eps[nElectrons]/F");
   myEvents->Branch("electrons_E1",electrons_E1,"electrons_E1[nElectrons]/F");
@@ -109,7 +114,68 @@ void DMHiggsAnalysis::declareVariables(){
   myEvents->Branch("electrons_topoCone20",electrons_topoCone20,"electrons_topoCone20[nElectrons]/F");
 
 
+  myEvents->Branch("nMuons", &nMuons,"nMuons/I");
+  //  myEvents->Branch("muonAuthor", muonAuthor,"muonAuthor[nMuons]/I");
+  myEvents->Branch("muonPx", muonPx,"muonPx[nMuons]/F");
+  myEvents->Branch("muonPy", muonPy,"muonPy[nMuons]/F");
+  myEvents->Branch("muonPz", muonPz,"muonPz[nMuons]/F");
+  myEvents->Branch("muonE",  muonE, "muonE[nMuons]/F");
+  myEvents->Branch("muons_charge",muons_charge,"muons_charge[nMuons]/F");
+  myEvents->Branch("muon_passIPcut", muons_passIPcut,"muons_passIPcut[nMuons]/I");
+  myEvents->Branch("muons_ptvarCone20",muons_ptvarCone20,"muons_ptvarCone20[nMuons]/F");
+  myEvents->Branch("muons_topoCone20",muons_topoCone20,"muons_topoCone20[nMuons]/F");
 
+
+  myEvents->Branch("nJets", &nJets,"nJets/I");
+  myEvents->Branch("jetPx", jetPx,"jetPx[nJets]/F");
+  myEvents->Branch("jetPy", jetPy,"jetPy[nJets]/F");
+  myEvents->Branch("jetPz", jetPz,"jetPz[nJets]/F");
+  myEvents->Branch("jetJvt",  jetJvt, "jetJvt[nJets]/F");
+  myEvents->Branch("jetPassSelection",  jetPassSelection, "jetPassSelection[nJets]/I");
+
+  myEvents->Branch("met", &met,"met/F");
+  myEvents->Branch("sumet", &sumet,"sumet/F");
+  myEvents->Branch("phi_met", &phi_met,"phi_met/F");
+
+
+  myEvents->Branch("ntruthPhotons", &ntruthPhotons,"ntruthPhotons/I");
+  myEvents->Branch("photonTruthPx", photonTruthPx,"photonTruthPx[ntruthPhotons]/F");
+  myEvents->Branch("photonTruthPy", photonTruthPy,"photonTruthPy[ntruthPhotons]/F");
+  myEvents->Branch("photonTruthPz", photonTruthPz,"photonTruthPz[ntruthPhotons]/F");
+  myEvents->Branch("photonTruthE",  photonTruthE, "photonTruthE[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_ptcone20",photonTruth_ptcone20,"photonTruth_ptcone20[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_ptcone40",photonTruth_ptcone40,"photonTruth_ptcone40[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_etcone20",photonTruth_etcone20,"photonTruth_etcone20[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_etcone40",photonTruth_etcone40,"photonTruth_etcone40[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_truthOrigin",photonTruth_truthOrigin,"photonTruth_truthOrigin[ntruthPhotons]/I");
+  myEvents->Branch("photonTruth_truthType",photonTruth_truthType,"photonTruth_truthType[ntruthPhotons]/I");
+
+  myEvents->Branch("ntruthElectrons", &ntruthElectrons,"ntruthElectrons/I");
+  myEvents->Branch("electronTruthPx", electronTruthPx,"electronTruthPx[ntruthElectrons]/F");
+  myEvents->Branch("electronTruthPy", electronTruthPy,"electronTruthPy[ntruthElectrons]/F");
+  myEvents->Branch("electronTruthPz", electronTruthPz,"electronTruthPz[ntruthElectrons]/F");
+  myEvents->Branch("electronTruthE",  electronTruthE, "electronTruthE[ntruthElectrons]/F");
+
+  myEvents->Branch("ntruthMuons", &ntruthMuons,"ntruthMuons/I");
+  myEvents->Branch("muonTruthPx", muonTruthPx,"muonTruthPx[ntruthMuons]/F");
+  myEvents->Branch("muonTruthPy", muonTruthPy,"muonTruthPy[ntruthMuons]/F");
+  myEvents->Branch("muonTruthPz", muonTruthPz,"muonTruthPz[ntruthMuons]/F");
+  myEvents->Branch("muonTruthE",  muonTruthE, "muonTruthE[ntruthMuons]/F");
+
+  myEvents->Branch("ntruthJets", &ntruthJets,"ntruthJets/I");
+  myEvents->Branch("jetTruthPx", jetTruthPx,"jetTruthPx[ntruthJets]/F");
+  myEvents->Branch("jetTruthPy", jetTruthPy,"jetTruthPy[ntruthJets]/F");
+  myEvents->Branch("jetTruthPz", jetTruthPz,"jetTruthPz[ntruthJets]/F");
+  myEvents->Branch("jetTruthE",  jetTruthE, "jetTruthE[ntruthJets]/F");
+
+  myEvents->Branch("mpxTruthInt", &mpxTruthInt,"mpxTruthInt/F");
+  myEvents->Branch("mpyTruthInt", &mpyTruthInt,"mpyTruthInt/F");
+  myEvents->Branch("metTruthInt", &metTruthInt,"metTruthInt/F");
+  myEvents->Branch("sumetTruthInt",  &sumetTruthInt, "sumetTruthInt/F");
+  myEvents->Branch("mpxTruthNonInt", &mpxTruthNonInt,"mpxTruthNonInt/F");
+  myEvents->Branch("mpyTruthNonInt", &mpyTruthNonInt,"mpyTruthNonInt/F");
+  myEvents->Branch("metTruthNonInt", &metTruthNonInt,"metTruthNonInt/F");
+  myEvents->Branch("sumetTruthNonInt",  &sumetTruthNonInt, "sumetTruthNonInt/F");
 }
 
 
@@ -119,10 +185,10 @@ void DMHiggsAnalysis::clearVectors(){
   for( int iparticle = 0 ; iparticle < MAXPARTICLES ; ++iparticle){
 
     //    photonAuthor[iparticle] =  - 9999;
-    photonPt[iparticle] =  - 9999;
+    photonPx[iparticle] =  - 9999;
     photonE[iparticle] =  - 9999;
-    photonEta[iparticle] =  - 9999;
-    photonPhi[iparticle] =  - 9999;
+    photonPy[iparticle] =  - 9999;
+    photonPz[iparticle] =  - 9999;
     photons_Eps[iparticle] =  - 9999;
     photons_E1[iparticle] =  - 9999;
     photons_E2[iparticle] =  - 9999;
@@ -142,10 +208,10 @@ void DMHiggsAnalysis::clearVectors(){
     photons_topoCone40[iparticle] =  - 9999;
 
     //electronAuthor[iparticle] =  - 9999;
-    electronPt[iparticle] =  - 9999;
+    electronPx[iparticle] =  - 9999;
     electronE[iparticle] =  - 9999;
-    electronEta[iparticle] =  - 9999;
-    electronPhi[iparticle] =  - 9999;
+    electronPy[iparticle] =  - 9999;
+    electronPz[iparticle] =  - 9999;
     electrons_Eps[iparticle] =  - 9999;
     electrons_E1[iparticle] =  - 9999;
     electrons_E2[iparticle] =  - 9999;
@@ -154,6 +220,62 @@ void DMHiggsAnalysis::clearVectors(){
     electrons_isTight[iparticle] =  - 9999;
     electrons_topoCone20[iparticle] =  - 9999;
     electrons_ptvarCone20[iparticle] =  - 9999;
+
+    //muonAuthor[iparticle] =  - 9999;
+    muonPx[iparticle] =  - 9999;
+    muonE[iparticle] =  - 9999;
+    muonPy[iparticle] =  - 9999;
+    muonPz[iparticle] =  - 9999;
+
+    muons_passIPcut[iparticle] =  - 9999;
+    muons_topoCone20[iparticle] =  - 9999;
+    muons_ptvarCone20[iparticle] =  - 9999;
+
+    //jetAuthor[iparticle] =  - 9999;
+    jetPx[iparticle] =  - 9999;
+    jetJvt[iparticle] =  - 9999;
+    jetPy[iparticle] =  - 9999;
+    jetPz[iparticle] =  - 9999;
+    jetPassSelection[iparticle] =  - 9999;
+
+
+
+    photonTruthPx[iparticle] =  - 9999;
+    photonTruthE[iparticle] =  - 9999;
+    photonTruthPy[iparticle] =  - 9999;
+    photonTruthPz[iparticle] =  - 9999;
+    photonTruth_etcone20[iparticle] =  - 9999;
+    photonTruth_etcone40[iparticle] =  - 9999;
+    photonTruth_ptcone20[iparticle] =  - 9999;
+    photonTruth_ptcone40[iparticle] =  - 9999;
+    photonTruth_truthOrigin[iparticle] =  - 9999;
+    photonTruth_truthType[iparticle] =  - 9999;
+
+
+    electronTruthPx[iparticle] =  - 9999;
+    electronTruthE[iparticle] =  - 9999;
+    electronTruthPy[iparticle] =  - 9999;
+    electronTruthPz[iparticle] =  - 9999;
+
+    muonTruthPx[iparticle] =  - 9999;
+    muonTruthE[iparticle] =  - 9999;
+    muonTruthPy[iparticle] =  - 9999;
+    muonTruthPz[iparticle] =  - 9999;
+
+
+    jetTruthPx[iparticle] =  - 9999;
+    jetTruthE[iparticle] =  - 9999;
+    jetTruthPy[iparticle] =  - 9999;
+    jetTruthPz[iparticle] =  - 9999;
+
+    mpxTruthInt =  - 9999;
+    mpyTruthInt =  - 9999;
+    metTruthInt =  - 9999;
+    sumetTruthInt =  - 9999;
+    mpxTruthNonInt =  - 9999;
+    mpyTruthNonInt =  - 9999;
+    metTruthNonInt =  - 9999;
+    sumetTruthNonInt =  - 9999;
   }
 
 }
@@ -169,15 +291,12 @@ EL::StatusCode DMHiggsAnalysis::initialize()
 
   myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
 
-
   wk()->addOutput(outFile);
 
-  
+
   //myEvents->SetDirectory(outFile);
 
   declareVariables();
-
-
 
 
 
@@ -196,10 +315,15 @@ EL::StatusCode DMHiggsAnalysis::execute()
   HgammaAnalysis::execute();
 
 
+  SG::AuxElement::Accessor<unsigned int> runNumber("runNumber");
+  SG::AuxElement::Accessor<unsigned int> lumiBlock("lumiBlock");
+  SG::AuxElement::Accessor<unsigned long long> eventNumber("eventNumber");
+  SG::AuxElement::Accessor< std::vector<float> > mcEventWeights("mcEventWeights");
+
   SG::AuxElement::Accessor<int> NPV("numberOfPrimaryVertices");
   SG::AuxElement::Accessor<float> mu("mu");
   SG::AuxElement::Accessor<float> initWeight("weightInitial");
-  //  SG::AuxElement::Accessor<float> XsecLumiEffKWeight("XsecLumiEffKWeight");
+  SG::AuxElement::Accessor<float> crossSectionBRflterEff("crossSectionBRfilterEff");
   //  SG::AuxElement::Accessor<float> TotalWeight("TotalWeight");
   SG::AuxElement::Accessor<float> myy("m_yy");
   SG::AuxElement::Accessor<float> met_sumet("sumet_TST");
@@ -221,22 +345,24 @@ EL::StatusCode DMHiggsAnalysis::execute()
   SG::AuxElement::Accessor<float> ptvarCone20("ptvarcone20");
   SG::AuxElement::Accessor<float> topoetCone20("topoetcone20");
   SG::AuxElement::Accessor<float> topoetCone40("topoetcone40");
+  SG::AuxElement::Accessor<float> etCone20("topoetcone20");
+  SG::AuxElement::Accessor<float> etCone40("topoetcone40");
   SG::AuxElement::Accessor<float> ptCone20("ptcone20");
   SG::AuxElement::Accessor<float> ptCone40("ptcone40");
+  SG::AuxElement::Accessor<int> truthType("truthType");
+  SG::AuxElement::Accessor<int> truthOrigin("truthOrigin");
   SG::AuxElement::Accessor<char> isisoFixedCutTight("isisoFixedCutTight");
   SG::AuxElement::Accessor<char> isisoFixedCutLoose("isisoFixedCutLoose");
   SG::AuxElement::Accessor<char> isisoFixedCutTightCaloOnly("isisoFixedCutTightCaloOnly");
   SG::AuxElement::Accessor<char> isisoFixedCutLooseCaloOnly("isisoFixedCutLooseCaloOnly");
   SG::AuxElement::Accessor<char> isTight("isTight");
+  SG::AuxElement::Accessor<char> passIPcut("passIPCut");
 
-
+  SG::AuxElement::Accessor<float> Jvt("Jvt");
 
 
 
   // photons
-
-
-
 
   //if (photons.size() < 2) return EL::StatusCode::SUCCESS;
   //TLorentzVector h = photons[0]->p4() + photons[1]->p4();
@@ -256,17 +382,19 @@ EL::StatusCode DMHiggsAnalysis::execute()
     HG::fatal("Cannot retrieve event Info .");
 
 
+  RunNumber = runNumber( *eventInfo );
+  LumiBlock = lumiBlock( *eventInfo );
+  EventNumber = eventNumber( *eventInfo );
 
   TLorentzVector etmissVector;
 
-
+  mcEventWeights_var = isMC() ?  mcEventWeights( *eventInfo )[0] : 1.; 
+  xsecBrFilterEff_var = crossSectionBRflterEff.isAvailable( *HGameventInfo ) ?  crossSectionBRflterEff( *HGameventInfo )  : 1.; 
   mcID_var = isMC() ? eventInfo->mcChannelNumber() : -999;
   NPV_var = NPV(*HGameventInfo);
   mu_var = mu(*HGameventInfo);
   isMC_var = isMC();
   initWeight_var = initWeight(*HGameventInfo);
-  //  XsecLumiEffKWeight_var = XsecLumiEffKWeight(*HGameventInfo);
-  //  TotalWeight_var =TotalWeight( ;
   myy_var = myy(*HGameventInfo);
   metSig_var = met_TST(*HGameventInfo)/met_sumet(*HGameventInfo);
   passVertex_var = fabs(hardestVertex(*HGameventInfo) - selectedVertex(*HGameventInfo)) < 0.3 ? 1 : 0;
@@ -274,12 +402,22 @@ EL::StatusCode DMHiggsAnalysis::execute()
   passQualityCuts_var = passQualityCuts(*HGameventInfo) == 1 ? 1 : 0 ;
 
 
+  std::string inputfileName = wk()->inputFileName();
+  std::string cutFlowName ;
+
+  cutFlowName = "CutFlow_" + inputfileName;
+  cutFlowName.replace(cutFlowName.find(".MxAOD") , -1, "") ;
+  cutFlowName.append("_weighted");
+
+  if( m_eventCounter == 1 ) m_histCutFlow[inputfileName] = (TH1F*) HG::getHistogramFromFile(cutFlowName,inputfileName);
+
   xAOD::PhotonContainer photons = photonHandler()->getCorrectedContainer() ;
   xAOD::ElectronContainer electrons = electronHandler()->getCorrectedContainer() ;
   xAOD::MuonContainer muons = muonHandler()->getCorrectedContainer() ;
   xAOD::JetContainer jets = jetHandler()->getCorrectedContainer() ;
 
-  xAOD::MissingETContainer etmiss = etmissHandler()->getCorrectedContainer(&photons,&jets,&electrons,&muons);
+
+  overlapHandler()->removeOverlap(photons,jets,electrons, muons);
 
 
   TLorentzVector photon_lead;
@@ -378,9 +516,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
   for(size_t gn=0; gn<photons.size(); gn++) {
     //    photonAuthor[nPhotons] = photons[gn]->author();
-    photonPt[nPhotons] = photons[gn]->p4().Pt();
-    photonEta[nPhotons] = photons[gn]->p4().Eta();
-    photonPhi[nPhotons] = photons[gn]->p4().Phi();
+    photonPx[nPhotons] = photons[gn]->p4().Px();
+    photonPy[nPhotons] = photons[gn]->p4().Py();
+    photonPz[nPhotons] = photons[gn]->p4().Pz();
     photonE[nPhotons] = photons[gn]->p4().E();
     photons_Eps[nPhotons] = photons_ePS( *photons[gn] ); 
     photons_E1[nPhotons] = photons_e1( *photons[gn] ); 
@@ -406,9 +544,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
   for(size_t gn=0; gn<electrons.size(); gn++) {
     //    electronAuthor[nElectrons] = electrons[gn]->author();
-    electronPt[nElectrons] = electrons[gn]->pt();
-    electronEta[nElectrons] = electrons[gn]->eta();
-    electronPhi[nElectrons] = electrons[gn]->phi();
+    electronPx[nElectrons] = electrons[gn]->p4().Px();
+    electronPy[nElectrons] = electrons[gn]->p4().Py();
+    electronPz[nElectrons] = electrons[gn]->p4().Pz();
     electronE[nElectrons] = electrons[gn]->e();
     electrons_Eps[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(0) : 0. ; 
     electrons_E1[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(1) : 0. ; 
@@ -422,6 +560,143 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
     nElectrons++;
   }
+
+
+  nMuons=0;
+
+
+  for(size_t gn=0; gn<muons.size(); gn++) {
+
+    muonPx[nMuons] = muons[gn]->p4().Px();
+    muonPy[nMuons] = muons[gn]->p4().Py();
+    muonPz[nMuons] = muons[gn]->p4().Pz();
+    muonE[nMuons] = muons[gn]->e();
+    
+    muons_topoCone20[nMuons] = topoetCone20( *muons[gn] ); 
+    muons_ptvarCone20[nMuons] = ptvarCone20( *muons[gn] );
+    muons_charge[nMuons] = muons[gn]->charge() ;   
+    muons_passIPcut[nMuons] = passIPcut( *muons[gn] );   
+
+    nMuons++;
+  }
+
+
+  nJets=0;
+
+
+  for(size_t gn=0; gn<jets.size(); gn++) {
+
+    jetPx[nJets] = jets[gn]->px();
+    jetPy[nJets] = jets[gn]->py();
+    jetPz[nJets] = jets[gn]->pz();
+    jetJvt[nJets] = Jvt( *jets[gn] );
+    jetPassSelection[nJets] = ( jetHandler()->passPtEtaCuts( jets[gn]) && jetHandler()->passJVFCut( jets[gn]) ) && jetHandler()->passJVTCut( jets[gn] ) ? 1 : 0;
+
+    nJets++;
+
+  }
+
+
+
+
+  met = met_TST(*HGameventInfo);
+  sumet = met_sumet(*HGameventInfo);
+  phi_met = met_phi(*HGameventInfo);
+
+
+
+
+
+  HG::TruthParticles* truthParticles = truthHandler()->getTruthParticles();
+  xAOD::TruthParticleContainer truthPhotons = truthHandler()->getPhotons();
+  xAOD::TruthParticleContainer truthElectrons = truthHandler()->getElectrons();
+  xAOD::TruthParticleContainer truthMuons = truthHandler()->getMuons();
+  xAOD::JetContainer truthJets = truthHandler()->getJets();
+  xAOD::MissingETContainer truthMET = truthHandler()->getMissingET();
+
+
+  ntruthPhotons = 0 ;
+
+  for( xAOD::TruthParticle* truthpart : truthPhotons){
+
+    photonTruthPx[ntruthPhotons] = truthpart->p4().Px();
+    photonTruthPy[ntruthPhotons] = truthpart->p4().Py();
+    photonTruthPz[ntruthPhotons] = truthpart->p4().Pz();
+    photonTruthE[ntruthPhotons] = truthpart->p4().E();
+    photonTruth_ptcone20[ntruthPhotons] = ptCone20( *truthpart ); 
+    photonTruth_ptcone40[ntruthPhotons] = ptCone40( *truthpart ); 
+    photonTruth_etcone20[ntruthPhotons] = etCone20( *truthpart ); 
+    photonTruth_etcone40[ntruthPhotons] = etCone40( *truthpart ); 
+    photonTruth_truthOrigin[ntruthPhotons] = truthOrigin( *truthpart ); 
+    photonTruth_truthType[ntruthPhotons] = truthType( *truthpart ); 
+
+
+    ++ntruthPhotons;
+  }
+
+
+  ntruthElectrons = 0 ;
+
+  for( xAOD::TruthParticle* truthpart : truthElectrons){
+
+    electronTruthPx[ntruthElectrons] = truthpart->p4().Px();
+    electronTruthPy[ntruthElectrons] = truthpart->p4().Py();
+    electronTruthPz[ntruthElectrons] = truthpart->p4().Pz();
+    electronTruthE[ntruthElectrons] = truthpart->p4().E();
+
+
+    ++ntruthElectrons;
+  }
+
+
+
+
+  ntruthMuons = 0 ;
+
+  for( xAOD::TruthParticle* truthpart : truthMuons){
+
+    muonTruthPx[ntruthMuons] = truthpart->p4().Px();
+    muonTruthPy[ntruthMuons] = truthpart->p4().Py();
+    muonTruthPz[ntruthMuons] = truthpart->p4().Pz();
+    muonTruthE[ntruthMuons] = truthpart->p4().E();
+
+
+    ++ntruthMuons;
+  }
+
+
+  ntruthJets = 0 ;
+
+  for( xAOD::Jet* truthpart : truthJets){
+
+    jetTruthPx[ntruthJets] = truthpart->p4().Px();
+    jetTruthPy[ntruthJets] = truthpart->p4().Py();
+    jetTruthPz[ntruthJets] = truthpart->p4().Pz();
+    jetTruthE[ntruthJets] = truthpart->p4().E();
+
+
+    ++ntruthJets;
+  }
+
+
+
+  // mpxTruthInt = ((*truthMET["Int"])+(*truthMET["IntMuons"])).mpx();
+  // mpyTruthInt = ((*truthMET["Int"])+(*truthMET["IntMuons"])).mpy();
+  // metTruthInt = ((*truthMET["Int"])+(*truthMET["IntMuons"])).met();
+  // sumetTruthInt = ((*truthMET["Int"])+(*truthMET["IntMuons"])).sumet();
+
+  mpxTruthInt = truthMET["Int"]->mpx();
+  mpyTruthInt = truthMET["Int"]->mpy();
+  metTruthInt = truthMET["Int"]->met();
+  sumetTruthInt = truthMET["Int"]->sumet();
+  mpxTruthNonInt = truthMET["NonInt"]->mpx();
+  mpyTruthNonInt = truthMET["NonInt"]->mpy();
+  metTruthNonInt = truthMET["NonInt"]->met();
+  sumetTruthNonInt = truthMET["NonInt"]->sumet();
+
+
+  //  for( xAOD::TruthParticle* )
+
 
 
 
@@ -438,6 +713,13 @@ EL::StatusCode DMHiggsAnalysis::finalize() {
 
   outFile->cd();
   myEvents->Write();
+  for( auto it : m_histCutFlow ){
+    outFile->cd();
+    std::cout << " Writing the cutflow histogram of sample  : " + TString(it.first) << std::endl;
+    if( !it.second ) continue;
+      //HG::fatal("Cut flow histogram is empty.");
+    it.second->Write();
+  }
   outFile->Close();
   
 

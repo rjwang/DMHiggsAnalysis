@@ -24,12 +24,20 @@ private:
   TTree *myEvents; //!
   // TH1 *myHist; //!
 
+
+
+  //  ===========================  General sample information  =========================== //
+  int RunNumber;
+  int EventNumber;
+  int LumiBlock;
+  float mcEventWeights_var;
+
   float mcID_var;
   int NPV_var;
   float mu_var;
   int isMC_var;
   float initWeight_var;
-  //  float XsecLumiEffKWeight_var = XsecLumiEffKWeight(*eventInfo);
+  float xsecBrFilterEff_var;
   //  float TotalWeight_var =TotalWeight(;
   float myy_var;
   /* float phi_yy_met_var; */
@@ -49,12 +57,15 @@ private:
   int passHiggsSelection_var;
   int passQualityCuts_var;
 
-  //photons
+  //  ===========================  Reco objects  information  =========================== //
+
+  //Photons
+
   int nPhotons;
   int photonAuthor[MAXPARTICLES];
-  float photonPt[MAXPARTICLES];
-  float photonEta[MAXPARTICLES];
-  float photonPhi[MAXPARTICLES];
+  float photonPx[MAXPARTICLES];
+  float photonPy[MAXPARTICLES];
+  float photonPz[MAXPARTICLES];
   float photonE[MAXPARTICLES];
   float photons_Eps[MAXPARTICLES];
   float photons_E1[MAXPARTICLES];
@@ -73,12 +84,13 @@ private:
   float photons_topoCone20[MAXPARTICLES];
   float photons_topoCone40[MAXPARTICLES];
 
-  //electrons
+  //Electrons
+
   int nElectrons;
   int electronAuthor[MAXPARTICLES];
-  float electronPt[MAXPARTICLES];
-  float electronEta[MAXPARTICLES];
-  float electronPhi[MAXPARTICLES];
+  float electronPx[MAXPARTICLES];
+  float electronPy[MAXPARTICLES];
+  float electronPz[MAXPARTICLES];
   float electronE[MAXPARTICLES];
   float electrons_Eps[MAXPARTICLES];
   float electrons_E1[MAXPARTICLES];
@@ -92,7 +104,96 @@ private:
   float electrons_ptvarCone20[MAXPARTICLES];
 
 
+  //Muons
 
+  int nMuons;
+  float muonPx[MAXPARTICLES];
+  float muonPy[MAXPARTICLES];
+  float muonPz[MAXPARTICLES];
+  float muonE[MAXPARTICLES];
+  float muons_Eps[MAXPARTICLES];
+  float muons_E1[MAXPARTICLES];
+  float muons_E2[MAXPARTICLES];
+  float muons_E3[MAXPARTICLES];
+  float muons_charge[MAXPARTICLES];
+  int muons_passIPcut[MAXPARTICLES];
+
+
+  float muons_topoCone20[MAXPARTICLES];
+  float muons_ptvarCone20[MAXPARTICLES];
+
+
+  //Jets
+
+  int nJets;
+  float jetPx[MAXPARTICLES];
+  float jetPy[MAXPARTICLES];
+  float jetPz[MAXPARTICLES];
+  float jetJvt[MAXPARTICLES];
+  int jetPassSelection[MAXPARTICLES];
+
+
+  // Met
+  float met;
+  float sumet;
+  float phi_met;
+
+
+  // ===========================  Truth information  =========================== //
+
+  // Photons 
+
+  int ntruthPhotons;
+  float photonTruthPx[MAXPARTICLES];
+  float photonTruthPy[MAXPARTICLES];
+  float photonTruthPz[MAXPARTICLES];
+  float photonTruthE[MAXPARTICLES];
+  float photonTruth_ptcone20[MAXPARTICLES];
+  float photonTruth_ptcone40[MAXPARTICLES];
+  float photonTruth_etcone20[MAXPARTICLES];
+  float photonTruth_etcone40[MAXPARTICLES];
+ 
+  int photonTruth_truthOrigin[MAXPARTICLES];
+  int photonTruth_truthType[MAXPARTICLES];
+
+
+  // Electrons
+
+  int ntruthElectrons;
+  float electronTruthPx[MAXPARTICLES];
+  float electronTruthPy[MAXPARTICLES];
+  float electronTruthPz[MAXPARTICLES];
+  float electronTruthE[MAXPARTICLES];
+ 
+  // Muons
+
+  int ntruthMuons;
+  float muonTruthPx[MAXPARTICLES];
+  float muonTruthPy[MAXPARTICLES];
+  float muonTruthPz[MAXPARTICLES];
+  float muonTruthE[MAXPARTICLES];
+ 
+
+  // Jets
+
+  int ntruthJets;
+  float jetTruthPx[MAXPARTICLES];
+  float jetTruthPy[MAXPARTICLES];
+  float jetTruthPz[MAXPARTICLES];
+  float jetTruthE[MAXPARTICLES];
+
+  // MissingET
+
+  float mpxTruthInt;
+  float mpyTruthInt;
+  float metTruthInt;
+  float sumetTruthInt;
+  float mpxTruthNonInt;
+  float mpyTruthNonInt;
+  float metTruthNonInt;
+  float sumetTruthNonInt;
+
+  std::map<std::string,TH1F*> m_histCutFlow; //!
 
 
 public:
