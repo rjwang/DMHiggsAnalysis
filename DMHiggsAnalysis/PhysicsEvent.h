@@ -30,9 +30,19 @@ public :
 
 
 //
-class PhysicsObject_Lepton : public LorentzVector {
+class PhysicsObject_Electron : public LorentzVector {
 public :
-    PhysicsObject_Lepton(LorentzVector vec, Int_t id_):
+    PhysicsObject_Electron(LorentzVector vec, Int_t id_):
+        LorentzVector(vec), id(id_) { }
+
+    Int_t id;
+};
+
+
+//
+class PhysicsObject_Muon : public LorentzVector {
+public :
+    PhysicsObject_Muon(LorentzVector vec, Int_t id_):
         LorentzVector(vec), id(id_) { }
 
     Int_t id;
@@ -60,17 +70,19 @@ public :
 };
 
 
-typedef std::vector<PhysicsObject>        PhysicsObjectCollection;
-typedef std::vector<PhysicsObject_Lepton> PhysicsObjectLeptonCollection;
-typedef std::vector<PhysicsObject_Photon> PhysicsObjectPhotonCollection;
-typedef std::vector<PhysicsObject_Jet>    PhysicsObjectJetCollection;
+typedef std::vector<PhysicsObject>        	PhysicsObjectCollection;
+typedef std::vector<PhysicsObject_Electron> 	PhysicsObjectElectronCollection;
+typedef std::vector<PhysicsObject_Muon>   	PhysicsObjectMuonCollection;
+typedef std::vector<PhysicsObject_Photon> 	PhysicsObjectPhotonCollection;
+typedef std::vector<PhysicsObject_Jet>    	PhysicsObjectJetCollection;
 
 //
 struct PhysicsEvent_t {
     int run,event,lumi;
     int nvtx;
 
-    PhysicsObjectLeptonCollection leptons;
+    PhysicsObjectElectronCollection electrons;
+    PhysicsObjectMuonCollection muons;
     PhysicsObjectPhotonCollection photons;
     PhysicsObjectJetCollection jets;
     LorentzVector met;

@@ -39,7 +39,7 @@ private:
   float initWeight_var;
   float xsecBrFilterEff_var;
   //  float TotalWeight_var =TotalWeight(;
-  float myy_var;
+  //float myy_var;
   /* float phi_yy_met_var; */
   /* float phi_yyj_met_var; */
   /* float phi_jj_met_var; */
@@ -60,7 +60,6 @@ private:
   //  ===========================  Reco objects  information  =========================== //
 
   //Photons
-
   int nPhotons;
   int photonAuthor[MAXPARTICLES];
   float photonPx[MAXPARTICLES];
@@ -85,7 +84,6 @@ private:
   float photons_topoCone40[MAXPARTICLES];
 
   //Electrons
-
   int nElectrons;
   int electronAuthor[MAXPARTICLES];
   float electronPx[MAXPARTICLES];
@@ -105,7 +103,6 @@ private:
 
 
   //Muons
-
   int nMuons;
   float muonPx[MAXPARTICLES];
   float muonPy[MAXPARTICLES];
@@ -116,19 +113,17 @@ private:
   float muons_E2[MAXPARTICLES];
   float muons_E3[MAXPARTICLES];
   float muons_charge[MAXPARTICLES];
-  int muons_passIPcut[MAXPARTICLES];
-
-
+  int   muons_passIPcut[MAXPARTICLES];
   float muons_topoCone20[MAXPARTICLES];
   float muons_ptvarCone20[MAXPARTICLES];
 
 
   //Jets
-
   int nJets;
   float jetPx[MAXPARTICLES];
   float jetPy[MAXPARTICLES];
   float jetPz[MAXPARTICLES];
+  float jetE[MAXPARTICLES];
   float jetJvt[MAXPARTICLES];
   int jetPassSelection[MAXPARTICLES];
 
@@ -141,7 +136,7 @@ private:
 
   // ===========================  Truth information  =========================== //
 
-  // Photons 
+  // Photons
 
   int ntruthPhotons;
   float photonTruthPx[MAXPARTICLES];
@@ -152,7 +147,7 @@ private:
   float photonTruth_ptcone40[MAXPARTICLES];
   float photonTruth_etcone20[MAXPARTICLES];
   float photonTruth_etcone40[MAXPARTICLES];
- 
+
   int photonTruth_truthOrigin[MAXPARTICLES];
   int photonTruth_truthType[MAXPARTICLES];
 
@@ -164,7 +159,7 @@ private:
   float electronTruthPy[MAXPARTICLES];
   float electronTruthPz[MAXPARTICLES];
   float electronTruthE[MAXPARTICLES];
- 
+
   // Muons
 
   int ntruthMuons;
@@ -172,7 +167,7 @@ private:
   float muonTruthPy[MAXPARTICLES];
   float muonTruthPz[MAXPARTICLES];
   float muonTruthE[MAXPARTICLES];
- 
+
 
   // Jets
 

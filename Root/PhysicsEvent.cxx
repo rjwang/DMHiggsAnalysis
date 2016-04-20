@@ -16,10 +16,10 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
 {
     PhysicsEvent_t phys;
 //
-//    phys.run=ev.run;
-//    phys.event=ev.event;
-//    phys.lumi=ev.lumi;
-//    phys.nvtx = ev.nvtx;
+    phys.run=ev.RunNumber;
+    phys.event=ev.EventNumber;
+    phys.lumi=ev.LumiBlock;
+    phys.nvtx = ev.NPV_var;
 
 /*
     // Leptons
@@ -66,6 +66,30 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
 	LorentzVector P4(ev.photonPx[i],ev.photonPy[i],ev.photonPz[i],ev.photonE[i]);
 	if(P4.pt()>0) {
 		phys.photons.push_back( PhysicsObject_Photon(P4, 22) );
+	}
+      }
+
+
+      for(Int_t i=0; i<ev.nElectrons; i++) {
+	LorentzVector P4(ev.electronPx[i],ev.electronPy[i],ev.electronPz[i],ev.electronE[i]);
+	if(P4.pt()>0) {
+		phys.electrons.push_back( PhysicsObject_Electron(P4, 11) );
+	}
+      }
+
+
+      for(Int_t i=0; i<ev.nMuons; i++) {
+	LorentzVector P4(ev.muonPx[i],ev.muonPy[i],ev.muonPz[i],ev.muonE[i]);
+	if(P4.pt()>0) {
+		phys.muons.push_back( PhysicsObject_Muon(P4, 13) );
+	}
+      }
+
+
+      for(Int_t i=0; i<ev.nJets; i++) {
+	LorentzVector P4(ev.jetPx[i],ev.jetPy[i],ev.jetPz[i],ev.jetE[i]);
+	if(P4.pt()>0) {
+		phys.jets.push_back( PhysicsObject_Jet(P4) );
 	}
       }
 
