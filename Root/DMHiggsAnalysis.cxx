@@ -136,6 +136,46 @@ void DMHiggsAnalysis::declareVariables(){
   myEvents->Branch("met", &met,"met/F");
   myEvents->Branch("sumet", &sumet,"sumet/F");
   myEvents->Branch("phi_met", &phi_met,"phi_met/F");
+
+
+  myEvents->Branch("ntruthPhotons", &ntruthPhotons,"ntruthPhotons/I");
+  myEvents->Branch("photonTruthPx", photonTruthPx,"photonTruthPx[ntruthPhotons]/F");
+  myEvents->Branch("photonTruthPy", photonTruthPy,"photonTruthPy[ntruthPhotons]/F");
+  myEvents->Branch("photonTruthPz", photonTruthPz,"photonTruthPz[ntruthPhotons]/F");
+  myEvents->Branch("photonTruthE",  photonTruthE, "photonTruthE[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_ptcone20",photonTruth_ptcone20,"photonTruth_ptcone20[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_ptcone40",photonTruth_ptcone40,"photonTruth_ptcone40[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_etcone20",photonTruth_etcone20,"photonTruth_etcone20[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_etcone40",photonTruth_etcone40,"photonTruth_etcone40[ntruthPhotons]/F");
+  myEvents->Branch("photonTruth_truthOrigin",photonTruth_truthOrigin,"photonTruth_truthOrigin[ntruthPhotons]/I");
+  myEvents->Branch("photonTruth_truthType",photonTruth_truthType,"photonTruth_truthType[ntruthPhotons]/I");
+
+  myEvents->Branch("ntruthElectrons", &ntruthElectrons,"ntruthElectrons/I");
+  myEvents->Branch("electronTruthPx", electronTruthPx,"electronTruthPx[ntruthElectrons]/F");
+  myEvents->Branch("electronTruthPy", electronTruthPy,"electronTruthPy[ntruthElectrons]/F");
+  myEvents->Branch("electronTruthPz", electronTruthPz,"electronTruthPz[ntruthElectrons]/F");
+  myEvents->Branch("electronTruthE",  electronTruthE, "electronTruthE[ntruthElectrons]/F");
+
+  myEvents->Branch("ntruthMuons", &ntruthMuons,"ntruthMuons/I");
+  myEvents->Branch("muonTruthPx", muonTruthPx,"muonTruthPx[ntruthMuons]/F");
+  myEvents->Branch("muonTruthPy", muonTruthPy,"muonTruthPy[ntruthMuons]/F");
+  myEvents->Branch("muonTruthPz", muonTruthPz,"muonTruthPz[ntruthMuons]/F");
+  myEvents->Branch("muonTruthE",  muonTruthE, "muonTruthE[ntruthMuons]/F");
+
+  myEvents->Branch("ntruthJets", &ntruthJets,"ntruthJets/I");
+  myEvents->Branch("jetTruthPx", jetTruthPx,"jetTruthPx[ntruthJets]/F");
+  myEvents->Branch("jetTruthPy", jetTruthPy,"jetTruthPy[ntruthJets]/F");
+  myEvents->Branch("jetTruthPz", jetTruthPz,"jetTruthPz[ntruthJets]/F");
+  myEvents->Branch("jetTruthE",  jetTruthE, "jetTruthE[ntruthJets]/F");
+
+  myEvents->Branch("mpxTruthInt", &mpxTruthInt,"mpxTruthInt/F");
+  myEvents->Branch("mpyTruthInt", &mpyTruthInt,"mpyTruthInt/F");
+  myEvents->Branch("metTruthInt", &metTruthInt,"metTruthInt/F");
+  myEvents->Branch("sumetTruthInt",  &sumetTruthInt, "sumetTruthInt/F");
+  myEvents->Branch("mpxTruthNonInt", &mpxTruthNonInt,"mpxTruthNonInt/F");
+  myEvents->Branch("mpyTruthNonInt", &mpyTruthNonInt,"mpyTruthNonInt/F");
+  myEvents->Branch("metTruthNonInt", &metTruthNonInt,"metTruthNonInt/F");
+  myEvents->Branch("sumetTruthNonInt",  &sumetTruthNonInt, "sumetTruthNonInt/F");
 }
 
 
@@ -197,6 +237,45 @@ void DMHiggsAnalysis::clearVectors(){
     jetPy[iparticle] =  - 9999;
     jetPz[iparticle] =  - 9999;
     jetPassSelection[iparticle] =  - 9999;
+
+
+
+    photonTruthPx[iparticle] =  - 9999;
+    photonTruthE[iparticle] =  - 9999;
+    photonTruthPy[iparticle] =  - 9999;
+    photonTruthPz[iparticle] =  - 9999;
+    photonTruth_etcone20[iparticle] =  - 9999;
+    photonTruth_etcone40[iparticle] =  - 9999;
+    photonTruth_ptcone20[iparticle] =  - 9999;
+    photonTruth_ptcone40[iparticle] =  - 9999;
+    photonTruth_truthOrigin[iparticle] =  - 9999;
+    photonTruth_truthType[iparticle] =  - 9999;
+
+
+    electronTruthPx[iparticle] =  - 9999;
+    electronTruthE[iparticle] =  - 9999;
+    electronTruthPy[iparticle] =  - 9999;
+    electronTruthPz[iparticle] =  - 9999;
+
+    muonTruthPx[iparticle] =  - 9999;
+    muonTruthE[iparticle] =  - 9999;
+    muonTruthPy[iparticle] =  - 9999;
+    muonTruthPz[iparticle] =  - 9999;
+
+
+    jetTruthPx[iparticle] =  - 9999;
+    jetTruthE[iparticle] =  - 9999;
+    jetTruthPy[iparticle] =  - 9999;
+    jetTruthPz[iparticle] =  - 9999;
+
+    mpxTruthInt =  - 9999;
+    mpyTruthInt =  - 9999;
+    metTruthInt =  - 9999;
+    sumetTruthInt =  - 9999;
+    mpxTruthNonInt =  - 9999;
+    mpyTruthNonInt =  - 9999;
+    metTruthNonInt =  - 9999;
+    sumetTruthNonInt =  - 9999;
   }
 
 }
@@ -266,8 +345,12 @@ EL::StatusCode DMHiggsAnalysis::execute()
   SG::AuxElement::Accessor<float> ptvarCone20("ptvarcone20");
   SG::AuxElement::Accessor<float> topoetCone20("topoetcone20");
   SG::AuxElement::Accessor<float> topoetCone40("topoetcone40");
+  SG::AuxElement::Accessor<float> etCone20("topoetcone20");
+  SG::AuxElement::Accessor<float> etCone40("topoetcone40");
   SG::AuxElement::Accessor<float> ptCone20("ptcone20");
   SG::AuxElement::Accessor<float> ptCone40("ptcone40");
+  SG::AuxElement::Accessor<int> truthType("truthType");
+  SG::AuxElement::Accessor<int> truthOrigin("truthOrigin");
   SG::AuxElement::Accessor<char> isisoFixedCutTight("isisoFixedCutTight");
   SG::AuxElement::Accessor<char> isisoFixedCutLoose("isisoFixedCutLoose");
   SG::AuxElement::Accessor<char> isisoFixedCutTightCaloOnly("isisoFixedCutTightCaloOnly");
@@ -502,13 +585,15 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
 
   for(size_t gn=0; gn<jets.size(); gn++) {
-    //    jetAuthor[nJets] = jets[gn]->author();
+
     jetPx[nJets] = jets[gn]->px();
     jetPy[nJets] = jets[gn]->py();
     jetPz[nJets] = jets[gn]->pz();
     jetJvt[nJets] = Jvt( *jets[gn] );
     jetPassSelection[nJets] = ( jetHandler()->passPtEtaCuts( jets[gn]) && jetHandler()->passJVFCut( jets[gn]) ) && jetHandler()->passJVTCut( jets[gn] ) ? 1 : 0;
+
     nJets++;
+
   }
 
 
@@ -517,6 +602,103 @@ EL::StatusCode DMHiggsAnalysis::execute()
   met = met_TST(*HGameventInfo);
   sumet = met_sumet(*HGameventInfo);
   phi_met = met_phi(*HGameventInfo);
+
+
+
+
+
+  HG::TruthParticles* truthParticles = truthHandler()->getTruthParticles();
+  xAOD::TruthParticleContainer truthPhotons = truthHandler()->getPhotons();
+  xAOD::TruthParticleContainer truthElectrons = truthHandler()->getElectrons();
+  xAOD::TruthParticleContainer truthMuons = truthHandler()->getMuons();
+  xAOD::JetContainer truthJets = truthHandler()->getJets();
+  xAOD::MissingETContainer truthMET = truthHandler()->getMissingET();
+
+
+  ntruthPhotons = 0 ;
+
+  for( xAOD::TruthParticle* truthpart : truthPhotons){
+
+    photonTruthPx[ntruthPhotons] = truthpart->p4().Px();
+    photonTruthPy[ntruthPhotons] = truthpart->p4().Py();
+    photonTruthPz[ntruthPhotons] = truthpart->p4().Pz();
+    photonTruthE[ntruthPhotons] = truthpart->p4().E();
+    photonTruth_ptcone20[ntruthPhotons] = ptCone20( *truthpart ); 
+    photonTruth_ptcone40[ntruthPhotons] = ptCone40( *truthpart ); 
+    photonTruth_etcone20[ntruthPhotons] = etCone20( *truthpart ); 
+    photonTruth_etcone40[ntruthPhotons] = etCone40( *truthpart ); 
+    photonTruth_truthOrigin[ntruthPhotons] = truthOrigin( *truthpart ); 
+    photonTruth_truthType[ntruthPhotons] = truthType( *truthpart ); 
+
+
+    ++ntruthPhotons;
+  }
+
+
+  ntruthElectrons = 0 ;
+
+  for( xAOD::TruthParticle* truthpart : truthElectrons){
+
+    electronTruthPx[ntruthElectrons] = truthpart->p4().Px();
+    electronTruthPy[ntruthElectrons] = truthpart->p4().Py();
+    electronTruthPz[ntruthElectrons] = truthpart->p4().Pz();
+    electronTruthE[ntruthElectrons] = truthpart->p4().E();
+
+
+    ++ntruthElectrons;
+  }
+
+
+
+
+  ntruthMuons = 0 ;
+
+  for( xAOD::TruthParticle* truthpart : truthMuons){
+
+    muonTruthPx[ntruthMuons] = truthpart->p4().Px();
+    muonTruthPy[ntruthMuons] = truthpart->p4().Py();
+    muonTruthPz[ntruthMuons] = truthpart->p4().Pz();
+    muonTruthE[ntruthMuons] = truthpart->p4().E();
+
+
+    ++ntruthMuons;
+  }
+
+
+  ntruthJets = 0 ;
+
+  for( xAOD::Jet* truthpart : truthJets){
+
+    jetTruthPx[ntruthJets] = truthpart->p4().Px();
+    jetTruthPy[ntruthJets] = truthpart->p4().Py();
+    jetTruthPz[ntruthJets] = truthpart->p4().Pz();
+    jetTruthE[ntruthJets] = truthpart->p4().E();
+
+
+    ++ntruthJets;
+  }
+
+
+
+  // mpxTruthInt = ((*truthMET["Int"])+(*truthMET["IntMuons"])).mpx();
+  // mpyTruthInt = ((*truthMET["Int"])+(*truthMET["IntMuons"])).mpy();
+  // metTruthInt = ((*truthMET["Int"])+(*truthMET["IntMuons"])).met();
+  // sumetTruthInt = ((*truthMET["Int"])+(*truthMET["IntMuons"])).sumet();
+
+  mpxTruthInt = truthMET["Int"]->mpx();
+  mpyTruthInt = truthMET["Int"]->mpy();
+  metTruthInt = truthMET["Int"]->met();
+  sumetTruthInt = truthMET["Int"]->sumet();
+  mpxTruthNonInt = truthMET["NonInt"]->mpx();
+  mpyTruthNonInt = truthMET["NonInt"]->mpy();
+  metTruthNonInt = truthMET["NonInt"]->met();
+  sumetTruthNonInt = truthMET["NonInt"]->sumet();
+
+
+  //  for( xAOD::TruthParticle* )
+
+
+
 
   myEvents->Fill();
   return EL::StatusCode::SUCCESS;

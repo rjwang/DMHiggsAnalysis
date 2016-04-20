@@ -26,7 +26,7 @@ private:
 
 
 
-  // General sample information 
+  //  ===========================  General sample information  =========================== //
   int RunNumber;
   int EventNumber;
   int LumiBlock;
@@ -57,7 +57,10 @@ private:
   int passHiggsSelection_var;
   int passQualityCuts_var;
 
-  //photons
+  //  ===========================  Reco objects  information  =========================== //
+
+  //Photons
+
   int nPhotons;
   int photonAuthor[MAXPARTICLES];
   float photonPx[MAXPARTICLES];
@@ -81,7 +84,8 @@ private:
   float photons_topoCone20[MAXPARTICLES];
   float photons_topoCone40[MAXPARTICLES];
 
-  //electrons
+  //Electrons
+
   int nElectrons;
   int electronAuthor[MAXPARTICLES];
   float electronPx[MAXPARTICLES];
@@ -100,7 +104,8 @@ private:
   float electrons_ptvarCone20[MAXPARTICLES];
 
 
-  //muons
+  //Muons
+
   int nMuons;
   float muonPx[MAXPARTICLES];
   float muonPy[MAXPARTICLES];
@@ -118,7 +123,8 @@ private:
   float muons_ptvarCone20[MAXPARTICLES];
 
 
-  //jets
+  //Jets
+
   int nJets;
   float jetPx[MAXPARTICLES];
   float jetPy[MAXPARTICLES];
@@ -133,6 +139,59 @@ private:
   float phi_met;
 
 
+  // ===========================  Truth information  =========================== //
+
+  // Photons 
+
+  int ntruthPhotons;
+  float photonTruthPx[MAXPARTICLES];
+  float photonTruthPy[MAXPARTICLES];
+  float photonTruthPz[MAXPARTICLES];
+  float photonTruthE[MAXPARTICLES];
+  float photonTruth_ptcone20[MAXPARTICLES];
+  float photonTruth_ptcone40[MAXPARTICLES];
+  float photonTruth_etcone20[MAXPARTICLES];
+  float photonTruth_etcone40[MAXPARTICLES];
+ 
+  int photonTruth_truthOrigin[MAXPARTICLES];
+  int photonTruth_truthType[MAXPARTICLES];
+
+
+  // Electrons
+
+  int ntruthElectrons;
+  float electronTruthPx[MAXPARTICLES];
+  float electronTruthPy[MAXPARTICLES];
+  float electronTruthPz[MAXPARTICLES];
+  float electronTruthE[MAXPARTICLES];
+ 
+  // Muons
+
+  int ntruthMuons;
+  float muonTruthPx[MAXPARTICLES];
+  float muonTruthPy[MAXPARTICLES];
+  float muonTruthPz[MAXPARTICLES];
+  float muonTruthE[MAXPARTICLES];
+ 
+
+  // Jets
+
+  int ntruthJets;
+  float jetTruthPx[MAXPARTICLES];
+  float jetTruthPy[MAXPARTICLES];
+  float jetTruthPz[MAXPARTICLES];
+  float jetTruthE[MAXPARTICLES];
+
+  // MissingET
+
+  float mpxTruthInt;
+  float mpyTruthInt;
+  float metTruthInt;
+  float sumetTruthInt;
+  float mpxTruthNonInt;
+  float mpyTruthNonInt;
+  float metTruthNonInt;
+  float sumetTruthNonInt;
 
   std::map<std::string,TH1F*> m_histCutFlow; //!
 
