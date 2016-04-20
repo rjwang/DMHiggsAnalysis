@@ -28,12 +28,43 @@ typedef std::vector<LorentzVector> LorentzVectorCollection;
 
 struct DataEvtSummary_t {
 
+  int RunNumber;
+  int EventNumber;
+  int LumiBlock;
+
+  int isMC_var;
+  int NPV_var;
+  float mu_var;
+  float initWeight_var;
+
   //photons
   int nPhotons;
   float photonPx[MAXPARTICLES];
   float photonPy[MAXPARTICLES];
   float photonPz[MAXPARTICLES];
   float photonE[MAXPARTICLES];
+
+  //Electrons
+  int nElectrons;
+  float electronPx[MAXPARTICLES];
+  float electronPy[MAXPARTICLES];
+  float electronPz[MAXPARTICLES];
+  float electronE[MAXPARTICLES];
+
+  //Muons
+  int nMuons;
+  float muonPx[MAXPARTICLES];
+  float muonPy[MAXPARTICLES];
+  float muonPz[MAXPARTICLES];
+  float muonE[MAXPARTICLES];
+
+  //Jets
+  int nJets;
+  float jetPx[MAXPARTICLES];
+  float jetPy[MAXPARTICLES];
+  float jetPz[MAXPARTICLES];
+  float jetE[MAXPARTICLES];
+
 
 };
 
@@ -51,8 +82,8 @@ public:
     }
 
     //write mode
-    bool initTree(TTree *t);
-    void fillTree();
+    //bool initTree(TTree *t);
+    //void fillTree();
 
     //read mode
     bool attachToTree(TTree *t);
