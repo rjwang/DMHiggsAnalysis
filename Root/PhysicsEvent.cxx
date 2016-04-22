@@ -19,7 +19,7 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
     phys.run=ev.RunNumber;
     phys.event=ev.EventNumber;
     phys.lumi=ev.LumiBlock;
-    phys.nvtx = ev.NPV_var;
+    phys.nvtx = ev.NPV;
 
 /*
     // Leptons
@@ -62,10 +62,16 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
 */
 
 
+      size_t npho(0);
       for(Int_t i=0; i<ev.nPhotons; i++) {
 	LorentzVector P4(ev.photonPx[i],ev.photonPy[i],ev.photonPz[i],ev.photonE[i]);
 	if(P4.pt()>0) {
 		phys.photons.push_back( PhysicsObject_Photon(P4, 22) );
+
+		phys.photons[npho].setPhotonIDIsoInfo(ev.photons_isTight[i], ev.photons_isFixedCutTight[i], ev.photons_isFixedCutLoose[i],
+							ev.photons_isFixedCutTightCaloOnly[i], ev.photons_isFixedCutLooseCaloOnly_);
+
+		npho++;
 	}
       }
 

@@ -38,7 +38,6 @@ private:
   int isMC_var;
   float initWeight_var;
   float xsecBrFilterEff_var;
-  //  float TotalWeight_var =TotalWeight(;
   //float myy_var;
   /* float phi_yy_met_var; */
   /* float phi_yyj_met_var; */
@@ -200,7 +199,7 @@ private:
   std::map<std::string,TFile*> m_outputFiles; //!
   std::map<std::string,TTree*> m_outputTTree; //!
 
-  std::string currentfilename; 
+  std::string currentfilename;
 
   /* CP::MuonSelectionTool              *m_muonLooseSelectionTool; //! */
   /* CP::MuonSelectionTool              *m_muonMediumSelectionTool; //! */
