@@ -97,6 +97,7 @@ private:
   float electrons_charge[MAXPARTICLES];
   int electrons_isTight[MAXPARTICLES];
   int electrons_isMedium[MAXPARTICLES];
+  int electrons_isIsoLoose[MAXPARTICLES];
   //   int electrons_isLoose[MAXPARTICLES];
 
   float electrons_topoCone20[MAXPARTICLES];
@@ -117,6 +118,12 @@ private:
   int   muons_passIPcut[MAXPARTICLES];
   float muons_topoCone20[MAXPARTICLES];
   float muons_ptvarCone20[MAXPARTICLES];
+  /* int muons_isTight[MAXPARTICLES]; */
+  /* int muons_isMedium[MAXPARTICLES]; */
+  /* int muons_isLoose[MAXPARTICLES]; */
+  int muons_isIsoGradientLoose[MAXPARTICLES];
+  int muons_isIsoGradient[MAXPARTICLES];
+  int muons_isIsoLoose[MAXPARTICLES];
 
 
   //Jets
@@ -195,6 +202,9 @@ private:
 
   std::string currentfilename; 
 
+  /* CP::MuonSelectionTool              *m_muonLooseSelectionTool; //! */
+  /* CP::MuonSelectionTool              *m_muonMediumSelectionTool; //! */
+  /* CP::MuonSelectionTool              *m_muonTightSelectionTool; //! */
 
 public:
   // this is a standard constructor
