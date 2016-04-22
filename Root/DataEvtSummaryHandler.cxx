@@ -42,50 +42,48 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("RunNumber",                      	&evSummary_.RunNumber);
     t_->SetBranchAddress("EventNumber",                      	&evSummary_.EventNumber);
     t_->SetBranchAddress("LumiBlock",                      	&evSummary_.LumiBlock);
-
-    t_->SetBranchAddress("isMC",                      	&evSummary_.isMC);
-    t_->SetBranchAddress("NPV",                      	&evSummary_.NPV);
-    t_->SetBranchAddress("mu",                      	&evSummary_.mu);
+    t_->SetBranchAddress("isMC",                      		&evSummary_.isMC);
+    t_->SetBranchAddress("NPV",                      		&evSummary_.NPV);
+    t_->SetBranchAddress("mu",                      		&evSummary_.mu);
     t_->SetBranchAddress("initWeight",             		&evSummary_.initWeight);
-    t_->SetBranchAddress("passQualityCuts",          	&evSummary_.passQualityCuts);
-
-
-
+    t_->SetBranchAddress("passQualityCuts",          		&evSummary_.passQualityCuts);
 
 
 
     t_->SetBranchAddress("nPhotons",                      	&evSummary_.nPhotons);
-    t_->SetBranchAddress("photonPx",                   		evSummary_.photonPx);
-    t_->SetBranchAddress("photonPy",                   		evSummary_.photonPy);
-    t_->SetBranchAddress("photonPz",                   		evSummary_.photonPz);
-    t_->SetBranchAddress("photonE",                   		evSummary_.photonE);
-    t_->SetBranchAddress("photons_isTight",                   	evSummary_.photons_isTight);
-    t_->SetBranchAddress("photons_isFixedCutTight",   		evSummary_.photons_isFixedCutTight);
-
+    t_->SetBranchAddress("photon_Px",                   	evSummary_.photon_Px);
+    t_->SetBranchAddress("photon_Py",                   	evSummary_.photon_Py);
+    t_->SetBranchAddress("photon_Pz",                   	evSummary_.photon_Pz);
+    t_->SetBranchAddress("photon_E",                   		evSummary_.photon_E);
+    t_->SetBranchAddress("photon_isTight",                   	evSummary_.photon_isTight);
+    t_->SetBranchAddress("photon_isIsoFixedCutTight",   	evSummary_.photon_isIsoFixedCutTight);
+    t_->SetBranchAddress("photon_isIsoFixedCutLoose",   	evSummary_.photon_isIsoFixedCutLoose);
+    t_->SetBranchAddress("photon_isIsoFixedCutTightCaloOnly",  evSummary_.photon_isIsoFixedCutTightCaloOnly);
+    t_->SetBranchAddress("photon_isIsoFixedCutLooseCaloOnly",  evSummary_.photon_isIsoFixedCutLooseCaloOnly);
 
 
 
     t_->SetBranchAddress("nElectrons",                      	&evSummary_.nElectrons);
-    t_->SetBranchAddress("electronPx",                   	evSummary_.electronPx);
-    t_->SetBranchAddress("electronPy",                   	evSummary_.electronPy);
-    t_->SetBranchAddress("electronPz",                   	evSummary_.electronPz);
-    t_->SetBranchAddress("electronE",                   	evSummary_.electronE);
+    t_->SetBranchAddress("electron_Px",                   	evSummary_.electron_Px);
+    t_->SetBranchAddress("electron_Py",                   	evSummary_.electron_Py);
+    t_->SetBranchAddress("electron_Pz",                   	evSummary_.electron_Pz);
+    t_->SetBranchAddress("electron_E",                   	evSummary_.electron_E);
 
 
 
     t_->SetBranchAddress("nMuons",                     		&evSummary_.nMuons);
-    t_->SetBranchAddress("muonPx",                   		evSummary_.muonPx);
-    t_->SetBranchAddress("muonPy",                   		evSummary_.muonPy);
-    t_->SetBranchAddress("muonPz",                   		evSummary_.muonPz);
-    t_->SetBranchAddress("muonE",                   		evSummary_.muonE);
+    t_->SetBranchAddress("muon_Px",                   		evSummary_.muon_Px);
+    t_->SetBranchAddress("muon_Py",                   		evSummary_.muon_Py);
+    t_->SetBranchAddress("muon_Pz",                   		evSummary_.muon_Pz);
+    t_->SetBranchAddress("muon_E",                   		evSummary_.muon_E);
 
 
 
     t_->SetBranchAddress("nJets",                      		&evSummary_.nJets);
-    t_->SetBranchAddress("jetPx",                   		evSummary_.jetPx);
-    t_->SetBranchAddress("jetPy",                   		evSummary_.jetPy);
-    t_->SetBranchAddress("jetPz",                   		evSummary_.jetPz);
-    t_->SetBranchAddress("jetE",                   		evSummary_.jetE);
+    t_->SetBranchAddress("jet_Px",                   		evSummary_.jet_Px);
+    t_->SetBranchAddress("jet_Py",                   		evSummary_.jet_Py);
+    t_->SetBranchAddress("jet_Pz",                   		evSummary_.jet_Pz);
+    t_->SetBranchAddress("jet_E",                   		evSummary_.jet_E);
 
 
 

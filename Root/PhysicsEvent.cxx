@@ -64,12 +64,13 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
 
       size_t npho(0);
       for(Int_t i=0; i<ev.nPhotons; i++) {
-	LorentzVector P4(ev.photonPx[i],ev.photonPy[i],ev.photonPz[i],ev.photonE[i]);
+	LorentzVector P4(ev.photon_Px[i],ev.photon_Py[i],ev.photon_Pz[i],ev.photon_E[i]);
 	if(P4.pt()>0) {
 		phys.photons.push_back( PhysicsObject_Photon(P4, 22) );
 
-		phys.photons[npho].setPhotonIDIsoInfo(ev.photons_isTight[i], ev.photons_isFixedCutTight[i], ev.photons_isFixedCutLoose[i],
-							ev.photons_isFixedCutTightCaloOnly[i], ev.photons_isFixedCutLooseCaloOnly_);
+		phys.photons[npho].setPhotonIDIsoInfo(ev.photon_isTight[i],
+							ev.photon_isIsoFixedCutTight[i], ev.photon_isIsoFixedCutLoose[i],
+							ev.photon_isIsoFixedCutTightCaloOnly[i], ev.photon_isIsoFixedCutLooseCaloOnly[i]);
 
 		npho++;
 	}
@@ -77,7 +78,7 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
 
 
       for(Int_t i=0; i<ev.nElectrons; i++) {
-	LorentzVector P4(ev.electronPx[i],ev.electronPy[i],ev.electronPz[i],ev.electronE[i]);
+	LorentzVector P4(ev.electron_Px[i],ev.electron_Py[i],ev.electron_Pz[i],ev.electron_E[i]);
 	if(P4.pt()>0) {
 		phys.electrons.push_back( PhysicsObject_Electron(P4, 11) );
 	}
@@ -85,7 +86,7 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
 
 
       for(Int_t i=0; i<ev.nMuons; i++) {
-	LorentzVector P4(ev.muonPx[i],ev.muonPy[i],ev.muonPz[i],ev.muonE[i]);
+	LorentzVector P4(ev.muon_Px[i],ev.muon_Py[i],ev.muon_Pz[i],ev.muon_E[i]);
 	if(P4.pt()>0) {
 		phys.muons.push_back( PhysicsObject_Muon(P4, 13) );
 	}
@@ -93,7 +94,7 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
 
 
       for(Int_t i=0; i<ev.nJets; i++) {
-	LorentzVector P4(ev.jetPx[i],ev.jetPy[i],ev.jetPz[i],ev.jetE[i]);
+	LorentzVector P4(ev.jet_Px[i],ev.jet_Py[i],ev.jet_Pz[i],ev.jet_E[i]);
 	if(P4.pt()>0) {
 		phys.jets.push_back( PhysicsObject_Jet(P4) );
 	}

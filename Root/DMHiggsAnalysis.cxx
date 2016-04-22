@@ -80,68 +80,69 @@ void DMHiggsAnalysis::declareVariables()
 
     myEvents->Branch("nPhotons", &nPhotons,"nPhotons/I");
     //  myEvents->Branch("photonAuthor", photonAuthor,"photonAuthor[nPhotons]/I");
-    myEvents->Branch("photonPx", photonPx,"photonPx[nPhotons]/F");
-    myEvents->Branch("photonPy", photonPy,"photonPy[nPhotons]/F");
-    myEvents->Branch("photonPz", photonPz,"photonPz[nPhotons]/F");
-    myEvents->Branch("photonE",  photonE, "photonE[nPhotons]/F");
-    myEvents->Branch("photons_Eps",photons_Eps,"photon_Eps[nPhotons]/F");
-    myEvents->Branch("photons_E1",photons_E1,"photons_E1[nPhotons]/F");
-    myEvents->Branch("photons_E2",photons_E2,"photons_E2[nPhotons]/F");
-    myEvents->Branch("photons_E3",photons_E3,"photons_E3[nPhotons]/F");
-    myEvents->Branch("photons_conversion",photons_conversionType,"photons_conversionType[nPhotons]/I");
-    myEvents->Branch("photons_conversionRadius",photons_conversionRadius,"photons_conversionRadius[nPhotons]/F");
-    myEvents->Branch("photons_isTight", photons_isTight,"photons_isTight[nPhotons]/I");
-    myEvents->Branch("photons_isIsoFixedCutTight",  photons_isIsoFixedCutTight, "photons_isIsoFixedCutTight[nPhotons]/I");
-    myEvents->Branch("photons_isIsoFixedCutCaloOnly",photons_isIsoFixedCutLoose,"photons_isIsoFixedCutCaloOnly[nPhotons]/I");
-    myEvents->Branch("photons_isIsoFixedCutLoose",photons_isIsoFixedCutLoose,"photons_isIsoFixedCutLoose[nPhotons]/I");
-    myEvents->Branch("photons_topoCone20",photons_topoCone20,"photons_topoCone20[nPhotons]/F");
-    myEvents->Branch("photons_topoCone40",photons_topoCone40,"photons_topoCone40[nPhotons]/F");
-    myEvents->Branch("photons_Cone20",photons_Cone20,"photons_Cone20[nPhotons]/F");
-    myEvents->Branch("photons_Cone40",photons_Cone40,"photons_Cone40[nPhotons]/F");
+    myEvents->Branch("photon_Px", photon_Px,"photon_Px[nPhotons]/F");
+    myEvents->Branch("photon_Py", photon_Py,"photon_Py[nPhotons]/F");
+    myEvents->Branch("photon_Pz", photon_Pz,"photon_Pz[nPhotons]/F");
+    myEvents->Branch("photon_E",  photon_E, "photon_E[nPhotons]/F");
+    myEvents->Branch("photon_Eps",photon_Eps,"photon_Eps[nPhotons]/F");
+    myEvents->Branch("photon_E1",photon_E1,"photon_E1[nPhotons]/F");
+    myEvents->Branch("photon_E2",photon_E2,"photon_E2[nPhotons]/F");
+    myEvents->Branch("photon_E3",photon_E3,"photon_E3[nPhotons]/F");
+    myEvents->Branch("photon_conversion",photon_conversionType,"photon_conversionType[nPhotons]/I");
+    myEvents->Branch("photon_conversionRadius",photon_conversionRadius,"photon_conversionRadius[nPhotons]/F");
+    myEvents->Branch("photon_isTight", photon_isTight,"photon_isTight[nPhotons]/I");
+    myEvents->Branch("photon_isIsoFixedCutTight",  photon_isIsoFixedCutTight, "photon_isIsoFixedCutTight[nPhotons]/I");
+    myEvents->Branch("photon_isIsoFixedCutLoose",photon_isIsoFixedCutLoose,"photon_isIsoFixedCutLoose[nPhotons]/I");
+    myEvents->Branch("photon_isIsoFixedCutLooseCaloOnly",photon_isIsoFixedCutLooseCaloOnly,"photon_isIsoFixedCutLooseCaloOnly[nPhotons]/I");
+    myEvents->Branch("photon_isIsoFixedCutTightCaloOnly",photon_isIsoFixedCutTightCaloOnly,"photon_isIsoFixedCutTightCaloOnly[nPhotons]/I");
+    myEvents->Branch("photon_topoCone20",photon_topoCone20,"photon_topoCone20[nPhotons]/F");
+    myEvents->Branch("photon_topoCone40",photon_topoCone40,"photon_topoCone40[nPhotons]/F");
+    myEvents->Branch("photon_Cone20",photon_Cone20,"photon_Cone20[nPhotons]/F");
+    myEvents->Branch("photon_Cone40",photon_Cone40,"photon_Cone40[nPhotons]/F");
 
     myEvents->Branch("nElectrons", &nElectrons,"nElectrons/I");
     //  myEvents->Branch("electronAuthor", electronAuthor,"electronAuthor[nElectrons]/I");
-    myEvents->Branch("electronPx", electronPx,"electronPx[nElectrons]/F");
-    myEvents->Branch("electronPy", electronPy,"electronPy[nElectrons]/F");
-    myEvents->Branch("electronPz", electronPz,"electronPz[nElectrons]/F");
-    myEvents->Branch("electronE",  electronE, "electronE[nElectrons]/F");
-    myEvents->Branch("electrons_Eps",electrons_Eps,"electron_Eps[nElectrons]/F");
-    myEvents->Branch("electrons_E1",electrons_E1,"electrons_E1[nElectrons]/F");
-    myEvents->Branch("electrons_E2",electrons_E2,"electrons_E2[nElectrons]/F");
-    myEvents->Branch("electrons_E3",electrons_E3,"electrons_E3[nElectrons]/F");
-    myEvents->Branch("electrons_charge",electrons_charge,"electrons_charge[nElectrons]/F");
-    myEvents->Branch("electron_isTight", electrons_isTight,"electrons_isTight[nElectrons]/I");
-    myEvents->Branch("electron_isMedium", electrons_isMedium,"electrons_isMedium[nElectrons]/I");
-    myEvents->Branch("electron_isIsoLoose", electrons_isIsoLoose,"electrons_isIsoLoose[nElectrons]/I");
-    myEvents->Branch("electrons_ptvarCone20",electrons_ptvarCone20,"electrons_ptvarCone20[nElectrons]/F");
-    myEvents->Branch("electrons_topoCone20",electrons_topoCone20,"electrons_topoCone20[nElectrons]/F");
+    myEvents->Branch("electron_Px", electron_Px,"electron_Px[nElectrons]/F");
+    myEvents->Branch("electron_Py", electron_Py,"electron_Py[nElectrons]/F");
+    myEvents->Branch("electron_Pz", electron_Pz,"electron_Pz[nElectrons]/F");
+    myEvents->Branch("electron_E",  electron_E, "electron_E[nElectrons]/F");
+    myEvents->Branch("electron_Eps",electron_Eps,"electron_Eps[nElectrons]/F");
+    myEvents->Branch("electron_E1",electron_E1,"electron_E1[nElectrons]/F");
+    myEvents->Branch("electron_E2",electron_E2,"electron_E2[nElectrons]/F");
+    myEvents->Branch("electron_E3",electron_E3,"electron_E3[nElectrons]/F");
+    myEvents->Branch("electron_charge",electron_charge,"electron_charge[nElectrons]/F");
+    myEvents->Branch("electron_isTight", electron_isTight,"electron_isTight[nElectrons]/I");
+    myEvents->Branch("electron_isMedium", electron_isMedium,"electron_isMedium[nElectrons]/I");
+    myEvents->Branch("electron_isIsoLoose", electron_isIsoLoose,"electron_isIsoLoose[nElectrons]/I");
+    myEvents->Branch("electron_ptvarCone20",electron_ptvarCone20,"electron_ptvarCone20[nElectrons]/F");
+    myEvents->Branch("electron_topoCone20",electron_topoCone20,"electron_topoCone20[nElectrons]/F");
 
 
     myEvents->Branch("nMuons", &nMuons,"nMuons/I");
     //  myEvents->Branch("muonAuthor", muonAuthor,"muonAuthor[nMuons]/I");
-    myEvents->Branch("muonPx", muonPx,"muonPx[nMuons]/F");
-    myEvents->Branch("muonPy", muonPy,"muonPy[nMuons]/F");
-    myEvents->Branch("muonPz", muonPz,"muonPz[nMuons]/F");
-    myEvents->Branch("muonE",  muonE, "muonE[nMuons]/F");
-    myEvents->Branch("muons_charge",muons_charge,"muons_charge[nMuons]/F");
-    myEvents->Branch("muons_passIPcut", muons_passIPcut,"muons_passIPcut[nMuons]/I");
-    // myEvents->Branch("muons_isTight", muons_isTight,"muons_isTight[nMuons]/I");
-    // myEvents->Branch("muons_isMedium", muons_isMedium,"muons_isMedium[nMuons]/I");
-    // myEvents->Branch("muons_isLoose", muons_isLoose,"muons_isLoose[nMuons]/I");
-    myEvents->Branch("muons_isIsoGradientLoose", muons_isIsoGradientLoose,"muons_isIsoGradientLoose[nMuons]/I");
-    myEvents->Branch("muons_isIsoGradient", muons_isIsoGradient,"muons_isIsoGradient[nMuons]/I");
-    myEvents->Branch("muons_isIsoLoose", muons_isIsoLoose,"muons_isIsoLoose[nMuons]/I");
-    myEvents->Branch("muons_ptvarCone20",muons_ptvarCone20,"muons_ptvarCone20[nMuons]/F");
-    myEvents->Branch("muons_topoCone20",muons_topoCone20,"muons_topoCone20[nMuons]/F");
+    myEvents->Branch("muon_Px", muon_Px,"muon_Px[nMuons]/F");
+    myEvents->Branch("muon_Py", muon_Py,"muon_Py[nMuons]/F");
+    myEvents->Branch("muon_Pz", muon_Pz,"muon_Pz[nMuons]/F");
+    myEvents->Branch("muon_E",  muon_E, "muon_E[nMuons]/F");
+    myEvents->Branch("muon_charge",muon_charge,"muon_charge[nMuons]/F");
+    myEvents->Branch("muon_passIPcut", muon_passIPcut,"muon_passIPcut[nMuons]/I");
+    // myEvents->Branch("muon_isTight", muon_isTight,"muon_isTight[nMuons]/I");
+    // myEvents->Branch("muon_isMedium", muon_isMedium,"muon_isMedium[nMuons]/I");
+    // myEvents->Branch("muon_isLoose", muon_isLoose,"muon_isLoose[nMuons]/I");
+    myEvents->Branch("muon_isIsoGradientLoose", muon_isIsoGradientLoose,"muon_isIsoGradientLoose[nMuons]/I");
+    myEvents->Branch("muon_isIsoGradient", muon_isIsoGradient,"muon_isIsoGradient[nMuons]/I");
+    myEvents->Branch("muon_isIsoLoose", muon_isIsoLoose,"muon_isIsoLoose[nMuons]/I");
+    myEvents->Branch("muon_ptvarCone20",muon_ptvarCone20,"muon_ptvarCone20[nMuons]/F");
+    myEvents->Branch("muon_topoCone20",muon_topoCone20,"muon_topoCone20[nMuons]/F");
 
 
     myEvents->Branch("nJets", &nJets,"nJets/I");
-    myEvents->Branch("jetPx", jetPx,"jetPx[nJets]/F");
-    myEvents->Branch("jetPy", jetPy,"jetPy[nJets]/F");
-    myEvents->Branch("jetPz", jetPz,"jetPz[nJets]/F");
-    myEvents->Branch("jetE", jetE,"jetE[nJets]/F");
-    myEvents->Branch("jetJvt",  jetJvt, "jetJvt[nJets]/F");
-    myEvents->Branch("jetPassSelection",  jetPassSelection, "jetPassSelection[nJets]/I");
+    myEvents->Branch("jet_Px", jet_Px,"jet_Px[nJets]/F");
+    myEvents->Branch("jet_Py", jet_Py,"jet_Py[nJets]/F");
+    myEvents->Branch("jet_Pz", jet_Pz,"jet_Pz[nJets]/F");
+    myEvents->Branch("jet_E", jet_E,"jet_E[nJets]/F");
+    myEvents->Branch("jet_Jvt",  jet_Jvt, "jet_Jvt[nJets]/F");
+    myEvents->Branch("jet_PassSelection",  jet_PassSelection, "jet_PassSelection[nJets]/I");
 
     myEvents->Branch("met", &met,"met/F");
     myEvents->Branch("sumet", &sumet,"sumet/F");
@@ -196,68 +197,68 @@ void DMHiggsAnalysis::clearVectors()
     for( int iparticle = 0 ; iparticle < MAXPARTICLES ; ++iparticle) {
 
         //    photonAuthor[iparticle] =  - 9999;
-        photonPx[iparticle] =  - 9999;
-        photonE[iparticle] =  - 9999;
-        photonPy[iparticle] =  - 9999;
-        photonPz[iparticle] =  - 9999;
-        photons_Eps[iparticle] =  - 9999;
-        photons_E1[iparticle] =  - 9999;
-        photons_E2[iparticle] =  - 9999;
-        photons_E3[iparticle] =  - 9999;
+        photon_Px[iparticle] =  - 9999;
+        photon_E[iparticle] =  - 9999;
+        photon_Py[iparticle] =  - 9999;
+        photon_Pz[iparticle] =  - 9999;
+        photon_Eps[iparticle] =  - 9999;
+        photon_E1[iparticle] =  - 9999;
+        photon_E2[iparticle] =  - 9999;
+        photon_E3[iparticle] =  - 9999;
 
-        photons_conversionType[iparticle] =  - 9999;
-        photons_isTight[iparticle] =  - 9999;
-        //    photons_isLoose[iparticle] =  - 9999;
-        //    photons_isLoosePrime[iparticle] =  - 9999;
+        photon_conversionType[iparticle] =  - 9999;
+        photon_isTight[iparticle] =  - 9999;
+        //    photon_isLoose[iparticle] =  - 9999;
+        //    photon_isLoosePrime[iparticle] =  - 9999;
 
-	photons_isIsoFixedCutTight[iparticle] =  - 9999;
-	photons_isIsoFixedCutTightCaloOnly[iparticle] =  - 9999;
-	photons_isIsoFixedCutLooseCaloOnly[iparticle] =  - 9999;
-	photons_isIsoFixedCutLoose[iparticle] =  - 9999;
-        photons_Cone20[iparticle] =  - 9999;
-        photons_Cone40[iparticle] =  - 9999;
-        photons_topoCone20[iparticle] =  - 9999;
-        photons_topoCone40[iparticle] =  - 9999;
+        photon_isIsoFixedCutTight[iparticle] =  - 9999;
+        photon_isIsoFixedCutTightCaloOnly[iparticle] =  - 9999;
+        photon_isIsoFixedCutLooseCaloOnly[iparticle] =  - 9999;
+        photon_isIsoFixedCutLoose[iparticle] =  - 9999;
+        photon_Cone20[iparticle] =  - 9999;
+        photon_Cone40[iparticle] =  - 9999;
+        photon_topoCone20[iparticle] =  - 9999;
+        photon_topoCone40[iparticle] =  - 9999;
 
         //electronAuthor[iparticle] =  - 9999;
-        electronPx[iparticle] =  - 9999;
-        electronE[iparticle] =  - 9999;
-        electronPy[iparticle] =  - 9999;
-        electronPz[iparticle] =  - 9999;
-        electrons_Eps[iparticle] =  - 9999;
-        electrons_E1[iparticle] =  - 9999;
-        electrons_E2[iparticle] =  - 9999;
-        electrons_E3[iparticle] =  - 9999;
+        electron_Px[iparticle] =  - 9999;
+        electron_E[iparticle] =  - 9999;
+        electron_Py[iparticle] =  - 9999;
+        electron_Pz[iparticle] =  - 9999;
+        electron_Eps[iparticle] =  - 9999;
+        electron_E1[iparticle] =  - 9999;
+        electron_E2[iparticle] =  - 9999;
+        electron_E3[iparticle] =  - 9999;
 
-        electrons_isTight[iparticle] =  - 9999;
-	electrons_isMedium[iparticle] =  - 9999;
-	electrons_isIsoLoose[iparticle] =  - 9999;
-        electrons_topoCone20[iparticle] =  - 9999;
-        electrons_ptvarCone20[iparticle] =  - 9999;
+        electron_isTight[iparticle] =  - 9999;
+        electron_isMedium[iparticle] =  - 9999;
+        electron_isIsoLoose[iparticle] =  - 9999;
+        electron_topoCone20[iparticle] =  - 9999;
+        electron_ptvarCone20[iparticle] =  - 9999;
 
         //muonAuthor[iparticle] =  - 9999;
-        muonPx[iparticle] =  - 9999;
-        muonE[iparticle] =  - 9999;
-        muonPy[iparticle] =  - 9999;
-        muonPz[iparticle] =  - 9999;
+        muon_Px[iparticle] =  - 9999;
+        muon_E[iparticle] =  - 9999;
+        muon_Py[iparticle] =  - 9999;
+        muon_Pz[iparticle] =  - 9999;
 
-        muons_passIPcut[iparticle] =  - 9999;
-        muons_topoCone20[iparticle] =  - 9999;
-        muons_ptvarCone20[iparticle] =  - 9999;
-	// muons_isLoose[iparticle] =  - 9999;
-	// muons_isTight[iparticle] =  - 9999;
-	// muons_isMedium[iparticle] =  - 9999;
-	muons_isIsoGradientLoose[iparticle] =  - 9999;
-	muons_isIsoGradient[iparticle] =  - 9999;
-	muons_isIsoLoose[iparticle] =  - 9999;
+        muon_passIPcut[iparticle] =  - 9999;
+        muon_topoCone20[iparticle] =  - 9999;
+        muon_ptvarCone20[iparticle] =  - 9999;
+        // muon_isLoose[iparticle] =  - 9999;
+        // muon_isTight[iparticle] =  - 9999;
+        // muon_isMedium[iparticle] =  - 9999;
+        muon_isIsoGradientLoose[iparticle] =  - 9999;
+        muon_isIsoGradient[iparticle] =  - 9999;
+        muon_isIsoLoose[iparticle] =  - 9999;
 
         //jetAuthor[iparticle] =  - 9999;
-        jetPx[iparticle] =  - 9999;
-        jetPy[iparticle] =  - 9999;
-        jetPz[iparticle] =  - 9999;
-	jetE[iparticle] =  - 9999;
-        jetJvt[iparticle] =  - 9999;
-        jetPassSelection[iparticle] =  - 9999;
+        jet_Px[iparticle] =  - 9999;
+        jet_Py[iparticle] =  - 9999;
+        jet_Pz[iparticle] =  - 9999;
+        jet_E[iparticle] =  - 9999;
+        jet_Jvt[iparticle] =  - 9999;
+        jet_PassSelection[iparticle] =  - 9999;
 
 
 
@@ -305,30 +306,31 @@ EL::StatusCode DMHiggsAnalysis::initialize()
 {
 
 
-  HgammaAnalysis::initialize();
-  std::string inputfileName = wk()->inputFileName();
-  currentfilename = inputfileName;
-  inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
-  inputfileName.append(".NTuple.root");
+    HgammaAnalysis::initialize();
+    std::string inputfileName = wk()->inputFileName();
+    currentfilename = inputfileName;
+    inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
+    inputfileName.append(".NTuple.root");
 
-  m_outputFiles[currentfilename] = TFile::Open(inputfileName.c_str(),"RECREATE");
+    m_outputFiles[currentfilename] = TFile::Open(inputfileName.c_str(),"RECREATE");
 
-  inputfileName.replace(inputfileName.find(".NTuple.root") , -1, ".Tree");
+    inputfileName.replace(inputfileName.find(".NTuple.root") , -1, ".Tree");
 
-  myEvents = new TTree(inputfileName.c_str(),"DMHiggsAnalysis");
+    //myEvents = new TTree(inputfileName.c_str(),"DMHiggsAnalysis");
+    myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
 
-  m_outputTTree[currentfilename] = myEvents;
+    m_outputTTree[currentfilename] = myEvents;
 
-  //  wk()->addOutput( m_outputFiles[inputfileName] );
-
-
-  //myEvents->SetDirectory(outFile);
-
-  declareVariables();
+    //  wk()->addOutput( m_outputFiles[inputfileName] );
 
 
+    //myEvents->SetDirectory(outFile);
 
-  return EL::StatusCode::SUCCESS;
+    declareVariables();
+
+
+
+    return EL::StatusCode::SUCCESS;
 }
 
 EL::StatusCode DMHiggsAnalysis::execute()
@@ -343,31 +345,33 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
     HgammaAnalysis::execute();
 
-  std::string inputfileName = wk()->inputFileName();
+    std::string inputfileName = wk()->inputFileName();
 
-  if( currentfilename != inputfileName ){
+    if( currentfilename != inputfileName ) {
 
-    currentfilename = inputfileName;
+        currentfilename = inputfileName;
 
-    inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
-    inputfileName.append(".NTuple.root");
+        inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
+        inputfileName.append(".NTuple.root");
 
-    m_outputFiles[currentfilename] = TFile::Open(inputfileName.c_str(),"RECREATE");
+        m_outputFiles[currentfilename] = TFile::Open(inputfileName.c_str(),"RECREATE");
 
-    inputfileName.replace(inputfileName.find(".NTuple.root") , -1, ".Tree");
+        inputfileName.replace(inputfileName.find(".NTuple.root") , -1, ".Tree");
 
-    myEvents = new TTree(inputfileName.c_str(),"DMHiggsAnalysis");
-
-    declareVariables();
-    m_outputTTree[currentfilename] = myEvents;
-
-    // wk()->addOutput(m_outputFiles[inputfileName]);
+//        myEvents = new TTree(inputfileName.c_str(),"DMHiggsAnalysis");
+        myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
 
 
-    inputfileName = wk()->inputFileName();
+        declareVariables();
+        m_outputTTree[currentfilename] = myEvents;
+
+        // wk()->addOutput(m_outputFiles[inputfileName]);
 
 
-  }
+        inputfileName = wk()->inputFileName();
+
+
+    }
 
 
     SG::AuxElement::Accessor<unsigned int> runNumber("runNumber");
@@ -385,12 +389,12 @@ EL::StatusCode DMHiggsAnalysis::execute()
     SG::AuxElement::Accessor<float> met_phi("phi_TST");
     SG::AuxElement::Accessor<float> met_TST("met_TST");
     SG::AuxElement::Accessor<float> phi_allparticles_met("DeltaPhi_allPart_MET");
-    SG::AuxElement::Accessor<float> photons_ePS("E0_raw");
-    SG::AuxElement::Accessor<float> photons_e1("E1_raw");
-    SG::AuxElement::Accessor<float> photons_e2("E2_raw");
-    SG::AuxElement::Accessor<float> photons_e3("E3_raw");
-    SG::AuxElement::Accessor<int> photons_converted("conversionType");
-    SG::AuxElement::Accessor<float> photons_convertedRadius("conversionRadius");
+    SG::AuxElement::Accessor<float> photon_ePS("E0_raw");
+    SG::AuxElement::Accessor<float> photon_e1("E1_raw");
+    SG::AuxElement::Accessor<float> photon_e2("E2_raw");
+    SG::AuxElement::Accessor<float> photon_e3("E3_raw");
+    SG::AuxElement::Accessor<int> photon_converted("conversionType");
+    SG::AuxElement::Accessor<float> photon_convertedRadius("conversionRadius");
     SG::AuxElement::Accessor<float> hardestVertex("hardestVertexZ");
     SG::AuxElement::Accessor<float> selectedVertex("selectedVertexZ");
     SG::AuxElement::Accessor<char> passHiggsSelection("isPassed");
@@ -481,25 +485,25 @@ EL::StatusCode DMHiggsAnalysis::execute()
     nPhotons=0;
     for(size_t gn=0; gn<photons.size(); gn++) {
         //    photonAuthor[nPhotons] = photons[gn]->author();
-        photonPx[nPhotons] = photons[gn]->p4().Px();
-        photonPy[nPhotons] = photons[gn]->p4().Py();
-        photonPz[nPhotons] = photons[gn]->p4().Pz();
-        photonE[nPhotons] = photons[gn]->p4().E();
-        photons_Eps[nPhotons] = photons_ePS( *photons[gn] );
-        photons_E1[nPhotons] = photons_e1( *photons[gn] );
-        photons_E2[nPhotons] = photons_e2( *photons[gn] );
-        photons_E3[nPhotons] = photons_e3( *photons[gn] );
-        photons_conversionType[nPhotons] = photons_converted( *photons[gn] );
-        photons_conversionRadius[nPhotons] = photons_convertedRadius( *photons[gn] );
-        photons_topoCone20[nPhotons] = topoetCone20( *photons[gn] );
-        photons_topoCone40[nPhotons] = topoetCone40( *photons[gn] );
-        photons_Cone20[nPhotons] = ptCone20( *photons[gn] );
-        photons_Cone40[nPhotons] = ptCone40( *photons[gn] );
-	photons_isIsoFixedCutTight[nPhotons] = isisoFixedCutTight( *photons[gn] ) == 1 ? 1 : 0;
-	photons_isIsoFixedCutTightCaloOnly[nPhotons] = isisoFixedCutTightCaloOnly( *photons[gn] ) == 1 ? 1 : 0;
-	photons_isIsoFixedCutLooseCaloOnly[nPhotons] = isisoFixedCutLooseCaloOnly( *photons[gn] ) == 1 ? 1 : 0;
-	photons_isIsoFixedCutLoose[nPhotons] = isisoFixedCutLoose( *photons[gn] ) == 1 ? 1 : 0;
-        photons_isTight[nPhotons] = isTight( *photons[gn] ) == 1 ? 1 : 0;
+        photon_Px[nPhotons] = photons[gn]->p4().Px();
+        photon_Py[nPhotons] = photons[gn]->p4().Py();
+        photon_Pz[nPhotons] = photons[gn]->p4().Pz();
+        photon_E[nPhotons] = photons[gn]->p4().E();
+        photon_Eps[nPhotons] = photon_ePS( *photons[gn] );
+        photon_E1[nPhotons] = photon_e1( *photons[gn] );
+        photon_E2[nPhotons] = photon_e2( *photons[gn] );
+        photon_E3[nPhotons] = photon_e3( *photons[gn] );
+        photon_conversionType[nPhotons] = photon_converted( *photons[gn] );
+        photon_conversionRadius[nPhotons] = photon_convertedRadius( *photons[gn] );
+        photon_topoCone20[nPhotons] = topoetCone20( *photons[gn] );
+        photon_topoCone40[nPhotons] = topoetCone40( *photons[gn] );
+        photon_Cone20[nPhotons] = ptCone20( *photons[gn] );
+        photon_Cone40[nPhotons] = ptCone40( *photons[gn] );
+        photon_isIsoFixedCutTight[nPhotons] = isisoFixedCutTight( *photons[gn] ) == 1 ? 1 : 0;
+        photon_isIsoFixedCutTightCaloOnly[nPhotons] = isisoFixedCutTightCaloOnly( *photons[gn] ) == 1 ? 1 : 0;
+        photon_isIsoFixedCutLooseCaloOnly[nPhotons] = isisoFixedCutLooseCaloOnly( *photons[gn] ) == 1 ? 1 : 0;
+        photon_isIsoFixedCutLoose[nPhotons] = isisoFixedCutLoose( *photons[gn] ) == 1 ? 1 : 0;
+        photon_isTight[nPhotons] = isTight( *photons[gn] ) == 1 ? 1 : 0;
         nPhotons++;
     }
 
@@ -510,22 +514,22 @@ EL::StatusCode DMHiggsAnalysis::execute()
     nElectrons=0;
     for(size_t gn=0; gn<electrons.size(); gn++) {
         //    electronAuthor[nElectrons] = electrons[gn]->author();
-        electronPx[nElectrons] = electrons[gn]->p4().Px();
-        electronPy[nElectrons] = electrons[gn]->p4().Py();
-        electronPz[nElectrons] = electrons[gn]->p4().Pz();
-        electronE[nElectrons] = electrons[gn]->e();
-        electrons_Eps[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(0) : 0. ;
-        electrons_E1[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(1) : 0. ;
-        electrons_E2[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(2) : 0. ;
-        electrons_E3[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(3) : 0. ;
+        electron_Px[nElectrons] = electrons[gn]->p4().Px();
+        electron_Py[nElectrons] = electrons[gn]->p4().Py();
+        electron_Pz[nElectrons] = electrons[gn]->p4().Pz();
+        electron_E[nElectrons] = electrons[gn]->e();
+        electron_Eps[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(0) : 0. ;
+        electron_E1[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(1) : 0. ;
+        electron_E2[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(2) : 0. ;
+        electron_E3[nElectrons] = electrons[gn]->caloCluster() != nullptr ? electrons[gn]->caloCluster()->energyBE(3) : 0. ;
 
-        electrons_topoCone20[nElectrons] = topoetCone20( *electrons[gn] );
-        electrons_ptvarCone20[nElectrons] = ptvarCone20( *electrons[gn] );
-	electrons_isTight[nElectrons] = isTight( *electrons[gn] ) == 1 ? 1 : 0;
-	electrons_isMedium[nElectrons] = electronHandler()->passPIDCut( electrons[gn] , "Medium" )  ?  1 : 0;
-	electrons_isIsoLoose[nElectrons] = electronHandler()->passIsoCut( electrons[gn] , HG::Iso::Loose )  ? 1 : 0;
-	electrons_isMedium[nElectrons] = electronHandler()->passPIDCut( electrons[gn] , "Medium" )  ? 1 : 0;
-        electrons_charge[nElectrons] = electrons[gn]->charge() ;
+        electron_topoCone20[nElectrons] = topoetCone20( *electrons[gn] );
+        electron_ptvarCone20[nElectrons] = ptvarCone20( *electrons[gn] );
+        electron_isTight[nElectrons] = isTight( *electrons[gn] ) == 1 ? 1 : 0;
+        electron_isMedium[nElectrons] = electronHandler()->passPIDCut( electrons[gn] , "Medium" )  ?  1 : 0;
+        electron_isIsoLoose[nElectrons] = electronHandler()->passIsoCut( electrons[gn] , HG::Iso::Loose )  ? 1 : 0;
+        electron_isMedium[nElectrons] = electronHandler()->passPIDCut( electrons[gn] , "Medium" )  ? 1 : 0;
+        electron_charge[nElectrons] = electrons[gn]->charge() ;
         nElectrons++;
     }
 
@@ -536,22 +540,22 @@ EL::StatusCode DMHiggsAnalysis::execute()
     //
     nMuons=0;
     for(size_t gn=0; gn<muons.size(); gn++) {
-        muonPx[nMuons] = muons[gn]->p4().Px();
-        muonPy[nMuons] = muons[gn]->p4().Py();
-        muonPz[nMuons] = muons[gn]->p4().Pz();
-        muonE[nMuons] = muons[gn]->e();
+        muon_Px[nMuons] = muons[gn]->p4().Px();
+        muon_Py[nMuons] = muons[gn]->p4().Py();
+        muon_Pz[nMuons] = muons[gn]->p4().Pz();
+        muon_E[nMuons] = muons[gn]->e();
 
-        muons_topoCone20[nMuons] = topoetCone20( *muons[gn] );
-        muons_ptvarCone20[nMuons] = ptvarCone20( *muons[gn] );
-        muons_charge[nMuons] = muons[gn]->charge() ;
-        muons_passIPcut[nMuons] = passIPcut( *muons[gn] );
-	muons_isIsoGradientLoose[nMuons] = muonHandler()->passIsoCut( muons[gn], HG::Iso::GradientLoose ) ? 1 : 0;
-	muons_isIsoGradient[nMuons] = muonHandler()->passIsoCut( muons[gn], HG::Iso::Gradient ) ? 1 : 0;
-	muons_isIsoLoose[nMuons] = muonHandler()->passIsoCut( muons[gn], HG::Iso::Loose ) ? 1 : 0;
+        muon_topoCone20[nMuons] = topoetCone20( *muons[gn] );
+        muon_ptvarCone20[nMuons] = ptvarCone20( *muons[gn] );
+        muon_charge[nMuons] = muons[gn]->charge() ;
+        muon_passIPcut[nMuons] = passIPcut( *muons[gn] );
+        muon_isIsoGradientLoose[nMuons] = muonHandler()->passIsoCut( muons[gn], HG::Iso::GradientLoose ) ? 1 : 0;
+        muon_isIsoGradient[nMuons] = muonHandler()->passIsoCut( muons[gn], HG::Iso::Gradient ) ? 1 : 0;
+        muon_isIsoLoose[nMuons] = muonHandler()->passIsoCut( muons[gn], HG::Iso::Loose ) ? 1 : 0;
 
-    // muons_isLoose[nMuons] = m_muonLooseSelectionTool->accept( muons[gn] ) ? 1 : 0;
-    // muons_isMedium[nMuons] = m_muonMediumSelectionTool->accept( muons[gn] ) ? 1 : 0;
-    // muons_isTight[nMuons] = m_muonTightSelectionTool->accept( muons[gn] ) ? 1 : 0;
+        // muon_isLoose[nMuons] = m_muonLooseSelectionTool->accept( muons[gn] ) ? 1 : 0;
+        // muon_isMedium[nMuons] = m_muonMediumSelectionTool->accept( muons[gn] ) ? 1 : 0;
+        // muon_isTight[nMuons] = m_muonTightSelectionTool->accept( muons[gn] ) ? 1 : 0;
 
         nMuons++;
     }
@@ -562,12 +566,12 @@ EL::StatusCode DMHiggsAnalysis::execute()
     //
     nJets=0;
     for(size_t gn=0; gn<jets.size(); gn++) {
-        jetPx[nJets] = jets[gn]->px();
-        jetPy[nJets] = jets[gn]->py();
-        jetPz[nJets] = jets[gn]->pz();
-	jetE[nJets]  = jets[gn]->e();
-        jetJvt[nJets] = Jvt( *jets[gn] );
-        jetPassSelection[nJets] = ( jetHandler()->passPtEtaCuts( jets[gn]) && jetHandler()->passJVFCut( jets[gn]) ) && jetHandler()->passJVTCut( jets[gn] ) ? 1 : 0;
+        jet_Px[nJets] = jets[gn]->px();
+        jet_Py[nJets] = jets[gn]->py();
+        jet_Pz[nJets] = jets[gn]->pz();
+        jet_E[nJets]  = jets[gn]->e();
+        jet_Jvt[nJets] = Jvt( *jets[gn] );
+        jet_PassSelection[nJets] = ( jetHandler()->passPtEtaCuts( jets[gn]) && jetHandler()->passJVFCut( jets[gn]) ) && jetHandler()->passJVTCut( jets[gn] ) ? 1 : 0;
 
         nJets++;
     }
@@ -678,22 +682,22 @@ EL::StatusCode DMHiggsAnalysis::execute()
 EL::StatusCode DMHiggsAnalysis::finalize()
 {
 
-  for( auto it : m_outputFiles ){
-    it.second->cd();
-    m_outputTTree[it.first]->Write();
-    if( m_histCutFlow[it.first] ) m_histCutFlow[it.first]->Write();
-    it.second->Close();
+    for( auto it : m_outputFiles ) {
+        it.second->cd();
+        m_outputTTree[it.first]->Write();
+        if( m_histCutFlow[it.first] ) m_histCutFlow[it.first]->Write();
+        it.second->Close();
 
-  }
+    }
 
 
 
-  // if( m_muonTightSelectionTool )
-  //   delete m_muonTightSelectionTool;
-  // if( m_muonMediumSelectionTool )
-  //   delete m_muonMediumSelectionTool;
-  // if( m_muonLooseSelectionTool )
-  //   delete m_muonLooseSelectionTool;
+    // if( m_muonTightSelectionTool )
+    //   delete m_muonTightSelectionTool;
+    // if( m_muonMediumSelectionTool )
+    //   delete m_muonMediumSelectionTool;
+    // if( m_muonLooseSelectionTool )
+    //   delete m_muonLooseSelectionTool;
 
 
     HgammaAnalysis::finalize();

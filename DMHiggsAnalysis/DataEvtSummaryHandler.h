@@ -40,37 +40,37 @@ struct DataEvtSummary_t {
 
   //photons
   int nPhotons;
-  float photonPx[MAXPARTICLES];
-  float photonPy[MAXPARTICLES];
-  float photonPz[MAXPARTICLES];
-  float photonE[MAXPARTICLES];
-  int photons_isTight[MAXPARTICLES];
-  int photons_isFixedCutTight[MAXPARTICLES];
-  int photons_isFixedCutLoose[MAXPARTICLES];
-  int photons_isFixedCutTightCaloOnly[MAXPARTICLES];
-  int photons_isFixedCutLooseCaloOnly[MAXPARTICLES];
+  float photon_Px[MAXPARTICLES];
+  float photon_Py[MAXPARTICLES];
+  float photon_Pz[MAXPARTICLES];
+  float photon_E[MAXPARTICLES];
+  int photon_isTight[MAXPARTICLES];
+  int photon_isIsoFixedCutTight[MAXPARTICLES];
+  int photon_isIsoFixedCutLoose[MAXPARTICLES];
+  int photon_isIsoFixedCutTightCaloOnly[MAXPARTICLES];
+  int photon_isIsoFixedCutLooseCaloOnly[MAXPARTICLES];
 
 
   //Electrons
   int nElectrons;
-  float electronPx[MAXPARTICLES];
-  float electronPy[MAXPARTICLES];
-  float electronPz[MAXPARTICLES];
-  float electronE[MAXPARTICLES];
+  float electron_Px[MAXPARTICLES];
+  float electron_Py[MAXPARTICLES];
+  float electron_Pz[MAXPARTICLES];
+  float electron_E[MAXPARTICLES];
 
   //Muons
   int nMuons;
-  float muonPx[MAXPARTICLES];
-  float muonPy[MAXPARTICLES];
-  float muonPz[MAXPARTICLES];
-  float muonE[MAXPARTICLES];
+  float muon_Px[MAXPARTICLES];
+  float muon_Py[MAXPARTICLES];
+  float muon_Pz[MAXPARTICLES];
+  float muon_E[MAXPARTICLES];
 
   //Jets
   int nJets;
-  float jetPx[MAXPARTICLES];
-  float jetPy[MAXPARTICLES];
-  float jetPz[MAXPARTICLES];
-  float jetE[MAXPARTICLES];
+  float jet_Px[MAXPARTICLES];
+  float jet_Py[MAXPARTICLES];
+  float jet_Pz[MAXPARTICLES];
+  float jet_E[MAXPARTICLES];
 
 
   //MET
