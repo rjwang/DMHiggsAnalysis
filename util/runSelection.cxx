@@ -108,6 +108,10 @@ int main(int argc, char *argv[])
         DataEvtSummary_t &ev=summaryHandler_.getEvent();
 
 
+        float weight = 1.0;
+	bool isMC = ev.isMC;
+        if(isMC) weight *= ev.initWeight;
+
 
         // add PhysicsEvent_t class, get all tree to physics objects
         PhysicsEvent_t phys=getPhysicsEventFrom(ev);
@@ -130,8 +134,6 @@ int main(int argc, char *argv[])
             std::pair <int,LorentzVector> goodpho;
             goodpho = std::make_pair(phoid,pho);
             goodPhotons.push_back(goodpho);
-
-
         }
 
         if(nGoodPhotons<2) continue;
@@ -140,7 +142,7 @@ int main(int argc, char *argv[])
 
         LorentzVector diphoton(goodPhotons[0].second+goodPhotons[1].second);
 
-        mon.fillHisto("diphotonmass_raw", tags, diphoton.mass()/1000., 1.0);
+        mon.fillHisto("diphotonmass_raw", tags, diphoton.mass()/1000., weight);
 
 
 

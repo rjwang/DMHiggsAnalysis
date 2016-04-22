@@ -21,9 +21,9 @@ enum PhysicsObjects   { MET=0, JET=1, TOP=6, ELECTRON=11, MUON=13, TAU=15, GLUON
 
 class PhysicsObject : public LorentzVector {
 public :
-    PhysicsObject(LorentzVector vec, Int_t id_):
+    PhysicsObject(LorentzVector vec, int id_):
         LorentzVector(vec), id(id_) { }
-    Int_t id;
+    int id;
 };
 
 
@@ -32,30 +32,43 @@ public :
 //
 class PhysicsObject_Electron : public LorentzVector {
 public :
-    PhysicsObject_Electron(LorentzVector vec, Int_t id_):
+    PhysicsObject_Electron(LorentzVector vec, int id_):
         LorentzVector(vec), id(id_) { }
 
-    Int_t id;
+    int id;
 };
 
 
 //
 class PhysicsObject_Muon : public LorentzVector {
 public :
-    PhysicsObject_Muon(LorentzVector vec, Int_t id_):
+    PhysicsObject_Muon(LorentzVector vec, int id_):
         LorentzVector(vec), id(id_) { }
 
-    Int_t id;
+    int id;
 };
 
 
 //
 class PhysicsObject_Photon : public LorentzVector {
 public :
-    PhysicsObject_Photon(LorentzVector vec, Int_t id_):
+    PhysicsObject_Photon(LorentzVector vec, int id_):
         LorentzVector(vec), id(id_) { }
 
-    Int_t id;
+    void setPhotonIDIsoInfo(int photons_isTight_,
+				int photons_isFixedCutTight_, int photons_isFixedCutLoose_,
+				int photons_isFixedCutTightCaloOnly_, int photons_isFixedCutLooseCaloOnly_){
+
+	isTightID = photons_isTight_;
+	isTightIso = photons_isFixedCutTight_;
+	isLooseIso = photons_isFixedCutLoose_;
+	isTightCaloIso = photons_isFixedCutTightCaloOnly_;
+	isLooseCaloIso = photons_isFixedCutLooseCaloOnly_;
+
+    }
+
+    int id;
+    int isTightID, isTightIso, isLooseIso, isTightCaloIso, isLooseCaloIso;
 };
 
 

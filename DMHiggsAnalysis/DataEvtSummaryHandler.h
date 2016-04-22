@@ -32,10 +32,11 @@ struct DataEvtSummary_t {
   int EventNumber;
   int LumiBlock;
 
-  int isMC_var;
-  int NPV_var;
-  float mu_var;
-  float initWeight_var;
+  int isMC;
+  int NPV;
+  float mu;
+  float initWeight;
+  int passQualityCuts;
 
   //photons
   int nPhotons;
@@ -43,6 +44,12 @@ struct DataEvtSummary_t {
   float photonPy[MAXPARTICLES];
   float photonPz[MAXPARTICLES];
   float photonE[MAXPARTICLES];
+  int photons_isTight[MAXPARTICLES];
+  int photons_isFixedCutTight[MAXPARTICLES];
+  int photons_isFixedCutLoose[MAXPARTICLES];
+  int photons_isFixedCutTightCaloOnly[MAXPARTICLES];
+  int photons_isFixedCutLooseCaloOnly[MAXPARTICLES];
+
 
   //Electrons
   int nElectrons;
@@ -65,6 +72,11 @@ struct DataEvtSummary_t {
   float jetPz[MAXPARTICLES];
   float jetE[MAXPARTICLES];
 
+
+  //MET
+  float met;
+  float sumet;
+  float phi_met;
 
 };
 
