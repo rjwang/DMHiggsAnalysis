@@ -96,6 +96,7 @@ private:
   float electrons_E3[MAXPARTICLES];
   float electrons_charge[MAXPARTICLES];
   int electrons_isTight[MAXPARTICLES];
+  int electrons_isMedium[MAXPARTICLES];
   //   int electrons_isLoose[MAXPARTICLES];
 
   float electrons_topoCone20[MAXPARTICLES];
@@ -189,6 +190,10 @@ private:
   float sumetTruthNonInt;
 
   std::map<std::string,TH1F*> m_histCutFlow; //!
+  std::map<std::string,TFile*> m_outputFiles; //!
+  std::map<std::string,TTree*> m_outputTTree; //!
+
+  std::string currentfilename; 
 
 
 public:

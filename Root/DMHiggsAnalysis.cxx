@@ -111,6 +111,7 @@ void DMHiggsAnalysis::declareVariables()
     myEvents->Branch("electrons_E3",electrons_E3,"electrons_E3[nElectrons]/F");
     myEvents->Branch("electrons_charge",electrons_charge,"electrons_charge[nElectrons]/F");
     myEvents->Branch("electron_isTight", electrons_isTight,"electrons_isTight[nElectrons]/I");
+    myEvents->Branch("electron_isMedium", electrons_isMedium,"electrons_isMedium[nElectrons]/I");
     myEvents->Branch("electrons_ptvarCone20",electrons_ptvarCone20,"electrons_ptvarCone20[nElectrons]/F");
     myEvents->Branch("electrons_topoCone20",electrons_topoCone20,"electrons_topoCone20[nElectrons]/F");
 
@@ -221,6 +222,7 @@ void DMHiggsAnalysis::clearVectors()
         electrons_E3[iparticle] =  - 9999;
 
         electrons_isTight[iparticle] =  - 9999;
+	electrons_isMedium[iparticle] =  - 9999;
         electrons_topoCone20[iparticle] =  - 9999;
         electrons_ptvarCone20[iparticle] =  - 9999;
 
@@ -288,23 +290,30 @@ EL::StatusCode DMHiggsAnalysis::initialize()
 {
 
 
-    HgammaAnalysis::initialize();
-    outFile = TFile::Open("NTuple.root","RECREATE");
+  HgammaAnalysis::initialize();
+  std::string inputfileName = wk()->inputFileName();
+  currentfilename = inputfileName;
+  inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
+  inputfileName.append(".NTuple.root");
+
+  m_outputFiles[currentfilename] = TFile::Open(inputfileName.c_str(),"RECREATE");
+
+  inputfileName.replace(inputfileName.find(".NTuple.root") , -1, ".Tree");
+
+  myEvents = new TTree(inputfileName.c_str(),"DMHiggsAnalysis");
+
+  m_outputTTree[currentfilename] = myEvents;
+
+  //  wk()->addOutput( m_outputFiles[inputfileName] );
+
+
+  //myEvents->SetDirectory(outFile);
+
+  declareVariables();
 
 
 
-    myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
-
-    wk()->addOutput(outFile);
-
-
-    //myEvents->SetDirectory(outFile);
-
-    declareVariables();
-
-
-
-    return EL::StatusCode::SUCCESS;
+  return EL::StatusCode::SUCCESS;
 }
 
 EL::StatusCode DMHiggsAnalysis::execute()
@@ -318,6 +327,32 @@ EL::StatusCode DMHiggsAnalysis::execute()
     // are filled properly.
 
     HgammaAnalysis::execute();
+
+  std::string inputfileName = wk()->inputFileName();
+
+  if( currentfilename != inputfileName ){
+
+    currentfilename = inputfileName;
+
+    inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
+    inputfileName.append(".NTuple.root");
+
+    m_outputFiles[currentfilename] = TFile::Open(inputfileName.c_str(),"RECREATE");
+
+    inputfileName.replace(inputfileName.find(".NTuple.root") , -1, ".Tree");
+
+    myEvents = new TTree(inputfileName.c_str(),"DMHiggsAnalysis");
+
+    declareVariables();
+    m_outputTTree[currentfilename] = myEvents;
+
+    // wk()->addOutput(m_outputFiles[inputfileName]);
+
+
+    inputfileName = wk()->inputFileName();
+  
+
+  }
 
 
     SG::AuxElement::Accessor<unsigned int> runNumber("runNumber");
@@ -407,7 +442,7 @@ EL::StatusCode DMHiggsAnalysis::execute()
     passQualityCuts_var = passQualityCuts(*HGameventInfo) == 1 ? 1 : 0 ;
 
 
-    std::string inputfileName = wk()->inputFileName();
+
     std::string cutFlowName ;
 
     cutFlowName = "CutFlow_" + inputfileName;
@@ -471,6 +506,7 @@ EL::StatusCode DMHiggsAnalysis::execute()
         electrons_topoCone20[nElectrons] = topoetCone20( *electrons[gn] );
         electrons_ptvarCone20[nElectrons] = ptvarCone20( *electrons[gn] );
         electrons_isTight[nElectrons] = isTight( *electrons[gn] ) == 1 ? 1 : 0;
+	electrons_isMedium[nElectrons] = electronHandler()->passPIDCut( electrons[gn] , "Medium" )  ? 1 : 0;
         electrons_charge[nElectrons] = electrons[gn]->charge() ;
         nElectrons++;
     }
@@ -617,18 +653,13 @@ EL::StatusCode DMHiggsAnalysis::execute()
 EL::StatusCode DMHiggsAnalysis::finalize()
 {
 
+  for( auto it : m_outputFiles ){
+    it.second->cd();
+    m_outputTTree[it.first]->Write();
+    if( m_histCutFlow[it.first] ) m_histCutFlow[it.first]->Write();
+    it.second->Close();
 
-    outFile->cd();
-    myEvents->Write();
-    for( auto it : m_histCutFlow ) {
-        outFile->cd();
-        std::cout << " Writing the cutflow histogram of sample  : " + TString(it.first) << std::endl;
-        if( !it.second ) continue;
-        //HG::fatal("Cut flow histogram is empty.");
-        it.second->Write();
-    }
-    outFile->Close();
-
+  }
 
 
 
