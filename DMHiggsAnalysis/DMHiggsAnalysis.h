@@ -20,10 +20,8 @@ public:
   // node (done by the //!)
 private:
 
-  TFile* outFile;//!
+  TFile* m_outputFile;//!
   TTree *myEvents; //!
-  // TH1 *myHist; //!
-
 
 
   //  ===========================  General sample information  =========================== //
@@ -72,7 +70,11 @@ private:
   int photon_conversionType[MAXPARTICLES];
   float photon_conversionRadius[MAXPARTICLES];
   int photon_isTight[MAXPARTICLES];
-  // int photon_isLoose[MAXPARTICLES];
+  int photons_isLoose[MAXPARTICLES];
+  int photons_isLoosePrime2[MAXPARTICLES];
+  int photons_isLoosePrime3[MAXPARTICLES];
+  int photons_isLoosePrime4[MAXPARTICLES];
+  int photons_isLoosePrime5[MAXPARTICLES];
   int photon_isIsoFixedCutTight[MAXPARTICLES];
   int photon_isIsoFixedCutTightCaloOnly[MAXPARTICLES];
   int photon_isIsoFixedCutLooseCaloOnly[MAXPARTICLES];
@@ -199,14 +201,14 @@ private:
   float sumetTruthNonInt;
 
   std::map<std::string,TH1F*> m_histCutFlow; //!
-  std::map<std::string,TFile*> m_outputFiles; //!
-  std::map<std::string,TTree*> m_outputTTree; //!
+  /* std::map<std::string,TFile*> m_outputFiles; //! */
+  /* std::map<std::string,TTree*> m_outputTTree; //! */
 
   std::string currentfilename;
 
-  /* CP::MuonSelectionTool              *m_muonLooseSelectionTool; //! */
-  /* CP::MuonSelectionTool              *m_muonMediumSelectionTool; //! */
-  /* CP::MuonSelectionTool              *m_muonTightSelectionTool; //! */
+  CP::MuonSelectionTool              *m_muonLooseSelectionTool; //!
+  CP::MuonSelectionTool              *m_muonMediumSelectionTool; //!
+  CP::MuonSelectionTool              *m_muonTightSelectionTool; //!
 
 public:
   // this is a standard constructor
