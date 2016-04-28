@@ -55,15 +55,15 @@ public :
     PhysicsObject_Photon(LorentzVector vec, int id_):
         LorentzVector(vec), id(id_) { }
 
-    void setPhotonIDIsoInfo(int photons_isTight_,
-				int photons_isFixedCutTight_, int photons_isFixedCutLoose_,
-				int photons_isFixedCutTightCaloOnly_, int photons_isFixedCutLooseCaloOnly_){
+    void setPhotonIDIsoInfo(int photon_isTight_,
+				int photon_isFixedCutTight_, int photon_isFixedCutLoose_,
+				int photon_isFixedCutTightCaloOnly_, int photon_isFixedCutLooseCaloOnly_){
 
-	isTightID = photons_isTight_;
-	isTightIso = photons_isFixedCutTight_;
-	isLooseIso = photons_isFixedCutLoose_;
-	isTightCaloIso = photons_isFixedCutTightCaloOnly_;
-	isLooseCaloIso = photons_isFixedCutLooseCaloOnly_;
+	isTightID = photon_isTight_;
+	isTightIso = photon_isFixedCutTight_;
+	isLooseIso = photon_isFixedCutLoose_;
+	isTightCaloIso = photon_isFixedCutTightCaloOnly_;
+	isLooseCaloIso = photon_isFixedCutLooseCaloOnly_;
 
     }
 

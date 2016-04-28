@@ -75,7 +75,11 @@ int main(int argc, char *argv[])
     SmartSelectionMonitor mon;
 
 
+    mon.addHistogram( new TH1F( "pu_raw", ";pileup;Events", 50,0,50) );
+    mon.addHistogram( new TH1F( "puwgt_raw", ";pileup;Events", 50,0,50) );
 
+    mon.addHistogram( new TH1F( "nvtx_raw",     ";Vertices;Events",50,0,50) );
+    mon.addHistogram( new TH1F( "nvtxwgt_raw",  ";Vertices;Events",50,0,50) );
 
 
     mon.addHistogram( new TH1F( "diphotonmass_raw",    ";#it{m}_{#gamma#gamma} [GeV];Events", 160,80,160) );
@@ -107,14 +111,27 @@ int main(int argc, char *argv[])
         summaryHandler_.getEntry(iev);
         DataEvtSummary_t &ev=summaryHandler_.getEvent();
 
+        //bad event filter
+        if(!ev.passQualityCuts) continue;
 
+
+        //weights:  genWeights * PU * PVz
         float weight = 1.0;
-	bool isMC = ev.isMC;
+        bool isMC = ev.isMC;
         if(isMC) weight *= ev.initWeight;
-
 
         // add PhysicsEvent_t class, get all tree to physics objects
         PhysicsEvent_t phys=getPhysicsEventFrom(ev);
+
+
+
+
+        mon.fillHisto("pu_raw",   tags, ev.mu,      1.0);
+        mon.fillHisto("puwgt_raw",tags, ev.mu,      weight);
+
+        //# of PV
+        mon.fillHisto("nvtx_raw",   tags, phys.nvtx,      1.0);
+        mon.fillHisto("nvtxwgt_raw",tags, phys.nvtx,      weight);
 
 
 
@@ -127,8 +144,14 @@ int main(int argc, char *argv[])
             int phoid = phys.photons[ipho].id;
             if(pho.pt()<25) continue;
             if(fabs(pho.eta())>2.37) continue;
+            if(fabs(pho.eta())>1.37 && fabs(pho.eta())<1.52) continue;
 
-            // ADD Iso, ID
+
+            //Iso, ID
+            bool hasTightIdandIso(true);
+            hasTightIdandIso &= phys.photons[ipho].isTightID;
+            hasTightIdandIso &= phys.photons[ipho].isTightIso;
+            if(!hasTightIdandIso) continue;
 
             nGoodPhotons++;
             std::pair <int,LorentzVector> goodpho;
@@ -136,13 +159,49 @@ int main(int argc, char *argv[])
             goodPhotons.push_back(goodpho);
         }
 
-        if(nGoodPhotons<2) continue;
+        if(nGoodPhotons<2) continue; // 2 tight photons
+
+        float _MASSDIF_(999.);
+        LorentzVector pho1(0,0,0,0),pho2(0,0,0,0);
+        for(size_t ipho=0; ipho<goodPhotons.size(); ipho++) {
+            LorentzVector pho1_ = goodPhotons[ipho].second;
+
+            for(size_t jpho=ipho+1; jpho<goodPhotons.size(); jpho++) {
+                LorentzVector pho2_ = goodPhotons[jpho].second;
+
+                LorentzVector diphoton=pho1_+pho2_;
+                double massdif = fabs(diphoton.mass()-125.);
+                if(massdif < _MASSDIF_) {
+                    _MASSDIF_ = massdif;
+                    pho1.SetPxPyPzE(pho1_.px(),pho1_.py(),pho1_.pz(),pho1_.energy());
+                    pho2.SetPxPyPzE(pho2_.px(),pho2_.py(),pho2_.pz(),pho2_.energy());
+                }
+            }
+        }
+
+	if(pho1.pt()<pho2.pt()) {
+		LorentzVector pho_ = pho1;
+		pho1 = pho2;
+		pho2 = pho_;
+	}
+
+
+        LorentzVector diphoton(pho1+pho2);
+
+        bool passLeadingPhoton (pho1.pt()/diphoton.mass() > 0.35);
+        bool passTrailingPhoton (pho2.pt()/diphoton.mass() > 0.25);
+        bool passmassWindow(diphoton.mass()>105 && diphoton.mass()<160);
+
+	if(passLeadingPhoton && passTrailingPhoton && passmassWindow){
+        	mon.fillHisto("diphotonmass_raw", tags, diphoton.mass(), weight);
+	}
 
 
 
-        LorentzVector diphoton(goodPhotons[0].second+goodPhotons[1].second);
 
-        mon.fillHisto("diphotonmass_raw", tags, diphoton.mass()/1000., weight);
+
+
+
 
 
 
