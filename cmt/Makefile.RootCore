@@ -10,31 +10,31 @@
 PACKAGE              = DMHiggsAnalysis
 
 # the libraries to link with this one:
-PACKAGE_PRELOAD      = 
+PACKAGE_PRELOAD      =
 
 # additional compilation flags to pass (not propagated to dependent packages):
-PACKAGE_CXXFLAGS     = 
+PACKAGE_CXXFLAGS     =
 
 # additional compilation flags to pass (propagated to dependent packages):
-PACKAGE_OBJFLAGS     = 
+PACKAGE_OBJFLAGS     =
 
 # additional linker flags to pass (for compiling the library):
-PACKAGE_LDFLAGS      = 
+PACKAGE_LDFLAGS      =
 
 # additional linker flags to pass (for compiling binaries):
-PACKAGE_BINFLAGS     = 
+PACKAGE_BINFLAGS     =
 
 # additional linker flags to pass (propagated to client libraries):
-PACKAGE_LIBFLAGS     = 
+PACKAGE_LIBFLAGS     =
 
 # the list of packages we depend on:
 PACKAGE_DEP = HGamAnalysisFramework
 
 # the list of packages we use if present, but that we can work without :
-PACKAGE_TRYDEP       = 
+PACKAGE_TRYDEP       =
 
 # list pattern of scripts to link directly into binary path:
-PACKAGE_SCRIPTS      = 
+PACKAGE_SCRIPTS      = scripts/submit2batch.sh scripts/wrapLocalAnalysisRun.sh scripts/runLocalAnalysisOverSamples.py scripts/generateJSONplotterFromList.py scripts/generatehtml.py
 
 # whether to use pedantic compilation:
 PACKAGE_PEDANTIC     = 1
@@ -53,7 +53,7 @@ PACKAGE_REFLEX       = 0
 # the list of all unit tests that should be called in recursive testing,
 # i.e. in unit tests that call other unit tests
 # for that unit tests need to pass on all machines, and run very fast
-PACKAGE_RECURSIVE_UT = 
+PACKAGE_RECURSIVE_UT =
 
 
 
