@@ -77,10 +77,15 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
       }
 
 
+      size_t nele(0);
       for(Int_t i=0; i<ev.nElectrons; i++) {
 	LorentzVector P4(ev.electron_Px[i]/1000.,ev.electron_Py[i]/1000.,ev.electron_Pz[i]/1000.,ev.electron_E[i]/1000.);
 	if(P4.pt()>0) {
-		phys.electrons.push_back( PhysicsObject_Electron(P4, 11) );
+		phys.electrons.push_back( PhysicsObject_Electron(P4, 11*ev.electron_charge[i]) );
+
+		phys.electrons[nele].setElectronIDIsoInfo(ev.electron_isTight[i],ev.electron_isMedium[i],
+								ev.electron_isIsoLoose[i]);
+		nele++;
 	}
       }
 

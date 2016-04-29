@@ -57,6 +57,10 @@ struct DataEvtSummary_t {
   float electron_Py[MAXPARTICLES];
   float electron_Pz[MAXPARTICLES];
   float electron_E[MAXPARTICLES];
+  float electron_charge[MAXPARTICLES];
+  int electron_isTight[MAXPARTICLES];
+  int electron_isMedium[MAXPARTICLES];
+  int electron_isIsoLoose[MAXPARTICLES];
 
   //Muons
   int nMuons;

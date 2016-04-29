@@ -28,27 +28,6 @@ public :
 
 
 
-
-//
-class PhysicsObject_Electron : public LorentzVector {
-public :
-    PhysicsObject_Electron(LorentzVector vec, int id_):
-        LorentzVector(vec), id(id_) { }
-
-    int id;
-};
-
-
-//
-class PhysicsObject_Muon : public LorentzVector {
-public :
-    PhysicsObject_Muon(LorentzVector vec, int id_):
-        LorentzVector(vec), id(id_) { }
-
-    int id;
-};
-
-
 //
 class PhysicsObject_Photon : public LorentzVector {
 public :
@@ -69,6 +48,35 @@ public :
 
     int id;
     int isTightID, isTightIso, isLooseIso, isTightCaloIso, isLooseCaloIso;
+};
+
+
+
+//
+class PhysicsObject_Electron : public LorentzVector {
+public :
+    PhysicsObject_Electron(LorentzVector vec, int id_):
+        LorentzVector(vec), id(id_) { }
+
+    void setElectronIDIsoInfo(int electron_isTight_, int electron_isMedium_, int electron_isIsoLoose_){
+
+	isTightID = electron_isTight_;
+	isMediumID = electron_isMedium_;
+	isLooseIso = electron_isIsoLoose_;
+    }
+
+    int id;
+    int isTightID,isMediumID,isLooseIso;
+};
+
+
+//
+class PhysicsObject_Muon : public LorentzVector {
+public :
+    PhysicsObject_Muon(LorentzVector vec, int id_):
+        LorentzVector(vec), id(id_) { }
+
+    int id;
 };
 
 

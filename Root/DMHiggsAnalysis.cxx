@@ -476,7 +476,6 @@ EL::StatusCode DMHiggsAnalysis::execute()
     cutFlowName.replace(cutFlowName.find(".MxAOD") , -1, "") ;
     cutFlowName.append("_weighted");
 
-    if( m_eventCounter == 1 ) m_histCutFlow[inputfileName] = (TH1F*) HG::getHistogramFromFile(cutFlowName,inputfileName);
 
     xAOD::PhotonContainer photons = photonHandler()->getCorrectedContainer() ;
     xAOD::ElectronContainer electrons = electronHandler()->getCorrectedContainer() ;
@@ -541,7 +540,6 @@ EL::StatusCode DMHiggsAnalysis::execute()
         electron_isTight[nElectrons] = isTight( *electrons[gn] ) == 1 ? 1 : 0;
         electron_isMedium[nElectrons] = electronHandler()->passPIDCut( electrons[gn] , "Medium" )  ?  1 : 0;
         electron_isIsoLoose[nElectrons] = electronHandler()->passIsoCut( electrons[gn] , HG::Iso::Loose )  ? 1 : 0;
-        electron_isMedium[nElectrons] = electronHandler()->passPIDCut( electrons[gn] , "Medium" )  ? 1 : 0;
         electron_charge[nElectrons] = electrons[gn]->charge() ;
         nElectrons++;
     }
@@ -705,7 +703,6 @@ EL::StatusCode DMHiggsAnalysis::finalize()
 
     m_outputFile->cd();
     myEvents->Write();
-    //  if( m_histCutFlow ) m_histCutFlow[it.first]->Write();
     m_outputFile->Close();
 
 

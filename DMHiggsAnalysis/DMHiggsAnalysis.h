@@ -99,8 +99,6 @@ private:
   int electron_isTight[MAXPARTICLES];
   int electron_isMedium[MAXPARTICLES];
   int electron_isIsoLoose[MAXPARTICLES];
-  // int electron_isLoose[MAXPARTICLES];
-
   float electron_topoCone20[MAXPARTICLES];
   float electron_ptvarCone20[MAXPARTICLES];
 

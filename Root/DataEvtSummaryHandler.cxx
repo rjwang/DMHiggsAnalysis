@@ -68,6 +68,10 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("electron_Py",                   	evSummary_.electron_Py);
     t_->SetBranchAddress("electron_Pz",                   	evSummary_.electron_Pz);
     t_->SetBranchAddress("electron_E",                   	evSummary_.electron_E);
+    t_->SetBranchAddress("electron_charge",                     evSummary_.electron_charge);
+    t_->SetBranchAddress("electron_isTight",                   	evSummary_.electron_isTight);
+    t_->SetBranchAddress("electron_isMedium",                   evSummary_.electron_isMedium);
+    t_->SetBranchAddress("electron_isIsoLoose",                 evSummary_.electron_isIsoLoose);
 
 
 
