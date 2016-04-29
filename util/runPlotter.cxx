@@ -308,8 +308,8 @@ void Draw2DHistogramSplitCanvas(JSONWrapper::Object& Root, std::string RootDir, 
    T->SetFillStyle(0);  T->SetLineColor(0);
    T->SetTextAlign(32);
    char Buffer[1024];
-   if(isSim)	sprintf(Buffer, "ATLAS Simulation, #it{ZH #rightarrow l^{+}l^{-}+#slash{E}_{T}}, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
-   else sprintf(Buffer, "ATLAS preliminary, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
+   if(isSim)	sprintf(Buffer, "#it{#bf{ATLAS}} Simulation, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
+   else sprintf(Buffer, "#it{#bf{ATLAS}} Preliminary, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
    T->AddText(Buffer);
 
    std::vector<JSONWrapper::Object> Process = Root["proc"].daughters();
@@ -496,7 +496,7 @@ void Draw2DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
       leg->SetFillColor(0);
       leg->SetFillStyle(0);  leg->SetLineColor(0);
       leg->SetTextAlign(31);
-      char Buffer[1024]; sprintf(Buffer, "#bf{ATLAS} #it{Preliminary}, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm,iLumi/1000);
+      char Buffer[1024]; sprintf(Buffer, "#it{#bf{ATLAS}} Preliminary, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm,iLumi/1000);
       leg->AddText(Buffer);
       TString processName = Process[i]["tag"].c_str();
       //processName += ", "+savename;
@@ -876,9 +876,9 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
 
    T = new TPaveText(0.06,0.994,0.58, 0.935, "NDC");
    if(isDataBlind || noratio) T = new TPaveText(0.05,0.994,0.45, 0.95, "NDC");
-   if(isSim) T->AddText("#bf{ATLAS} #it{Simulation}");
-   else if(isinProgress) T->AddText("#bf{ATLAS} #it{Work in Progress}");
-   else      T->AddText("#bf{ATLAS} #it{Preliminary}");
+   if(isSim) T->AddText("#it{#bf{ATLAS}} Simulation");
+   else if(isinProgress) T->AddText("#it{#bf{ATLAS}} Work in Progress");
+   else      T->AddText("#it{#bf{ATLAS}} Preliminary");
 
    T->Draw("same");
    T->SetBorderSize(0);
@@ -1142,7 +1142,7 @@ int main(int argc, char* argv[]){
 
 	printf("--%18s --> integrated luminosity to be used for the MC rescale\n","iLumi");
 	printf("--%18s --> center of mass energy (TeV) = 8 TeV by default\n","iEcm");
-        printf("--%18s --> print CMS Simulation instead of the standard title\n","isSim");
+        printf("--%18s --> print ATLAS Simulation instead of the standard title\n","isSim");
         printf("--%18s --> path to the directory containing the .root files to process\n","inDir");
         printf("--%18s --> path of the directory that will contains the output plots and tables\n","outDir");
         printf("--%18s --> path of the output summary .root file\n","outFile");

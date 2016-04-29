@@ -195,128 +195,13 @@ void DMHiggsAnalysis::declareVariables()
 }
 
 
-void DMHiggsAnalysis::clearVectors()
-{
-
-
-    for( int iparticle = 0 ; iparticle < MAXPARTICLES ; ++iparticle) {
-
-        //    photonAuthor[iparticle] =  - 9999;
-        photon_Px[iparticle] =  - 9999;
-        photon_E[iparticle] =  - 9999;
-        photon_Py[iparticle] =  - 9999;
-        photon_Pz[iparticle] =  - 9999;
-        photon_Eps[iparticle] =  - 9999;
-        photon_E1[iparticle] =  - 9999;
-        photon_E2[iparticle] =  - 9999;
-        photon_E3[iparticle] =  - 9999;
-
-        photon_conversionType[iparticle] =  - 9999;
-        photon_isTight[iparticle] =  - 9999;
-        photons_isLoose[iparticle] =  - 9999;
-        photons_isLoosePrime2[iparticle] =  - 9999;
-        photons_isLoosePrime3[iparticle] =  - 9999;
-        photons_isLoosePrime4[iparticle] =  - 9999;
-        photons_isLoosePrime5[iparticle] =  - 9999;
-
-        photon_isIsoFixedCutTight[iparticle] =  - 9999;
-        photon_isIsoFixedCutTightCaloOnly[iparticle] =  - 9999;
-        photon_isIsoFixedCutLooseCaloOnly[iparticle] =  - 9999;
-        photon_isIsoFixedCutLoose[iparticle] =  - 9999;
-        photon_Cone20[iparticle] =  - 9999;
-        photon_Cone40[iparticle] =  - 9999;
-        photon_topoCone20[iparticle] =  - 9999;
-        photon_topoCone40[iparticle] =  - 9999;
-
-        //electronAuthor[iparticle] =  - 9999;
-        electron_Px[iparticle] =  - 9999;
-        electron_E[iparticle] =  - 9999;
-        electron_Py[iparticle] =  - 9999;
-        electron_Pz[iparticle] =  - 9999;
-        electron_Eps[iparticle] =  - 9999;
-        electron_E1[iparticle] =  - 9999;
-        electron_E2[iparticle] =  - 9999;
-        electron_E3[iparticle] =  - 9999;
-
-        electron_isTight[iparticle] =  - 9999;
-        electron_isMedium[iparticle] =  - 9999;
-        electron_isIsoLoose[iparticle] =  - 9999;
-        electron_topoCone20[iparticle] =  - 9999;
-        electron_ptvarCone20[iparticle] =  - 9999;
-
-        //muonAuthor[iparticle] =  - 9999;
-        muon_Px[iparticle] =  - 9999;
-        muon_E[iparticle] =  - 9999;
-        muon_Py[iparticle] =  - 9999;
-        muon_Pz[iparticle] =  - 9999;
-
-        muon_passIPcut[iparticle] =  - 9999;
-        muon_topoCone20[iparticle] =  - 9999;
-        muon_ptvarCone20[iparticle] =  - 9999;
-        // muon_isLoose[iparticle] =  - 9999;
-        // muon_isTight[iparticle] =  - 9999;
-        // muon_isMedium[iparticle] =  - 9999;
-        muon_isIsoGradientLoose[iparticle] =  - 9999;
-        muon_isIsoGradient[iparticle] =  - 9999;
-        muon_isIsoLoose[iparticle] =  - 9999;
-
-        //jetAuthor[iparticle] =  - 9999;
-        jet_Px[iparticle] =  - 9999;
-        jet_Py[iparticle] =  - 9999;
-        jet_Pz[iparticle] =  - 9999;
-        jet_E[iparticle] =  - 9999;
-        jet_Jvt[iparticle] =  - 9999;
-        jet_PassSelection[iparticle] =  - 9999;
-
-
-
-        photonTruthPx[iparticle] =  - 9999;
-        photonTruthE[iparticle] =  - 9999;
-        photonTruthPy[iparticle] =  - 9999;
-        photonTruthPz[iparticle] =  - 9999;
-        photonTruth_etcone20[iparticle] =  - 9999;
-        photonTruth_etcone40[iparticle] =  - 9999;
-        photonTruth_ptcone20[iparticle] =  - 9999;
-        photonTruth_ptcone40[iparticle] =  - 9999;
-        photonTruth_truthOrigin[iparticle] =  - 9999;
-        photonTruth_truthType[iparticle] =  - 9999;
-
-
-        electronTruthPx[iparticle] =  - 9999;
-        electronTruthE[iparticle] =  - 9999;
-        electronTruthPy[iparticle] =  - 9999;
-        electronTruthPz[iparticle] =  - 9999;
-
-        muonTruthPx[iparticle] =  - 9999;
-        muonTruthE[iparticle] =  - 9999;
-        muonTruthPy[iparticle] =  - 9999;
-        muonTruthPz[iparticle] =  - 9999;
-
-
-        jetTruthPx[iparticle] =  - 9999;
-        jetTruthE[iparticle] =  - 9999;
-        jetTruthPy[iparticle] =  - 9999;
-        jetTruthPz[iparticle] =  - 9999;
-
-        mpxTruthInt =  - 9999;
-        mpyTruthInt =  - 9999;
-        metTruthInt =  - 9999;
-        sumetTruthInt =  - 9999;
-        mpxTruthNonInt =  - 9999;
-        mpyTruthNonInt =  - 9999;
-        metTruthNonInt =  - 9999;
-        sumetTruthNonInt =  - 9999;
-    }
-
-}
-
 EL::StatusCode DMHiggsAnalysis::initialize()
 {
 
 
     HgammaAnalysis::initialize();
     std::string inputfileName = wk()->inputFileName();
-    currentfilename = inputfileName;
+    //currentfilename = inputfileName;
     inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
     inputfileName.append(".NTuple.root");
 
@@ -357,31 +242,6 @@ EL::StatusCode DMHiggsAnalysis::execute()
     // are filled properly.
 
     HgammaAnalysis::execute();
-
-
-    std::string inputfileName = wk()->inputFileName();
-
-    if( currentfilename != inputfileName ) {
-
-        currentfilename = inputfileName;
-
-        inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
-        inputfileName.append(".NTuple.root");
-
-        m_outputFile->cd();
-
-        myEvents->Write();
-        m_outputFile->Close();
-
-        m_outputFile = TFile::Open(inputfileName.c_str(),"RECREATE");
-        myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
-
-        declareVariables();
-
-        inputfileName = wk()->inputFileName();
-
-
-    }
 
 
     SG::AuxElement::Accessor<unsigned int> runNumber("runNumber");
@@ -468,13 +328,6 @@ EL::StatusCode DMHiggsAnalysis::execute()
     passHiggsSelection_var = passHiggsSelection(*HGameventInfo) == 1 ?  1 : 0;
     passQualityCuts_var = passQualityCuts(*HGameventInfo) == 1 ? 1 : 0 ;
 
-
-
-    std::string cutFlowName ;
-
-    cutFlowName = "CutFlow_" + inputfileName;
-    cutFlowName.replace(cutFlowName.find(".MxAOD") , -1, "") ;
-    cutFlowName.append("_weighted");
 
 
     xAOD::PhotonContainer photons = photonHandler()->getCorrectedContainer() ;
@@ -567,8 +420,6 @@ EL::StatusCode DMHiggsAnalysis::execute()
         // muon_isLoose[nMuons] = m_muonLooseSelectionTool->accept( muons[gn] ) ? 1 : 0;
         // muon_isMedium[nMuons] = m_muonMediumSelectionTool->accept( muons[gn] ) ? 1 : 0;
         // muon_isTight[nMuons] = m_muonTightSelectionTool->accept( muons[gn] ) ? 1 : 0;
-
-
         nMuons++;
     }
 
@@ -599,17 +450,12 @@ EL::StatusCode DMHiggsAnalysis::execute()
     phi_met = met_phi(*HGameventInfo);
 
 
-    ntruthPhotons = 0 ;
-    ntruthElectrons = 0 ;
-    ntruthMuons = 0 ;
-    ntruthJets = 0 ;
-
     //
     // Generator-level information
     //
     //HG::TruthParticles* 		truthParticles = truthHandler()->getTruthParticles();
 
-    if( isMC() ) {
+    if( isMC_var ) {
         xAOD::TruthParticleContainer 	truthPhotons = truthHandler()->getPhotons() ;
         xAOD::TruthParticleContainer 	truthElectrons = truthHandler()->getElectrons();
         xAOD::TruthParticleContainer 	truthMuons = truthHandler()->getMuons();
@@ -618,7 +464,6 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
 
         ntruthPhotons = 0 ;
-
         for( xAOD::TruthParticle* truthpart : truthPhotons) {
 
             photonTruthPx[ntruthPhotons] = truthpart->p4().Px();
@@ -631,8 +476,6 @@ EL::StatusCode DMHiggsAnalysis::execute()
             photonTruth_etcone40[ntruthPhotons] = etCone40( *truthpart );
             photonTruth_truthOrigin[ntruthPhotons] = truthOrigin( *truthpart );
             photonTruth_truthType[ntruthPhotons] = truthType( *truthpart );
-
-
             ++ntruthPhotons;
         }
 

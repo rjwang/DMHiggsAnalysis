@@ -198,11 +198,11 @@ private:
   float metTruthNonInt;
   float sumetTruthNonInt;
 
-  std::map<std::string,TH1F*> m_histCutFlow; //!
+  //std::map<std::string,TH1F*> m_histCutFlow; //!
   /* std::map<std::string,TFile*> m_outputFiles; //! */
   /* std::map<std::string,TTree*> m_outputTTree; //! */
 
-  std::string currentfilename;
+  //std::string currentfilename;
 
   CP::MuonSelectionTool              *m_muonLooseSelectionTool; //!
   CP::MuonSelectionTool              *m_muonMediumSelectionTool; //!
@@ -217,7 +217,6 @@ public:
   // these are the functions inherited from HgammaAnalysis
 
   void declareVariables();
-  void clearVectors();
 
   virtual EL::StatusCode createOutput();
   virtual EL::StatusCode initialize();

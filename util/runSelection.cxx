@@ -82,7 +82,28 @@ int main(int argc, char *argv[])
     mon.addHistogram( new TH1F( "nvtxwgt_raw",  ";Vertices;Events",50,0,50) );
 
 
-    mon.addHistogram( new TH1F( "diphotonmass_raw",    ";#it{m}_{#gamma#gamma} [GeV];Events", 160,80,160) );
+    mon.addHistogram( new TH2F( "pt2mass_pho2vspho1_raw",";#it{p}_{T}^{#gamma1}/#it{m}_{#gamma#gamma};#it{p}_{T}^{#gamma2}/#it{m}_{#gamma#gamma};Events",100,0,1., 100,0,1.) );
+
+    mon.addHistogram( new TH1F( "diphoton_mass_raw",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
+    mon.addHistogram( new TH1F( "diphoton_pt_raw",    ";#it{p}_{T}^{#gamma#gamma} [GeV];Events", 100,0,600) );
+
+    mon.addHistogram( new TH1F( "leadingpho_pt_raw",    ";Leading #it{p}_{T}^{#gamma} [GeV];Events", 100,0,600) );
+    mon.addHistogram( new TH1F( "trailingpho_pt_raw",    ";Trailing #it{p}_{T}^{#gamma} [GeV];Events", 100,0,600) );
+    mon.addHistogram( new TH1F( "leadingpho_eta_raw",    ";Leading #it{#eta}^{#gamma};Events", 100,-2.4,2.4) );
+    mon.addHistogram( new TH1F( "trailingpho_eta_raw",    ";Trailing #it{#eta}^{#gamma};Events", 100,-2.4,2.4) );
+    mon.addHistogram( new TH1F( "leadingpho_phi_raw",    ";Leading #it{#phi}^{#gamma};Events", 50,-1.*TMath::Pi(),TMath::Pi()) );
+    mon.addHistogram( new TH1F( "trailingpho_phi_raw",    ";Trailing #it{#phi}^{#gamma};Events", 50,-1.*TMath::Pi(),TMath::Pi()) );
+
+
+
+
+    TH1F *h1 = (TH1F*) mon.addHistogram( new TH1F( "nphotons_raw", ";Photon multiplicity;Events", 3,2,5) );
+    for(int ibin=1; ibin<=h1->GetXaxis()->GetNbins(); ibin++) {
+        TString label("");
+        label +="=";
+        label += (ibin+1);
+        h1->GetXaxis()->SetBinLabel(ibin,label);
+    }
 
     //####################################################################################################################
     //###########################################           EVENT LOOP         ###########################################
@@ -124,8 +145,6 @@ int main(int argc, char *argv[])
         PhysicsEvent_t phys=getPhysicsEventFrom(ev);
 
 
-
-
         mon.fillHisto("pu_raw",   tags, ev.mu,      1.0);
         mon.fillHisto("puwgt_raw",tags, ev.mu,      weight);
 
@@ -146,7 +165,6 @@ int main(int argc, char *argv[])
             if(fabs(pho.eta())>2.37) continue;
             if(fabs(pho.eta())>1.37 && fabs(pho.eta())<1.52) continue;
 
-
             //Iso, ID
             bool hasTightIdandIso(true);
             hasTightIdandIso &= phys.photons[ipho].isTightID;
@@ -161,30 +179,28 @@ int main(int argc, char *argv[])
 
         if(nGoodPhotons<2) continue; // 2 tight photons
 
-        float _MASSDIF_(999.);
-        LorentzVector pho1(0,0,0,0),pho2(0,0,0,0);
-        for(size_t ipho=0; ipho<goodPhotons.size(); ipho++) {
-            LorentzVector pho1_ = goodPhotons[ipho].second;
 
-            for(size_t jpho=ipho+1; jpho<goodPhotons.size(); jpho++) {
-                LorentzVector pho2_ = goodPhotons[jpho].second;
 
-                LorentzVector diphoton=pho1_+pho2_;
-                double massdif = fabs(diphoton.mass()-125.);
-                if(massdif < _MASSDIF_) {
-                    _MASSDIF_ = massdif;
-                    pho1.SetPxPyPzE(pho1_.px(),pho1_.py(),pho1_.pz(),pho1_.energy());
-                    pho2.SetPxPyPzE(pho2_.px(),pho2_.py(),pho2_.pz(),pho2_.energy());
-                }
-            }
+        LorentzVector pho1 = goodPhotons[0].second;
+        LorentzVector pho2 = goodPhotons[1].second;
+
+	//find the leading and trailing photon
+        if(pho1.pt()<pho2.pt()) {
+            LorentzVector pho_ = pho1;
+            pho1 = pho2;
+            pho2 = pho_;
         }
 
-	if(pho1.pt()<pho2.pt()) {
-		LorentzVector pho_ = pho1;
-		pho1 = pho2;
-		pho2 = pho_;
-	}
-
+        for(size_t ipho=2; ipho<goodPhotons.size(); ipho++) {
+            LorentzVector pho_ = goodPhotons[ipho].second;
+            if( pho_.pt() > pho1.pt() ) {
+                pho2 = pho1;
+                pho1 = pho_;
+            }
+            if( pho_.pt() > pho2.pt() && pho_.pt() < pho1.pt() ) {
+                pho2 = pho_;
+            }
+        }
 
         LorentzVector diphoton(pho1+pho2);
 
@@ -192,9 +208,25 @@ int main(int argc, char *argv[])
         bool passTrailingPhoton (pho2.pt()/diphoton.mass() > 0.25);
         bool passmassWindow(diphoton.mass()>105 && diphoton.mass()<160);
 
-	if(passLeadingPhoton && passTrailingPhoton && passmassWindow){
-        	mon.fillHisto("diphotonmass_raw", tags, diphoton.mass(), weight);
-	}
+
+	mon.fillHisto("pt2mass_pho2vspho1_raw",tags, pho1.pt()/diphoton.mass(), pho2.pt()/diphoton.mass(), weight);
+
+        if(passLeadingPhoton && passTrailingPhoton && passmassWindow) {
+
+	    mon.fillHisto("nphotons_raw",tags, nGoodPhotons, weight);
+            mon.fillHisto("diphoton_mass_raw", tags, diphoton.mass(), weight);
+	    mon.fillHisto("diphoton_pt_raw", tags, diphoton.pt(), weight);
+
+	    mon.fillHisto("leadingpho_pt_raw", tags, pho1.pt(), weight);
+	    mon.fillHisto("trailingpho_pt_raw", tags, pho2.pt(), weight);
+	    mon.fillHisto("leadingpho_eta_raw", tags, pho1.eta(), weight);
+	    mon.fillHisto("trailingpho_eta_raw", tags, pho2.eta(), weight);
+	    mon.fillHisto("leadingpho_phi_raw", tags, pho1.phi(), weight);
+	    mon.fillHisto("trailingpho_phi_raw", tags, pho2.phi(), weight);
+
+
+
+        }
 
 
 
