@@ -80,6 +80,10 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("muon_Py",                   		evSummary_.muon_Py);
     t_->SetBranchAddress("muon_Pz",                   		evSummary_.muon_Pz);
     t_->SetBranchAddress("muon_E",                   		evSummary_.muon_E);
+    t_->SetBranchAddress("muon_charge",                         evSummary_.muon_charge);
+    t_->SetBranchAddress("muon_isIsoGradientLoose",             evSummary_.muon_isIsoGradientLoose);
+    t_->SetBranchAddress("muon_isIsoGradient",                  evSummary_.muon_isIsoGradient);
+    t_->SetBranchAddress("muon_isIsoLoose",                 	evSummary_.muon_isIsoLoose);
 
 
 
@@ -88,6 +92,8 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("jet_Py",                   		evSummary_.jet_Py);
     t_->SetBranchAddress("jet_Pz",                   		evSummary_.jet_Pz);
     t_->SetBranchAddress("jet_E",                   		evSummary_.jet_E);
+    t_->SetBranchAddress("jet_Jvt",                   		evSummary_.jet_Jvt);
+
 
 
 

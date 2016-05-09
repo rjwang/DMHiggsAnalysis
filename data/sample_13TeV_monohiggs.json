@@ -656,6 +656,14 @@
       "marker": 842, 
       "data": [
         {
+          "filtEff": 0.44135, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_15-35_CVetoBVeto.NTuple", 
+          "xsec": 5.1947E+5
+        }, 
+        {
           "filtEff": 0.41028, 
           "kfactor": 1, 
           "split": 1, 
@@ -728,6 +736,14 @@
           "xsec": 2.4843E-9
         }, 
         {
+          "filtEff": 0.48261, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_15-35_CFilterBVeto.NTuple", 
+          "xsec": 5.1949E+5
+        }, 
+        {
           "filtEff": 0.48609, 
           "kfactor": 1, 
           "split": 1, 
@@ -798,6 +814,14 @@
           "dtag": "Sherpa_gamjet_4000_CFilterBVeto.NTuple", 
           "nevts": 800, 
           "xsec": 2.5134E-9
+        }, 
+        {
+          "filtEff": 0.075953, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_15-35_BFilter.NTuple", 
+          "xsec": 5.1941E+5
         }, 
         {
           "filtEff": 0.10752, 
@@ -899,6 +923,23 @@
       "marker": 798, 
       "data": [
         {
+          "filtEff": 0.00058997, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_1Hard1BremDP40.NTuple", 
+          "xsec": 16616
+        }, 
+        {
+          "filtEff": 0.24320, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_0-55.NTuple", 
+          "nevts": 996400, 
+          "xsec": 140.90
+        }, 
+        {
           "filtEff": 0.45653, 
           "kfactor": 1, 
           "split": 1, 
@@ -951,6 +992,87 @@
           "dtag": "Sherpa_gamgam_2DP20_650-1000.NTuple", 
           "nevts": 499000, 
           "xsec": 0.23503
+        }, 
+        {
+          "filtEff": 0.16729, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_1000-1500.NTuple", 
+          "nevts": 1992800, 
+          "xsec": 0.060489
+        }, 
+        {
+          "filtEff": 0.11035, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_1500-2000.NTuple", 
+          "nevts": 499500, 
+          "xsec": 0.012409
+        }, 
+        {
+          "filtEff": 0.080306, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_2000-2500.NTuple", 
+          "nevts": 499500, 
+          "xsec": 0.0033581
+        }, 
+        {
+          "filtEff": 0.061888, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_2500-3000.NTuple", 
+          "nevts": 99000, 
+          "xsec": 0.0010460
+        }, 
+        {
+          "filtEff": 0.050045, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_3000-3500.NTuple", 
+          "nevts": 99800, 
+          "xsec": 0.00035256
+        }, 
+        {
+          "filtEff": 0.041190, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_3500-4000.NTuple", 
+          "nevts": 99800, 
+          "xsec": 0.00012396
+        }, 
+        {
+          "filtEff": 0.035153, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_4000-4500.NTuple", 
+          "nevts": 99400, 
+          "xsec": 0.000044474
+        }, 
+        {
+          "filtEff": 0.030293, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_4500-5000.NTuple", 
+          "nevts": 99600, 
+          "xsec": 0.000016024
+        }, 
+        {
+          "filtEff": 0.024712, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_5000-inf.NTuple", 
+          "nevts": 99200, 
+          "xsec": 0.0000086793
         }
       ]
     }, 
@@ -966,6 +1088,28 @@
         }
       ], 
       "fill": 0
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "MA(300)MZ(600)#times10000", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.81102, 
+          "kfactor": 10000, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zp2hdmxx_gg_mzp600_mA300.NTuple", 
+          "xsec": 4.315128E-7
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
     }
   ]
 }

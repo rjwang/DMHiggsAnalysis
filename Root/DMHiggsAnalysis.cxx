@@ -16,7 +16,6 @@ DMHiggsAnalysis::DMHiggsAnalysis(const char *name)
     // initialization code will go into histInitialize() and
     // initialize().
 
-
 }
 
 
@@ -34,7 +33,6 @@ EL::StatusCode DMHiggsAnalysis::createOutput()
     // gets called after the Handlers are initialized, so that the systematic
     // registry is already filled.
 
-    //histoStore()->createTH1F("m_yy", 60, 110, 140);
 
 
     //Create a TTree
@@ -47,7 +45,6 @@ EL::StatusCode DMHiggsAnalysis::createOutput()
 
 void DMHiggsAnalysis::declareVariables()
 {
-
     myEvents->Branch("RunNumber",&RunNumber,"RunNumber/I");
     myEvents->Branch("LumiBlock",&LumiBlock,"LumiBlock/I");
     myEvents->Branch("EventNumber",&EventNumber,"EventNumber/I");
@@ -198,33 +195,44 @@ void DMHiggsAnalysis::declareVariables()
 EL::StatusCode DMHiggsAnalysis::initialize()
 {
 
-
     HgammaAnalysis::initialize();
     std::string inputfileName = wk()->inputFileName();
     //currentfilename = inputfileName;
     inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
+    TString TagName = inputfileName;
     inputfileName.append(".NTuple.root");
 
 
     m_outputFile = TFile::Open(inputfileName.c_str(),"RECREATE");
+
+    // copy cutflow hists
+    if( isMC() ) {
+        CutFlow_ = (TH1F*) getCutFlowHistogram("CutFlow_"+TagName,"")->Clone("CutFlow");
+        CutFlow_noDalitz_ = (TH1F*) getCutFlowHistogram("CutFlow_"+TagName,"_noDalitz")->Clone("CutFlow_noDalitz");
+        CutFlow_weighted_ = (TH1F*) getCutFlowHistogram("CutFlow_"+TagName,"_weighted")->Clone("CutFlow_weighted");
+        CutFlow_noDalitz_weighted_ = (TH1F*) getCutFlowHistogram("CutFlow_"+TagName,"_noDalitz_weighted")->Clone("CutFlow_noDalitz_weighted");
+    }
+
+    // tree
     myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
     declareVariables();
 
-    m_muonTightSelectionTool = new CP::MuonSelectionTool("MuonTightSelectionTool");
-    m_muonMediumSelectionTool = new CP::MuonSelectionTool("MuonMediumSelectionTool");
-    m_muonLooseSelectionTool = new CP::MuonSelectionTool("MuonLooseSelectionTool");
+    /*
+        m_muonTightSelectionTool = new CP::MuonSelectionTool("MuonTightSelectionTool");
+        m_muonMediumSelectionTool = new CP::MuonSelectionTool("MuonMediumSelectionTool");
+        m_muonLooseSelectionTool = new CP::MuonSelectionTool("MuonLooseSelectionTool");
 
-    CP_CHECK( "initialize()" , m_muonTightSelectionTool->setProperty("MuQuality", int(xAOD::Muon::Tight)) );
-    CP_CHECK( "initialize()" , m_muonMediumSelectionTool->setProperty("MuQuality", int(xAOD::Muon::Medium)) );
-    CP_CHECK( "initialize()" , m_muonLooseSelectionTool->setProperty("MuQuality", int(xAOD::Muon::Loose)) );
+        CP_CHECK( "initialize()" , m_muonTightSelectionTool->setProperty("MuQuality", int(xAOD::Muon::Tight)) );
+        CP_CHECK( "initialize()" , m_muonMediumSelectionTool->setProperty("MuQuality", int(xAOD::Muon::Medium)) );
+        CP_CHECK( "initialize()" , m_muonLooseSelectionTool->setProperty("MuQuality", int(xAOD::Muon::Loose)) );
 
-    if( m_muonTightSelectionTool->initialize().isFailure() )
-        HG::fatal("Couldn't initalize MuonSelectionTool for tight WP. Exiting");
-    if( m_muonMediumSelectionTool->initialize().isFailure() )
-        HG::fatal("Couldn't initalize MuonSelectionTool for medium WP. Exiting");
-    if( m_muonLooseSelectionTool->initialize().isFailure() )
-        HG::fatal("Couldn't initalize MuonSelectionTool for loose WP. Exiting");
-
+        if( m_muonTightSelectionTool->initialize().isFailure() )
+            HG::fatal("Couldn't initalize MuonSelectionTool for tight WP. Exiting");
+        if( m_muonMediumSelectionTool->initialize().isFailure() )
+            HG::fatal("Couldn't initalize MuonSelectionTool for medium WP. Exiting");
+        if( m_muonLooseSelectionTool->initialize().isFailure() )
+            HG::fatal("Couldn't initalize MuonSelectionTool for loose WP. Exiting");
+    */
 
 
 
@@ -330,6 +338,8 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
 
 
+
+
     xAOD::PhotonContainer photons = photonHandler()->getCorrectedContainer() ;
     xAOD::ElectronContainer electrons = electronHandler()->getCorrectedContainer() ;
     xAOD::MuonContainer muons = muonHandler()->getCorrectedContainer() ;
@@ -417,6 +427,7 @@ EL::StatusCode DMHiggsAnalysis::execute()
         muon_isIsoGradient[nMuons] = muonHandler()->passIsoCut( muons[gn], HG::Iso::Gradient ) ? 1 : 0;
         muon_isIsoLoose[nMuons] = muonHandler()->passIsoCut( muons[gn], HG::Iso::Loose ) ? 1 : 0;
 
+        // medium is already applied
         // muon_isLoose[nMuons] = m_muonLooseSelectionTool->accept( muons[gn] ) ? 1 : 0;
         // muon_isMedium[nMuons] = m_muonMediumSelectionTool->accept( muons[gn] ) ? 1 : 0;
         // muon_isTight[nMuons] = m_muonTightSelectionTool->accept( muons[gn] ) ? 1 : 0;
@@ -545,6 +556,12 @@ EL::StatusCode DMHiggsAnalysis::finalize()
 
 
     m_outputFile->cd();
+    if( isMC() ) {
+        CutFlow_->Write();
+        CutFlow_noDalitz_->Write();
+        CutFlow_weighted_->Write();
+        CutFlow_noDalitz_weighted_->Write();
+    }
     myEvents->Write();
     m_outputFile->Close();
 

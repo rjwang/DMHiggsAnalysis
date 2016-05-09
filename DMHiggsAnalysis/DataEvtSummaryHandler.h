@@ -68,6 +68,11 @@ struct DataEvtSummary_t {
   float muon_Py[MAXPARTICLES];
   float muon_Pz[MAXPARTICLES];
   float muon_E[MAXPARTICLES];
+  float muon_charge[MAXPARTICLES];
+  int muon_isIsoGradientLoose[MAXPARTICLES];
+  int muon_isIsoGradient[MAXPARTICLES];
+  int muon_isIsoLoose[MAXPARTICLES];
+
 
   //Jets
   int nJets;
@@ -75,6 +80,7 @@ struct DataEvtSummary_t {
   float jet_Py[MAXPARTICLES];
   float jet_Pz[MAXPARTICLES];
   float jet_E[MAXPARTICLES];
+  float jet_Jvt[MAXPARTICLES];
 
 
   //MET

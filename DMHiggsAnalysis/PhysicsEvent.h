@@ -76,7 +76,15 @@ public :
     PhysicsObject_Muon(LorentzVector vec, int id_):
         LorentzVector(vec), id(id_) { }
 
+     void setMuonIDIsoInfo(int isIsoGradientLoose_, int isIsoGradient_, int isIsoLoose_){
+
+	isIsoGradientLoose = isIsoGradientLoose_;
+	isIsoGradient = isIsoGradient_;
+	isIsoLoose = isIsoLoose_;
+     }
+
     int id;
+    int isIsoGradientLoose,isIsoGradient,isIsoLoose;
 };
 
 
@@ -87,7 +95,11 @@ public :
     PhysicsObject_Jet(LorentzVector vec):
         LorentzVector(vec) { }
 
+    void setJetInfo(float Jvt_){
+	JVT = Jvt_;
+    }
 
+    float JVT;
 };
 
 

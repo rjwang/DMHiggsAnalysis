@@ -21,8 +21,11 @@ public:
 private:
 
   TFile* m_outputFile;//!
+  TH1F *CutFlow_; //!
+  TH1F *CutFlow_noDalitz_; //!
+  TH1F *CutFlow_weighted_; //!
+  TH1F *CutFlow_noDalitz_weighted_; //!
   TTree *myEvents; //!
-
 
   //  ===========================  General sample information  =========================== //
   int RunNumber;
@@ -204,9 +207,11 @@ private:
 
   //std::string currentfilename;
 
+/*
   CP::MuonSelectionTool              *m_muonLooseSelectionTool; //!
   CP::MuonSelectionTool              *m_muonMediumSelectionTool; //!
   CP::MuonSelectionTool              *m_muonTightSelectionTool; //!
+*/
 
 public:
   // this is a standard constructor
