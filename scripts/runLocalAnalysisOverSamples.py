@@ -94,6 +94,7 @@ for proc in procList :
 
         #run over items in process
         isdata=getByLabel(desc,'isdata',False)
+	issignal=getByLabel(desc,'issignal',False)
         doWIMPreweighting=getByLabel(desc,'doWIMPreweighting',False)
         mctruthmode=getByLabel(desc,'mctruthmode',0)
 	tag = getByLabel(desc,'tag','') #RJ
@@ -115,17 +116,20 @@ for proc in procList :
         data = desc['data']
         for d in data :
             origdtag = getByLabel(d,'dtag','')
+	    if not isdata: origdtag = 'mc15c.'+origdtag
             dtag = origdtag
             xsec = getByLabel(d,'xsec',-1)
 	    nevts = getByLabel(d,'nevts',-1)
-            br = getByLabel(d,'br',[])
+            BR = getByLabel(d,'BR',-1)
+	    filtEff = getByLabel(d,'filtEff',-1)
+	    kfactor = getByLabel(d,'kfactor',-1)
             suffix = str(getByLabel(d,'suffix' ,""))
             if(onlytag!='all') :
                 if(dtag.find(onlytag)<0) : continue
             if(mctruthmode!=0) : dtag+='_filt'+str(mctruthmode)
 
-            if(xsec>0 and not isdata) :
-                for ibr in br :  xsec = xsec*ibr
+            #if(xsec>0 and not isdata) :
+            #    for ibr in br :  xsec = xsec*ibr
             split=getByLabel(d,'split',1)
 
 
@@ -155,7 +159,10 @@ for proc in procList :
 		eventsFile = 'root://eosatlas//eos/atlas'+eventsFile
 
             	sedcmd = 'sed \"s%@input%' + eventsFile +'%;s%@outdir%' + outdir +'%;s%@isMC%' + str(not isdata) + '%;s%@mctruthmode%'+str(mctruthmode)+'%;s%@xsec%'+str(xsec)+'%;'
-		sedcmd += 's%@nevts%'+str(nevts)+'%;'
+		sedcmd += 's%@BR%'+str(BR)+'%;'
+		sedcmd += 's%@filtEff%'+str(filtEff)+'%;'
+		sedcmd += 's%@kfactor%'+str(kfactor)+'%;'
+		sedcmd += 's%@issignal%'+str(issignal)+'%;'
                 sedcmd += 's%@cprime%'+str(getByLabel(d,'cprime',-1))+'%;'
                 sedcmd += 's%@brnew%' +str(getByLabel(d,'brnew' ,-1))+'%;'
                 sedcmd += 's%@suffix%' +suffix+'%;'

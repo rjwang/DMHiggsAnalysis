@@ -46,7 +46,7 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("NPV",                      		&evSummary_.NPV);
     t_->SetBranchAddress("mu",                      		&evSummary_.mu);
     t_->SetBranchAddress("initWeight",             		&evSummary_.initWeight);
-    t_->SetBranchAddress("passQualityCuts",          		&evSummary_.passQualityCuts);
+    t_->SetBranchAddress("passVertex",          		&evSummary_.passVertex);
 
 
 

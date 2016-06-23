@@ -236,6 +236,7 @@ void SavingToFile(JSONWrapper::Object& Root, std::string RootDir, NameAndType Hi
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
          if(!Process[i]["isdata"].toBool() && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
+
          if(Samples[j].isTag("xsec")     ) Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
@@ -324,7 +325,7 @@ void Draw2DHistogramSplitCanvas(JSONWrapper::Object& Root, std::string RootDir, 
    T->SetTextAlign(32);
    char Buffer[1024];
    if(isSim)	sprintf(Buffer, "#it{#bf{ATLAS}} Simulation, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
-   else sprintf(Buffer, "#it{#bf{ATLAS}} Preliminary, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
+   else sprintf(Buffer, "#it{#bf{ATLAS}} Internal, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
    T->AddText(Buffer);
 
    std::vector<JSONWrapper::Object> Process = Root["proc"].daughters();
@@ -342,6 +343,7 @@ void Draw2DHistogramSplitCanvas(JSONWrapper::Object& Root, std::string RootDir, 
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
          if(!Process[i]["isdata"].toBool()  && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
+
          if(Samples[j].isTag("xsec"))  		Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))  	Weight*= Samples[j]["filtEff"].toDouble();
@@ -465,6 +467,7 @@ void Draw2DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
          if(!Process[i]["isdata"].toBool()  && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
 	  string filtExt("");
 	  if(Process[i].isTag("mctruthmode") ) { char buf[255]; sprintf(buf,"_filt%d",(int)Process[i]["mctruthmode"].toInt()); filtExt += buf; }
+
          if(Samples[j].isTag("xsec")     )Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR")) 	        Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
@@ -472,6 +475,7 @@ void Draw2DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
 	 //if(Samples[j].isTag("nevts")     ) Weight/= Samples[j]["nevts"].toDouble();
          stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
          Weight /= sampleInfo.initialNumberOfEvents;
+
 
          //std::vector<JSONWrapper::Object> BR = Samples[j]["br"].daughters();for(unsigned int b=0;b<BR.size();b++){Weight*=BR[b].toDouble();}
 
@@ -514,7 +518,7 @@ void Draw2DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
       leg->SetFillColor(0);
       leg->SetFillStyle(0);  leg->SetLineColor(0);
       leg->SetTextAlign(31);
-      char Buffer[1024]; sprintf(Buffer, "#it{#bf{ATLAS}} Preliminary, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm,iLumi/1000);
+      char Buffer[1024]; sprintf(Buffer, "#it{#bf{ATLAS}} Internal, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm,iLumi/1000);
       leg->AddText(Buffer);
       TString processName = Process[i]["tag"].c_str();
       //processName += ", "+savename;
@@ -599,6 +603,7 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
          if(!Process[i]["isdata"].toBool() && !Process[i]["isdatadriven"].toBool() )Weight*= iLumi;
 	  string filtExt("");
 	 if(Process[i].isTag("mctruthmode") ) { char buf[255]; sprintf(buf,"_filt%d",(int)Process[i]["mctruthmode"].toInt()); filtExt += buf; }
+
          if(Samples[j].isTag("xsec")     )    Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
@@ -898,7 +903,7 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
    if(isDataBlind || noratio) T = new TPaveText(0.05,0.994,0.45, 0.95, "NDC");
    if(isSim) T->AddText("#it{#bf{ATLAS}} Simulation");
    else if(isinProgress) T->AddText("#it{#bf{ATLAS}} Work in Progress");
-   else      T->AddText("#it{#bf{ATLAS}} Preliminary");
+   else      T->AddText("#it{#bf{ATLAS}} Internal");
 
    T->Draw("same");
    T->SetBorderSize(0);

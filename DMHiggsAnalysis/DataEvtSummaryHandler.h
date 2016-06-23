@@ -36,7 +36,7 @@ struct DataEvtSummary_t {
   int NPV;
   float mu;
   float initWeight;
-  int passQualityCuts;
+  int passVertex;
 
   //photons
   int nPhotons;

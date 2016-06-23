@@ -3,6 +3,7 @@
 
 #include "HGamAnalysisFramework/HgammaAnalysis.h"
 
+#include "PATInterfaces/SystematicRegistry.h"
 
 #define MAXPARTICLES 99
 
@@ -31,13 +32,13 @@ private:
   int RunNumber;
   int EventNumber;
   int LumiBlock;
-  float mcEventWeights_var;
-  float mcID_var;
+//  float mcEventWeights_var;
+//  float mcID_var;
   int NPV_var;
   float mu_var;
-  int isMC_var;
+//  int isMC_var;
   float initWeight_var;
-  float xsecBrFilterEff_var;
+//  float xsecBrFilterEff_var;
   //float myy_var;
   /* float phi_yy_met_var; */
   /* float phi_yyj_met_var; */
@@ -51,10 +52,14 @@ private:
   /* float phi_y1_y2_var; */
   /* float phi_j1_j2_var; */
   /* float phi_allparticles_met_var; */
+/*
   int passVertex_var;
   int passHiggsSelection_var;
   int passQualityCuts_var;
+*/
 
+  int isPassed_var;
+  int isPassedJetEventClean_var;
   //  ===========================  Reco objects  information  =========================== //
 
   //
@@ -66,6 +71,7 @@ private:
   float photon_Pz[MAXPARTICLES];
   float photon_E[MAXPARTICLES];
   //int photon_Author[MAXPARTICLES];
+/*
   float photon_Eps[MAXPARTICLES];
   float photon_E1[MAXPARTICLES];
   float photon_E2[MAXPARTICLES];
@@ -86,13 +92,14 @@ private:
   float photon_Cone40[MAXPARTICLES];
   float photon_topoCone20[MAXPARTICLES];
   float photon_topoCone40[MAXPARTICLES];
-
+*/
   //Electrons
   int nElectrons;
   float electron_Px[MAXPARTICLES];
   float electron_Py[MAXPARTICLES];
   float electron_Pz[MAXPARTICLES];
   float electron_E[MAXPARTICLES];
+/*
   int electron_Author[MAXPARTICLES];
   float electron_Eps[MAXPARTICLES];
   float electron_E1[MAXPARTICLES];
@@ -104,7 +111,7 @@ private:
   int electron_isIsoLoose[MAXPARTICLES];
   float electron_topoCone20[MAXPARTICLES];
   float electron_ptvarCone20[MAXPARTICLES];
-
+*/
 
   //Muons
   int nMuons;
@@ -112,6 +119,7 @@ private:
   float muon_Py[MAXPARTICLES];
   float muon_Pz[MAXPARTICLES];
   float muon_E[MAXPARTICLES];
+/*
   float muon_Eps[MAXPARTICLES];
   float muon_E1[MAXPARTICLES];
   float muon_E2[MAXPARTICLES];
@@ -120,13 +128,15 @@ private:
   int   muon_passIPcut[MAXPARTICLES];
   float muon_topoCone20[MAXPARTICLES];
   float muon_ptvarCone20[MAXPARTICLES];
+*/
   /* int muon_isTight[MAXPARTICLES]; */
   /* int muon_isMedium[MAXPARTICLES]; */
   /* int muon_isLoose[MAXPARTICLES]; */
+/*
   int muon_isIsoGradientLoose[MAXPARTICLES];
   int muon_isIsoGradient[MAXPARTICLES];
   int muon_isIsoLoose[MAXPARTICLES];
-
+*/
 
   //Jets
   int nJets;
@@ -134,15 +144,16 @@ private:
   float jet_Py[MAXPARTICLES];
   float jet_Pz[MAXPARTICLES];
   float jet_E[MAXPARTICLES];
+/*
   float jet_Jvt[MAXPARTICLES];
   int jet_PassSelection[MAXPARTICLES];
-
+*/
 
   // Met
   float met;
   float sumet;
   float phi_met;
-  float metSig_var;
+//  float metSig_var;
 
 
 

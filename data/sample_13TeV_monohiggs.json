@@ -1093,17 +1093,545 @@
       "isdata": false, 
       "color": "809", 
       "issignal": true, 
-      "tag": "MA(300)MZ(600)#times10000", 
+      "tag": "Mx(1)MZ(10)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.55614, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp10_mx1.NTuple", 
+          "xsec": 0.005430504
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)MZ(200)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.61383, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp200_mx1.NTuple", 
+          "xsec": 0.005353668
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)MZ(300)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.63219, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp300_mx1.NTuple", 
+          "xsec": 0.004645956
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)MZ(2000)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.79653, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp2000_mx1.NTuple", 
+          "xsec": 0.00002033532
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)MZ(10000)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.83644, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp10000_mx1.NTuple", 
+          "xsec": 2.422956E-11
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(150)MZ(10)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.69599, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp10_mx150.NTuple", 
+          "xsec": 1.088472E-8
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(150)MZ(200)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.68700, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp200_mx150.NTuple", 
+          "xsec": 0.00001104181
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(150)MZ(295)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.66759, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp295_mx150.NTuple", 
+          "xsec": 0.0003554064
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1000)MZ(1000)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.81895, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp1000_mx1000.NTuple", 
+          "xsec": 1.680839E-9
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1000)MZ(1995)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.79489, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp1995_mx1000.NTuple", 
+          "xsec": 9.914352E-7
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)Ms(10)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.76221, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms10_mx1.NTuple", 
+          "xsec": 0.007453092
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)Ms(200)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.77383, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms200_mx1.NTuple", 
+          "xsec": 0.006137760
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)Ms(300)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.72679, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms300_mx1.NTuple", 
+          "xsec": 0.01745363
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)Ms(2000)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.76768, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms2000_mx1.NTuple", 
+          "xsec": 0.008443068
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)Ms(10000)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.76864, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms10000_mx1.NTuple", 
+          "xsec": 0.006460836
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(150)Ms(10)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.76953, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms10_mx150.NTuple", 
+          "xsec": 5.969952E-9
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(150)Ms(295)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.75166, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms295_mx150.NTuple", 
+          "xsec": 5.267256E-8
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1000)Ms(1000)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.84767, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms1000_mx1000.NTuple", 
+          "xsec": 2.239188E-13
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1000)Ms(1995)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.86110, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_shxx_gg_ms1995_mx1000.NTuple", 
+          "xsec": 1.581682E-11
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "MZ(600)MA(300)", 
       "lwidth": 2, 
       "marker": 809, 
       "data": [
         {
           "filtEff": 0.81102, 
-          "kfactor": 10000, 
+          "kfactor": 1, 
           "split": 1, 
           "BR": 1.0, 
           "dtag": "MGPy8_zp2hdmxx_gg_mzp600_mA300.NTuple", 
           "xsec": 4.315128E-7
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "MZ(600)MA(400)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.80332, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zp2hdmxx_gg_mzp600_mA400.NTuple", 
+          "xsec": 5.173320E-7
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "MZ(800)MA(500)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.78718, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zp2hdmxx_gg_mzp800_mA500.NTuple", 
+          "xsec": 4.733964E-7
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "MZ(800)MA(600)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.77036, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zp2hdmxx_gg_mzp800_mA600.NTuple", 
+          "xsec": 3.430944E-7
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "MZ(1400)MA(700)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.74511, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zp2hdmxx_gg_mzp1400_mA700.NTuple", 
+          "xsec": 1.812965E-7
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "MZ(1400)MA(800)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.72997, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zp2hdmxx_gg_mzp1400_mA800.NTuple", 
+          "xsec": 4.840896E-8
         }
       ], 
       "fill": 0, 

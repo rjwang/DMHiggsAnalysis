@@ -1,4 +1,5 @@
 #include <DMHiggsAnalysis/DMHiggsAnalysis.h>
+#include <DMHiggsAnalysis/DMHiggsSystematics.h>
 
 #ifdef __CINT__
 
@@ -12,3 +13,8 @@
 #ifdef __CINT__
 #pragma link C++ class DMHiggsAnalysis+;
 #endif
+
+#ifdef __CINT__
+#pragma link C++ class DMHiggsSystematics+;
+#endif
+
