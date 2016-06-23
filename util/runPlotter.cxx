@@ -235,8 +235,8 @@ void SavingToFile(JSONWrapper::Object& Root, std::string RootDir, NameAndType Hi
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
+/*
          if(!Process[i]["isdata"].toBool() && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
-
          if(Samples[j].isTag("xsec")     ) Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
@@ -244,7 +244,7 @@ void SavingToFile(JSONWrapper::Object& Root, std::string RootDir, NameAndType Hi
 	 //if(Samples[j].isTag("nevts")     ) Weight/= Samples[j]["nevts"].toDouble();
 	 stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
          Weight /= sampleInfo.initialNumberOfEvents;
-
+*/
 	 string filtExt("");
 	 if(Process[i].isTag("mctruthmode") ) { char buf[255]; sprintf(buf,"_filt%d",(int)Process[i]["mctruthmode"].toInt()); filtExt += buf; }
 
@@ -342,8 +342,8 @@ void Draw2DHistogramSplitCanvas(JSONWrapper::Object& Root, std::string RootDir, 
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
+/*
          if(!Process[i]["isdata"].toBool()  && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
-
          if(Samples[j].isTag("xsec"))  		Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))  	Weight*= Samples[j]["filtEff"].toDouble();
@@ -351,7 +351,7 @@ void Draw2DHistogramSplitCanvas(JSONWrapper::Object& Root, std::string RootDir, 
 	 //if(Samples[j].isTag("nevts")) 		Weight/= Samples[j]["nevts"].toDouble();
          stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
          Weight /= sampleInfo.initialNumberOfEvents;
-
+*/
          //std::vector<JSONWrapper::Object> BR = Samples[j]["br"].daughters();for(unsigned int b=0;b<BR.size();b++){Weight*=BR[b].toDouble();}
 
 
@@ -464,10 +464,11 @@ void Draw2DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
-         if(!Process[i]["isdata"].toBool()  && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
+//         if(!Process[i]["isdata"].toBool()  && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
 	  string filtExt("");
 	  if(Process[i].isTag("mctruthmode") ) { char buf[255]; sprintf(buf,"_filt%d",(int)Process[i]["mctruthmode"].toInt()); filtExt += buf; }
 
+/*
          if(Samples[j].isTag("xsec")     )Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR")) 	        Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
@@ -475,7 +476,7 @@ void Draw2DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
 	 //if(Samples[j].isTag("nevts")     ) Weight/= Samples[j]["nevts"].toDouble();
          stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
          Weight /= sampleInfo.initialNumberOfEvents;
-
+*/
 
          //std::vector<JSONWrapper::Object> BR = Samples[j]["br"].daughters();for(unsigned int b=0;b<BR.size();b++){Weight*=BR[b].toDouble();}
 
@@ -600,10 +601,11 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
-         if(!Process[i]["isdata"].toBool() && !Process[i]["isdatadriven"].toBool() )Weight*= iLumi;
+//         if(!Process[i]["isdata"].toBool() && !Process[i]["isdatadriven"].toBool() )Weight*= iLumi;
 	  string filtExt("");
 	 if(Process[i].isTag("mctruthmode") ) { char buf[255]; sprintf(buf,"_filt%d",(int)Process[i]["mctruthmode"].toInt()); filtExt += buf; }
 
+/*
          if(Samples[j].isTag("xsec")     )    Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
@@ -611,7 +613,7 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
 	 //if(Samples[j].isTag("nevts")     )   Weight/= Samples[j]["nevts"].toDouble();
          stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
          Weight /= sampleInfo.initialNumberOfEvents;
-
+*/
          //std::vector<JSONWrapper::Object> BR = Samples[j]["br"].daughters();for(unsigned int b=0;b<BR.size();b++){Weight*=BR[b].toDouble();}
 
          if(HistoProperties.name.find("optim_cut")!=string::npos){Weight=1.0;}

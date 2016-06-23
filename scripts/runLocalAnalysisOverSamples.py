@@ -116,7 +116,7 @@ for proc in procList :
         data = desc['data']
         for d in data :
             origdtag = getByLabel(d,'dtag','')
-	    if not isdata: origdtag = 'mc15c.'+origdtag
+	    #if not isdata: origdtag = 'mc15c.'+origdtag
             dtag = origdtag
             xsec = getByLabel(d,'xsec',-1)
 	    nevts = getByLabel(d,'nevts',-1)

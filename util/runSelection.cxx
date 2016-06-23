@@ -117,38 +117,33 @@ int main(int argc, char *argv[])
     */
 
     TTree *myEvents_bin0 = new TTree("tree_bin0","tree_bin0");
-    double mgg_bin0(0.), weight_bin0_t(1.), weight_bin0_all(1.);
+    double mgg_bin0(0.), weight_bin0_t(1.);
     myEvents_bin0->Branch("mgg",&mgg_bin0,"mgg/D");
     myEvents_bin0->Branch("weight_t", &weight_bin0_t,"weight_t/D");
-    myEvents_bin0->Branch("weight_all", &weight_bin0_all,"weight_all/D");
 
 
     TTree *myEvents_bin1 = new TTree("tree_bin1","tree_bin1");
-    double mgg_bin1(0.), weight_bin1_t(1.), weight_bin1_all(1.);
+    double mgg_bin1(0.), weight_bin1_t(1.);
     myEvents_bin1->Branch("mgg",&mgg_bin1,"mgg/D");
     myEvents_bin1->Branch("weight_t", &weight_bin1_t,"weight_t/D");
-    myEvents_bin1->Branch("weight_all", &weight_bin1_all,"weight_all/D");
 
 
     TTree *myEvents_bin2 = new TTree("tree_bin2","tree_bin2");
-    double mgg_bin2(0.), weight_bin2_t(1.), weight_bin2_all(1.);
+    double mgg_bin2(0.), weight_bin2_t(1.);
     myEvents_bin2->Branch("mgg",&mgg_bin2,"mgg/D");
     myEvents_bin2->Branch("weight_t", &weight_bin2_t,"weight_t/D");
-    myEvents_bin2->Branch("weight_all", &weight_bin2_all,"weight_all/D");
 
 
     TTree *myEvents_bin3 = new TTree("tree_bin3","tree_bin3");
-    double mgg_bin3(0.), weight_bin3_t(1.), weight_bin3_all(1.);
+    double mgg_bin3(0.), weight_bin3_t(1.);
     myEvents_bin3->Branch("mgg",&mgg_bin3,"mgg/D");
     myEvents_bin3->Branch("weight_t", &weight_bin3_t,"weight_t/D");
-    myEvents_bin3->Branch("weight_all", &weight_bin3_all,"weight_all/D");
 
 
     TTree *myEvents_allbins = new TTree("tree_allbins","tree_allbins");
-    double mgg_allbins(0.), weight_allbins_t(1.), weight_allbins_all(1.);
+    double mgg_allbins(0.), weight_allbins_t(1.);
     myEvents_allbins->Branch("mgg",&mgg_allbins,"mgg/D");
     myEvents_allbins->Branch("weight_t", &weight_allbins_t,"weight_t/D");
-    myEvents_allbins->Branch("weight_all", &weight_allbins_all,"weight_all/D");
 
 
 
@@ -273,16 +268,9 @@ int main(int argc, char *argv[])
         summaryHandler_.getEntry(iev);
         DataEvtSummary_t &ev=summaryHandler_.getEvent();
 
-        //weights:  genWeights * PU * PVz
+        //all the weights, include XS*BR*EFF, genWeights * PU * PVz
         float weight = 1.0;
         if(isMC) weight *= ev.initWeight;
-        /*
-        	//normalization weights
-        	if(isMC){
-        		weight *= (xsec*BR*filtEff*kfactor);
-        		weight /= (sumInitialEvents/skim_eff);
-        	}
-        */
         // add PhysicsEvent_t class, get all tree to physics objects
         PhysicsEvent_t phys=getPhysicsEventFrom(ev);
 
@@ -553,22 +541,12 @@ int main(int argc, char *argv[])
 
                     mgg_bin0 = diphoton.mass();
                     weight_bin0_t = weight;
-                    weight_bin0_all = weight;
-                    if(isMC) {
-                        weight_bin0_all *= (xsec*BR*filtEff*kfactor);
-                        weight_bin0_all /= (sumInitialEvents/skim_eff);
-                    }
                     myEvents_bin0->Fill();
 
                 } else {
 
                     mgg_bin1 = diphoton.mass();
                     weight_bin1_t = weight;
-                    weight_bin1_all = weight;
-                    if(isMC) {
-                        weight_bin1_all *= (xsec*BR*filtEff*kfactor);
-                        weight_bin1_all /= (sumInitialEvents/skim_eff);
-                    }
                     myEvents_bin1->Fill();
 
                 }
@@ -577,11 +555,6 @@ int main(int argc, char *argv[])
 
                 mgg_bin2 = diphoton.mass();
                 weight_bin2_t = weight;
-                weight_bin2_all = weight;
-                if(isMC) {
-                    weight_bin2_all *= (xsec*BR*filtEff*kfactor);
-                    weight_bin2_all /= (sumInitialEvents/skim_eff);
-                }
                 myEvents_bin2->Fill();
 
 
@@ -589,25 +562,15 @@ int main(int argc, char *argv[])
 
                 mgg_bin3 = diphoton.mass();
                 weight_bin3_t = weight;
-                weight_bin3_all = weight;
-                if(isMC) {
-                    weight_bin3_all *= (xsec*BR*filtEff*kfactor);
-                    weight_bin3_all /= (sumInitialEvents/skim_eff);
-                }
                 myEvents_bin3->Fill();
 
             }
 
 
 
-                mgg_allbins = diphoton.mass();
-                weight_allbins_t = weight;
-                weight_allbins_all = weight;
-                if(isMC) {
-                    weight_allbins_all *= (xsec*BR*filtEff*kfactor);
-                    weight_allbins_all /= (sumInitialEvents/skim_eff);
-                }
-                myEvents_allbins->Fill();
+            mgg_allbins = diphoton.mass();
+            weight_allbins_t = weight;
+            myEvents_allbins->Fill();
 
 
         }

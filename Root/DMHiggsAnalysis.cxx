@@ -113,6 +113,7 @@ void DMHiggsAnalysis::declareVariables()
 EL::StatusCode DMHiggsAnalysis::initialize()
 {
 
+    using namespace std;
     HgammaAnalysis::initialize();
     std::string inputfileName = wk()->inputFileName();
     //currentfilename = inputfileName;
@@ -121,11 +122,12 @@ EL::StatusCode DMHiggsAnalysis::initialize()
     TagName.ReplaceAll("mc15c.","");
     inputfileName.append(".NTuple.root");
     TString InputfileName = inputfileName;
-    //InputfileName.ReplaceAll("mc15c.","");
 
     m_outputFile = TFile::Open(InputfileName.Data(),"RECREATE");
 
     if(TagName.Contains("Pythia8_WH125") || TagName.Contains("Pythia8_ZH125") ) TagName += "_big";
+    if(TagName.Contains("Pythia8_1Hard1BremDP40")) TagName = "Pythia81Hard1BremDP40";
+
     // copy cutflow hists
     if( isMC() ) {
         CutFlow_ = (TH1F*) getCutFlowHistogram("CutFlow_"+TagName,"")->Clone("CutFlow");
@@ -190,7 +192,7 @@ EL::StatusCode DMHiggsAnalysis::execute()
     RunNumber = runNumber( *eventInfo );
     LumiBlock = lumiBlock( *eventInfo );
     EventNumber = eventNumber( *eventInfo );
-    initWeight_var = initWeight(*HGameventInfo);
+    if(isMC()) initWeight_var = HgammaAnalysis::weightFinal(); //initWeight(*HGameventInfo);
     NPV_var = NPV(*HGameventInfo);
     mu_var = mu(*HGameventInfo);
 
