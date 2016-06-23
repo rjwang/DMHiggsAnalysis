@@ -76,6 +76,7 @@ float leftcutLine, rightcutLine;
 
 
 struct stSampleInfo{ double PURescale_up; double PURescale_down; double initialNumberOfEvents;};
+std::unordered_map<string, stSampleInfo> sampleInfoMap;
 std::unordered_map<string, bool> FileExist;
 TString getChannelName(std::string SaveName);
 void savePath(TCanvas* c,std::string outDir,std::string SaveName,std::string plotExt);
@@ -116,8 +117,8 @@ TObject* GetObjectFromPath(TDirectory* File, std::string Path, bool GetACopy=fal
 
 }
 
-void GetListOfObject(JSONWrapper::Object& Root, std::string RootDir, std::list<NameAndType>& histlist, TDirectory* dir=NULL, std::string parentPath=""){
-
+void GetListOfObject(JSONWrapper::Object& Root, std::string RootDir, std::list<NameAndType>& histlist, TDirectory* dir=NULL, std::string parentPath="")
+{
   if(parentPath=="" && !dir)
     {
       int dataProcessed = 0;
@@ -140,8 +141,6 @@ void GetListOfObject(JSONWrapper::Object& Root, std::string RootDir, std::list<N
           if(isMC  ){if(bckgProcessed>8) {continue;}else{bckgProcessed++;}}
 
 	  std::vector<JSONWrapper::Object> Samples = (Process[ip])["data"].daughters();
-          //to make it faster only consider the first samples
-	  //for(size_t id=0; id<Samples.size()&&id<2; id++){
 	  for(size_t id=0; id<Samples.size(); id++){
 	      int split = 1;
 	      if(Samples[id].isTag("split"))split = Samples[id]["split"].toInt();
@@ -187,7 +186,7 @@ void GetListOfObject(JSONWrapper::Object& Root, std::string RootDir, std::list<N
 
 }
 
-void checkFileExist(JSONWrapper::Object& Root, std::string RootDir){
+void checkFileExist(JSONWrapper::Object& Root, std::string RootDir, NameAndType HistoProperties){
 
    std::vector<JSONWrapper::Object> Process = Root["proc"].daughters();
    for(unsigned int i=0;i<Process.size();i++){
@@ -199,6 +198,7 @@ void checkFileExist(JSONWrapper::Object& Root, std::string RootDir){
 	 int split = 1;
 	 if(Samples[j].isTag("split"))split = Samples[j]["split"].toInt();
 
+	 TH1* tmphist = NULL;
          for(int s=0;s<split;s++){
 	   string segmentExt; if(split>1) { char buf[255]; sprintf(buf,"_%i",s); segmentExt += buf; }
             string FileName = RootDir + (Samples[j])["dtag"].toString() + ((Samples[j].isTag("suffix"))?(Samples[j])["suffix"].toString():string("")) + segmentExt + filtExt + ".root";
@@ -206,7 +206,20 @@ void checkFileExist(JSONWrapper::Object& Root, std::string RootDir){
             bool& fileExist = FileExist[FileName];
             if(!File || File->IsZombie() || !File->IsOpen() || File->TestBit(TFile::kRecovered) ){fileExist=false;  continue; }else{fileExist=true;}
 
+            TH1* tmptmphist = (TH1*) GetObjectFromPath(File,HistoProperties.name);
+            if(tmptmphist)
+              {
+                if(!tmphist){gROOT->cd(); tmphist = (TH1*)tmptmphist->Clone(tmptmphist->GetName());}else{tmphist->Add(tmptmphist);}
+                delete tmptmphist;
+              }
+            delete File;
          }
+	 if(!tmphist)continue;
+	 stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
+	 sampleInfo.initialNumberOfEvents = tmphist->GetBinContent(1);
+
+	 delete tmphist;
+
       }
    }
 }
@@ -222,13 +235,16 @@ void SavingToFile(JSONWrapper::Object& Root, std::string RootDir, NameAndType Hi
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
+/*
          if(!Process[i]["isdata"].toBool() && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
          if(Samples[j].isTag("xsec")     ) Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
 	 if(Samples[j].isTag("kfactor"))        Weight*= Samples[j]["kfactor"].toDouble();
-	 if(Samples[j].isTag("nevts")     ) Weight/= Samples[j]["nevts"].toDouble();
-
+	 //if(Samples[j].isTag("nevts")     ) Weight/= Samples[j]["nevts"].toDouble();
+	 stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
+         Weight /= sampleInfo.initialNumberOfEvents;
+*/
 	 string filtExt("");
 	 if(Process[i].isTag("mctruthmode") ) { char buf[255]; sprintf(buf,"_filt%d",(int)Process[i]["mctruthmode"].toInt()); filtExt += buf; }
 
@@ -308,8 +324,8 @@ void Draw2DHistogramSplitCanvas(JSONWrapper::Object& Root, std::string RootDir, 
    T->SetFillStyle(0);  T->SetLineColor(0);
    T->SetTextAlign(32);
    char Buffer[1024];
-   if(isSim)	sprintf(Buffer, "ATLAS Simulation, #it{ZH #rightarrow l^{+}l^{-}+#slash{E}_{T}}, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
-   else sprintf(Buffer, "ATLAS preliminary, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
+   if(isSim)	sprintf(Buffer, "#it{#bf{ATLAS}} Simulation, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
+   else sprintf(Buffer, "#it{#bf{ATLAS}} Internal, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm, iLumi/1000);
    T->AddText(Buffer);
 
    std::vector<JSONWrapper::Object> Process = Root["proc"].daughters();
@@ -326,13 +342,16 @@ void Draw2DHistogramSplitCanvas(JSONWrapper::Object& Root, std::string RootDir, 
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
+/*
          if(!Process[i]["isdata"].toBool()  && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
          if(Samples[j].isTag("xsec"))  		Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))  	Weight*= Samples[j]["filtEff"].toDouble();
 	 if(Samples[j].isTag("kfactor"))        Weight*= Samples[j]["kfactor"].toDouble();
-	 if(Samples[j].isTag("nevts")) 		Weight/= Samples[j]["nevts"].toDouble();
-
+	 //if(Samples[j].isTag("nevts")) 		Weight/= Samples[j]["nevts"].toDouble();
+         stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
+         Weight /= sampleInfo.initialNumberOfEvents;
+*/
          //std::vector<JSONWrapper::Object> BR = Samples[j]["br"].daughters();for(unsigned int b=0;b<BR.size();b++){Weight*=BR[b].toDouble();}
 
 
@@ -349,7 +368,6 @@ void Draw2DHistogramSplitCanvas(JSONWrapper::Object& Root, std::string RootDir, 
             TH1* tmptmphist = (TH1*) GetObjectFromPath(File,HistoProperties.name);
             if(!tmptmphist){delete File;continue;}
             if(!tmphist){gROOT->cd(); tmphist = (TH1*)tmptmphist->Clone(tmptmphist->GetName());}else{tmphist->Add(tmptmphist);}
-            //if(Process[i]["isdata"].toBool())printf("%s --> %f*%f(%f)\n",(Samples[j])["dtag"].toString().c_str(), tmptmphist->Integral(),Weight, initialNumberOfEvents[(Samples[j])["dtag"].toString()]);
             delete tmptmphist;
             delete File;
          }
@@ -446,14 +464,19 @@ void Draw2DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
-         if(!Process[i]["isdata"].toBool()  && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
+//         if(!Process[i]["isdata"].toBool()  && !Process[i]["isdatadriven"].toBool())Weight*= iLumi;
 	  string filtExt("");
 	  if(Process[i].isTag("mctruthmode") ) { char buf[255]; sprintf(buf,"_filt%d",(int)Process[i]["mctruthmode"].toInt()); filtExt += buf; }
+
+/*
          if(Samples[j].isTag("xsec")     )Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR")) 	        Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
 	 if(Samples[j].isTag("kfactor"))        Weight*= Samples[j]["kfactor"].toDouble();
-	 if(Samples[j].isTag("nevts")     ) Weight/= Samples[j]["nevts"].toDouble();
+	 //if(Samples[j].isTag("nevts")     ) Weight/= Samples[j]["nevts"].toDouble();
+         stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
+         Weight /= sampleInfo.initialNumberOfEvents;
+*/
 
          //std::vector<JSONWrapper::Object> BR = Samples[j]["br"].daughters();for(unsigned int b=0;b<BR.size();b++){Weight*=BR[b].toDouble();}
 
@@ -496,7 +519,7 @@ void Draw2DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
       leg->SetFillColor(0);
       leg->SetFillStyle(0);  leg->SetLineColor(0);
       leg->SetTextAlign(31);
-      char Buffer[1024]; sprintf(Buffer, "#bf{ATLAS} #it{Preliminary}, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm,iLumi/1000);
+      char Buffer[1024]; sprintf(Buffer, "#it{#bf{ATLAS}} Internal, #sqrt{s}=%.1f TeV, L=%.1f fb^{-1}", iEcm,iLumi/1000);
       leg->AddText(Buffer);
       TString processName = Process[i]["tag"].c_str();
       //processName += ", "+savename;
@@ -578,15 +601,19 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
-         if(!Process[i]["isdata"].toBool() && !Process[i]["isdatadriven"].toBool() )Weight*= iLumi;
+//         if(!Process[i]["isdata"].toBool() && !Process[i]["isdatadriven"].toBool() )Weight*= iLumi;
 	  string filtExt("");
 	 if(Process[i].isTag("mctruthmode") ) { char buf[255]; sprintf(buf,"_filt%d",(int)Process[i]["mctruthmode"].toInt()); filtExt += buf; }
+
+/*
          if(Samples[j].isTag("xsec")     )    Weight*= Samples[j]["xsec"].toDouble();
 	 if(Samples[j].isTag("BR"))             Weight*= Samples[j]["BR"].toDouble();
 	 if(Samples[j].isTag("filtEff"))        Weight*= Samples[j]["filtEff"].toDouble();
 	 if(Samples[j].isTag("kfactor"))        Weight*= Samples[j]["kfactor"].toDouble();
-	 if(Samples[j].isTag("nevts")     )   Weight/= Samples[j]["nevts"].toDouble();
-
+	 //if(Samples[j].isTag("nevts")     )   Weight/= Samples[j]["nevts"].toDouble();
+         stSampleInfo& sampleInfo = sampleInfoMap[(Samples[j])["dtag"].toString()];
+         Weight /= sampleInfo.initialNumberOfEvents;
+*/
          //std::vector<JSONWrapper::Object> BR = Samples[j]["br"].daughters();for(unsigned int b=0;b<BR.size();b++){Weight*=BR[b].toDouble();}
 
          if(HistoProperties.name.find("optim_cut")!=string::npos){Weight=1.0;}
@@ -876,9 +903,9 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
 
    T = new TPaveText(0.06,0.994,0.58, 0.935, "NDC");
    if(isDataBlind || noratio) T = new TPaveText(0.05,0.994,0.45, 0.95, "NDC");
-   if(isSim) T->AddText("#bf{ATLAS} #it{Simulation}");
-   else if(isinProgress) T->AddText("#bf{ATLAS} #it{Work in Progress}");
-   else      T->AddText("#bf{ATLAS} #it{Preliminary}");
+   if(isSim) T->AddText("#it{#bf{ATLAS}} Simulation");
+   else if(isinProgress) T->AddText("#it{#bf{ATLAS}} Work in Progress");
+   else      T->AddText("#it{#bf{ATLAS}} Internal");
 
    T->Draw("same");
    T->SetBorderSize(0);
@@ -1142,7 +1169,7 @@ int main(int argc, char* argv[]){
 
 	printf("--%18s --> integrated luminosity to be used for the MC rescale\n","iLumi");
 	printf("--%18s --> center of mass energy (TeV) = 8 TeV by default\n","iEcm");
-        printf("--%18s --> print CMS Simulation instead of the standard title\n","isSim");
+        printf("--%18s --> print ATLAS Simulation instead of the standard title\n","isSim");
         printf("--%18s --> path to the directory containing the .root files to process\n","inDir");
         printf("--%18s --> path of the directory that will contains the output plots and tables\n","outDir");
         printf("--%18s --> path of the output summary .root file\n","outFile");
@@ -1244,7 +1271,7 @@ int main(int argc, char* argv[]){
 
 
    JSONWrapper::Object Root(jsonFile, true);
-   checkFileExist(Root,inDir);
+   checkFileExist(Root,inDir,NameAndType(cutflowhisto,true, false));  //Used to get the rescale factor based on the total number of events geenrated
    std::list<NameAndType> histlist;
    GetListOfObject(Root,inDir,histlist);
    histlist.sort();

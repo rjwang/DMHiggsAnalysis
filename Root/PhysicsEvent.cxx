@@ -77,32 +77,48 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
       }
 
 
+      size_t nele(0);
       for(Int_t i=0; i<ev.nElectrons; i++) {
 	LorentzVector P4(ev.electron_Px[i]/1000.,ev.electron_Py[i]/1000.,ev.electron_Pz[i]/1000.,ev.electron_E[i]/1000.);
 	if(P4.pt()>0) {
-		phys.electrons.push_back( PhysicsObject_Electron(P4, 11) );
+		phys.electrons.push_back( PhysicsObject_Electron(P4, 11*ev.electron_charge[i]) );
+
+		phys.electrons[nele].setElectronIDIsoInfo(ev.electron_isTight[i],ev.electron_isMedium[i],
+								ev.electron_isIsoLoose[i]);
+		nele++;
 	}
       }
 
 
+      size_t nmuon(0);
       for(Int_t i=0; i<ev.nMuons; i++) {
 	LorentzVector P4(ev.muon_Px[i]/1000.,ev.muon_Py[i]/1000.,ev.muon_Pz[i]/1000.,ev.muon_E[i]/1000.);
 	if(P4.pt()>0) {
-		phys.muons.push_back( PhysicsObject_Muon(P4, 13) );
+		phys.muons.push_back( PhysicsObject_Muon(P4, 13*ev.muon_charge[i]) );
+
+		phys.muons[nmuon].setMuonIDIsoInfo(ev.muon_isIsoGradientLoose[i],
+								ev.muon_isIsoGradient[i],ev.muon_isIsoLoose[i]);
+		nmuon++;
+
 	}
       }
 
 
+      size_t njet(0);
       for(Int_t i=0; i<ev.nJets; i++) {
 	LorentzVector P4(ev.jet_Px[i]/1000.,ev.jet_Py[i]/1000.,ev.jet_Pz[i]/1000.,ev.jet_E[i]/1000.);
 	if(P4.pt()>0) {
 		phys.jets.push_back( PhysicsObject_Jet(P4) );
+
+		phys.jets[njet].setJetInfo(ev.jet_Jvt[i]);
+
+		njet++;
 	}
       }
 
 
     // MET
-//    phys.met 	 = LorentzVector( ev.met_pt*cos(ev.met_phi), ev.met_pt*sin(ev.met_phi), 0, ev.met_pt );
+    phys.met 	 = LorentzVector( ev.met*cos(ev.phi_met)/1000., ev.met*sin(ev.phi_met)/1000., 0, ev.met/1000. );
 
 /*
     // Jet

@@ -36,7 +36,7 @@ struct DataEvtSummary_t {
   int NPV;
   float mu;
   float initWeight;
-  int passQualityCuts;
+  int passVertex;
 
   //photons
   int nPhotons;
@@ -57,6 +57,10 @@ struct DataEvtSummary_t {
   float electron_Py[MAXPARTICLES];
   float electron_Pz[MAXPARTICLES];
   float electron_E[MAXPARTICLES];
+  float electron_charge[MAXPARTICLES];
+  int electron_isTight[MAXPARTICLES];
+  int electron_isMedium[MAXPARTICLES];
+  int electron_isIsoLoose[MAXPARTICLES];
 
   //Muons
   int nMuons;
@@ -64,6 +68,11 @@ struct DataEvtSummary_t {
   float muon_Py[MAXPARTICLES];
   float muon_Pz[MAXPARTICLES];
   float muon_E[MAXPARTICLES];
+  float muon_charge[MAXPARTICLES];
+  int muon_isIsoGradientLoose[MAXPARTICLES];
+  int muon_isIsoGradient[MAXPARTICLES];
+  int muon_isIsoLoose[MAXPARTICLES];
+
 
   //Jets
   int nJets;
@@ -71,6 +80,7 @@ struct DataEvtSummary_t {
   float jet_Py[MAXPARTICLES];
   float jet_Pz[MAXPARTICLES];
   float jet_E[MAXPARTICLES];
+  float jet_Jvt[MAXPARTICLES];
 
 
   //MET

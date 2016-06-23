@@ -28,27 +28,6 @@ public :
 
 
 
-
-//
-class PhysicsObject_Electron : public LorentzVector {
-public :
-    PhysicsObject_Electron(LorentzVector vec, int id_):
-        LorentzVector(vec), id(id_) { }
-
-    int id;
-};
-
-
-//
-class PhysicsObject_Muon : public LorentzVector {
-public :
-    PhysicsObject_Muon(LorentzVector vec, int id_):
-        LorentzVector(vec), id(id_) { }
-
-    int id;
-};
-
-
 //
 class PhysicsObject_Photon : public LorentzVector {
 public :
@@ -74,12 +53,53 @@ public :
 
 
 //
+class PhysicsObject_Electron : public LorentzVector {
+public :
+    PhysicsObject_Electron(LorentzVector vec, int id_):
+        LorentzVector(vec), id(id_) { }
+
+    void setElectronIDIsoInfo(int electron_isTight_, int electron_isMedium_, int electron_isIsoLoose_){
+
+	isTightID = electron_isTight_;
+	isMediumID = electron_isMedium_;
+	isLooseIso = electron_isIsoLoose_;
+    }
+
+    int id;
+    int isTightID,isMediumID,isLooseIso;
+};
+
+
+//
+class PhysicsObject_Muon : public LorentzVector {
+public :
+    PhysicsObject_Muon(LorentzVector vec, int id_):
+        LorentzVector(vec), id(id_) { }
+
+     void setMuonIDIsoInfo(int isIsoGradientLoose_, int isIsoGradient_, int isIsoLoose_){
+
+	isIsoGradientLoose = isIsoGradientLoose_;
+	isIsoGradient = isIsoGradient_;
+	isIsoLoose = isIsoLoose_;
+     }
+
+    int id;
+    int isIsoGradientLoose,isIsoGradient,isIsoLoose;
+};
+
+
+
+//
 class PhysicsObject_Jet : public LorentzVector {
 public :
     PhysicsObject_Jet(LorentzVector vec):
         LorentzVector(vec) { }
 
+    void setJetInfo(float Jvt_){
+	JVT = Jvt_;
+    }
 
+    float JVT;
 };
 
 
