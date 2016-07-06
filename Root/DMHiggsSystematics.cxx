@@ -88,45 +88,6 @@ EL::StatusCode DMHiggsSystematics::createOutput()
 }
 
 
-void DMHiggsSystematics::declareVariables()
-{
-    myEvents->Branch("RunNumber",&RunNumber,"RunNumber/I");
-    myEvents->Branch("LumiBlock",&LumiBlock,"LumiBlock/I");
-    myEvents->Branch("EventNumber",&EventNumber,"EventNumber/I");
-    myEvents->Branch("NPV",&NPV_var,"NPV_var/I");
-    myEvents->Branch("mu",&mu_var,"mu_var/F");
-    myEvents->Branch("initWeight",&initWeight_var,"initWeight_var/F");
-
-    myEvents->Branch("nPhotons", &nPhotons,"nPhotons/I");
-    myEvents->Branch("photon_Px", photon_Px,"photon_Px[nPhotons]/F");
-    myEvents->Branch("photon_Py", photon_Py,"photon_Py[nPhotons]/F");
-    myEvents->Branch("photon_Pz", photon_Pz,"photon_Pz[nPhotons]/F");
-    myEvents->Branch("photon_E",  photon_E, "photon_E[nPhotons]/F");
-
-    myEvents->Branch("nElectrons", &nElectrons,"nElectrons/I");
-    myEvents->Branch("electron_Px", electron_Px,"electron_Px[nElectrons]/F");
-    myEvents->Branch("electron_Py", electron_Py,"electron_Py[nElectrons]/F");
-    myEvents->Branch("electron_Pz", electron_Pz,"electron_Pz[nElectrons]/F");
-    myEvents->Branch("electron_E",  electron_E, "electron_E[nElectrons]/F");
-
-    myEvents->Branch("nMuons", &nMuons,"nMuons/I");
-    myEvents->Branch("muon_Px", muon_Px,"muon_Px[nMuons]/F");
-    myEvents->Branch("muon_Py", muon_Py,"muon_Py[nMuons]/F");
-    myEvents->Branch("muon_Pz", muon_Pz,"muon_Pz[nMuons]/F");
-    myEvents->Branch("muon_E",  muon_E, "muon_E[nMuons]/F");
-
-    myEvents->Branch("nJets", &nJets,"nJets/I");
-    myEvents->Branch("jet_Px", jet_Px,"jet_Px[nJets]/F");
-    myEvents->Branch("jet_Py", jet_Py,"jet_Py[nJets]/F");
-    myEvents->Branch("jet_Pz", jet_Pz,"jet_Pz[nJets]/F");
-    myEvents->Branch("jet_E", jet_E,"jet_E[nJets]/F");
-
-    myEvents->Branch("met", &met,"met/F");
-    myEvents->Branch("phi_met", &phi_met,"phi_met/F");
-    myEvents->Branch("sumet", &sumet,"sumet/F");
-
-}
-
 
 EL::StatusCode DMHiggsSystematics::initialize()
 {
@@ -141,114 +102,36 @@ EL::StatusCode DMHiggsSystematics::initialize()
     m_outputFile = TFile::Open(inputfileName.c_str(),"RECREATE");
 
 
+
+
+
     //#############################
     // doing systematics
     //#############################
 
+    // Set the function type:
+//    TString sysListDir = "/afs/cern.ch/work/r/rewang/monoHiggs/hgam_012_000247/DMHiggsAnalysis/data/SysList_data16_h012_rel20p7.txt";
+    TString sysListDir = "/afs/cern.ch/work/r/rewang/monoHiggs/hgam_012_000247/DMHiggsAnalysis/data/SysList_data16_h012_rel20p7_noMuonElev2.txt";
+    std::ifstream sysListFile (sysListDir.Data());
     syslist.clear();
     syslist.push_back(""); //norminal
-    syslist.push_back("EG_RESOLUTION_ALL__1down");
-/*
-    syslist.push_back("EG_RESOLUTION_ALL__1up");
-    syslist.push_back("EG_SCALE_ALL__1down");
-    syslist.push_back("EG_SCALE_ALL__1up");
-    syslist.push_back("EL_EFF_ID_TotalCorrUncertainty__1down");
-    syslist.push_back("EL_EFF_ID_TotalCorrUncertainty__1up");
-    syslist.push_back("EL_EFF_Iso_TotalCorrUncertainty__1down");
-    syslist.push_back("EL_EFF_Iso_TotalCorrUncertainty__1up");
-    syslist.push_back("EL_EFF_Reco_TotalCorrUncertainty__1down");
-    syslist.push_back("EL_EFF_Reco_TotalCorrUncertainty__1up");
-    syslist.push_back("EL_EFF_TriggerEff_TotalCorrUncertainty__1down");
-    syslist.push_back("EL_EFF_TriggerEff_TotalCorrUncertainty__1up");
-    syslist.push_back("EL_EFF_Trigger_TotalCorrUncertainty__1down");
-    syslist.push_back("EL_EFF_Trigger_TotalCorrUncertainty__1up");
-    syslist.push_back("FT_EFF_Eigen_B_0__1down");
-    syslist.push_back("FT_EFF_Eigen_B_0__1up");
-    syslist.push_back("FT_EFF_Eigen_B_1__1down");
-    syslist.push_back("FT_EFF_Eigen_B_1__1up");
-    syslist.push_back("FT_EFF_Eigen_B_2__1down");
-    syslist.push_back("FT_EFF_Eigen_B_2__1up");
-    syslist.push_back("FT_EFF_Eigen_B_3__1down");
-    syslist.push_back("FT_EFF_Eigen_B_3__1up");
-    syslist.push_back("FT_EFF_Eigen_B_4__1down");
-    syslist.push_back("FT_EFF_Eigen_B_4__1up");
-    syslist.push_back("FT_EFF_Eigen_C_0__1down");
-    syslist.push_back("FT_EFF_Eigen_C_0__1up");
-    syslist.push_back("FT_EFF_Eigen_C_1__1down");
-    syslist.push_back("FT_EFF_Eigen_C_1__1up");
-    syslist.push_back("FT_EFF_Eigen_C_2__1down");
-    syslist.push_back("FT_EFF_Eigen_C_2__1up");
-    syslist.push_back("FT_EFF_Eigen_C_3__1down");
-    syslist.push_back("FT_EFF_Eigen_C_3__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_0__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_0__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_10__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_10__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_11__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_11__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_1__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_1__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_2__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_2__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_3__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_3__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_4__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_4__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_5__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_5__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_6__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_6__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_7__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_7__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_8__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_8__1up");
-    syslist.push_back("FT_EFF_Eigen_Light_9__1down");
-    syslist.push_back("FT_EFF_Eigen_Light_9__1up");
-    syslist.push_back("FT_EFF_extrapolation_from_charm__1down");
-    syslist.push_back("FT_EFF_extrapolation_from_charm__1up");
-    syslist.push_back("FT_EFF_extrapolation__1down");
-    syslist.push_back("FT_EFF_extrapolation__1up");
-    syslist.push_back("JET_JER_SINGLE_NP__1up");
-    syslist.push_back("MET_JetTrk_ScaleDown");
-    syslist.push_back("MET_JetTrk_ScaleUp");
-    syslist.push_back("MET_SoftTrk_ResoPara");
-    syslist.push_back("MET_SoftTrk_ResoPerp");
-    syslist.push_back("MET_SoftTrk_ScaleDown");
-    syslist.push_back("MET_SoftTrk_ScaleUp");
-    syslist.push_back("MUONS_ID__1down");
-    syslist.push_back("MUONS_ID__1up");
-    syslist.push_back("MUONS_MS__1down");
-    syslist.push_back("MUONS_MS__1up");
-    syslist.push_back("MUONS_SCALE__1down");
-    syslist.push_back("MUONS_SCALE__1up");
-    syslist.push_back("MUON_EFF_STAT_LOWPT__1down");
-    syslist.push_back("MUON_EFF_STAT_LOWPT__1up");
-    syslist.push_back("MUON_EFF_STAT__1down");
-    syslist.push_back("MUON_EFF_STAT__1up");
-    syslist.push_back("MUON_EFF_SYS_LOWPT__1down");
-    syslist.push_back("MUON_EFF_SYS_LOWPT__1up");
-    syslist.push_back("MUON_EFF_SYS__1down");
-    syslist.push_back("MUON_EFF_SYS__1up");
-    syslist.push_back("MUON_EFF_TrigStatUncertainty__1down");
-    syslist.push_back("MUON_EFF_TrigStatUncertainty__1up");
-    syslist.push_back("MUON_EFF_TrigSystUncertainty__1down");
-    syslist.push_back("MUON_EFF_TrigSystUncertainty__1up");
-    syslist.push_back("MUON_ISO_STAT__1down");
-    syslist.push_back("MUON_ISO_STAT__1up");
-    syslist.push_back("MUON_ISO_SYS__1down");
-    syslist.push_back("MUON_ISO_SYS__1up");
-    syslist.push_back("PH_EFF_ID_Uncertainty__1down");
-    syslist.push_back("PH_EFF_ID_Uncertainty__1up");
-    syslist.push_back("PH_EFF_TRKISO_Uncertainty__1down");
-    syslist.push_back("PH_EFF_TRKISO_Uncertainty__1up");
-    syslist.push_back("PH_Iso_DDonoff");
-    syslist.push_back("PRW_DATASF__1down");
-    syslist.push_back("PRW_DATASF__1up");
-*/
+
+    if (sysListFile.is_open()) {
+        std::string line;
+        while ( getline (sysListFile,line) ) {
+            if(line == "")continue;
+            TString tempSys = line;
+            std::cout << "using sys: " << tempSys << std::endl;
+            syslist.push_back(tempSys);
+	    //break; //for testing
+        }
+    } else {
+        std::cout << "Unable to open systematic list: " << sysListDir <<std::endl;
+        abort();
+    }
+    sysListFile.close();
 
     SYSHIST = syslist.size();
-
-
     for(int hist=0; hist<SYSHIST; hist++) {
 
         TString Hname = "mgg";
@@ -259,14 +142,11 @@ EL::StatusCode DMHiggsSystematics::initialize()
         myhisto[hist]->GetXaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
         myhisto[hist]->GetXaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
         myhisto[hist]->GetXaxis()->SetBinLabel(3,"Intermediate #it{E}_{T}^{miss}");
-        myhisto[hist]->GetXaxis()->SetBinLabel(4,"Rest");
+        myhisto[hist]->GetXaxis()->SetBinLabel(4,"Rest Category");
 
     }
 
 
-    // tree
-    //myEvents = new TTree("DMHiggsSystematics","DMHiggsSystematics");
-    //declareVariables();
 
     return EL::StatusCode::SUCCESS;
 }
@@ -296,6 +176,7 @@ EL::StatusCode DMHiggsSystematics::execute()
     SG::AuxElement::Accessor<float> initWeight("weightInitial");
     SG::AuxElement::Accessor<char> isPassed("isPassed");
     SG::AuxElement::Accessor<char> isPassedJetEventClean("isPassedJetEventClean");
+    SG::AuxElement::Accessor<char> isDalitz("isDalitz");
     SG::AuxElement::Accessor<float> met_TST("met_TST");
     SG::AuxElement::Accessor<float> met_sumet("sumet_TST");
     SG::AuxElement::Accessor<float> met_phi("phi_TST");
@@ -325,13 +206,21 @@ EL::StatusCode DMHiggsSystematics::execute()
         isPassedJetEventClean_var = isPassedJetEventClean(*HGameventInfo) == 1 ? 1 : 0 ;
         if(!isPassed_var || !isPassedJetEventClean_var) return EL::StatusCode::SUCCESS;
 
-        RunNumber = runNumber( *eventInfo );
-        LumiBlock = lumiBlock( *eventInfo );
-        EventNumber = eventNumber( *eventInfo );
-        initWeight_var = initWeight(*HGameventInfo);
-        NPV_var = NPV(*HGameventInfo);
-        mu_var = mu(*HGameventInfo);
+        if(isMC()) {
+            isDalitz_var = isDalitz(*HGameventInfo) == 1 ? 1 : 0 ;
+            if(isDalitz_var) return EL::StatusCode::SUCCESS;
+        }
 
+
+
+        /*
+                RunNumber = runNumber( *eventInfo );
+                LumiBlock = lumiBlock( *eventInfo );
+                EventNumber = eventNumber( *eventInfo );
+                initWeight_var = initWeight(*HGameventInfo);
+                NPV_var = NPV(*HGameventInfo);
+                mu_var = mu(*HGameventInfo);
+        */
 
         xAOD::PhotonContainer photons_H = photonHandler()->getCorrectedContainer() ;
         xAOD::ElectronContainer electrons_H = electronHandler()->getCorrectedContainer() ;
@@ -353,9 +242,18 @@ EL::StatusCode DMHiggsSystematics::execute()
         //if(!HgammaAnalysis::passJetEventCleaning() ) return EL::StatusCode::SUCCESS;
 
 
+
+        HgammaAnalysis::setSelectedObjects(&photons, &electrons, &muons, &jets);
+
         //weights:  genWeights * PU * PVz
         float weight = 1.0;
-        if(isMC()) weight *= HgammaAnalysis::weightFinal();//initWeight_var;
+        //if(isMC()) weight *= HgammaAnalysis::weightFinal();
+        if(isMC()) weight *= HgammaAnalysis::weight();
+        // mcWeight_var * pileupWeight_var * vertexWeight_var * weigth from Photon SF
+
+
+
+
 
 
         //
@@ -365,7 +263,17 @@ EL::StatusCode DMHiggsSystematics::execute()
         if(photons.size()<2) continue; // 2 tight photons
         std::vector<LorentzVector> GoodPhotons;
         for(size_t gn=0; gn<photons.size(); gn++) {
-            LorentzVector P4( photons[gn]->p4().Px()/1000.,  photons[gn]->p4().Py()/1000., photons[gn]->p4().Pz()/1000., photons[gn]->p4().E()/1000.);
+
+            double pt = photons[gn]->p4().Pt();
+            double eta = photons[gn]->p4().Eta();
+            double phi = photons[gn]->p4().Phi();
+            double e = photons[gn]->p4().E();
+
+            TLorentzVector pho;
+            pho.Clear();
+            pho.SetPtEtaPhiE(pt,eta,phi,e);
+
+            LorentzVector P4( pho.Px()/1000., pho.Py()/1000., pho.Pz()/1000., pho.E()/1000.);
             GoodPhotons.push_back(P4);
         }
 
@@ -373,12 +281,14 @@ EL::StatusCode DMHiggsSystematics::execute()
         LorentzVector pho1 = GoodPhotons[0];
         LorentzVector pho2 = GoodPhotons[1];
 
-        //find the leading and trailing photon
-        if(pho1.pt()<pho2.pt()) {
-            LorentzVector pho_ = pho1;
-            pho1 = pho2;
-            pho2 = pho_;
-        }
+        /*
+            //find the leading and trailing photon
+            if(pho1.pt()<pho2.pt()) {
+                LorentzVector pho_ = pho1;
+                pho1 = pho2;
+                pho2 = pho_;
+            }
+        */
 
         LorentzVector diphoton(pho1+pho2);
         bool passLeadingPhoton (pho1.pt()/diphoton.mass() > 0.35);
@@ -422,7 +332,17 @@ EL::StatusCode DMHiggsSystematics::execute()
         //
         std::vector<LorentzVector> GoodJets;
         for(size_t ijet=0; ijet<jets.size(); ijet++) {
-            LorentzVector P4( jets[ijet]->p4().Px()/1000.,  jets[ijet]->p4().Py()/1000., jets[ijet]->p4().Pz()/1000., jets[ijet]->p4().E()/1000.);
+
+            double pt = jets[ijet]->p4().Pt();
+            double eta = jets[ijet]->p4().Eta();
+            double phi = jets[ijet]->p4().Phi();
+            double e = jets[ijet]->p4().E();
+
+            TLorentzVector pho;
+            pho.Clear();
+            pho.SetPtEtaPhiE(pt,eta,phi,e);
+
+            LorentzVector P4( pho.Px()/1000., pho.Py()/1000., pho.Pz()/1000., pho.E()/1000.);
             GoodJets.push_back(P4);
         }
 
@@ -450,14 +370,14 @@ EL::StatusCode DMHiggsSystematics::execute()
 
         if(goodMET.pt()>100) {
             if(diphoton.pt()>100) {
-                if(diphoton.mass()>122 && diphoton.mass()<128) myhisto[hist] -> Fill(0.,weight);
+                myhisto[hist] -> Fill(0.,weight);
             } else {
-                if(diphoton.mass()>122 && diphoton.mass()<128) myhisto[hist] -> Fill(1.,weight);
+                myhisto[hist] -> Fill(1.,weight);
             }
         } else if(goodMET.pt()>50 && hardsum.pt()>40) {
-            if(diphoton.mass()>122 && diphoton.mass()<128) myhisto[hist] -> Fill(2.,weight);
+            myhisto[hist] -> Fill(2.,weight);
         } else if( diphoton.pt()>15) {
-            if(diphoton.mass()>122 && diphoton.mass()<128) myhisto[hist] -> Fill(3.,weight);
+            myhisto[hist] -> Fill(3.,weight);
         }
 
 
@@ -468,7 +388,6 @@ EL::StatusCode DMHiggsSystematics::execute()
     }//systematics loop
 
 
-    //myEvents->Fill();
     return EL::StatusCode::SUCCESS;
 }
 
@@ -479,14 +398,11 @@ EL::StatusCode DMHiggsSystematics::finalize()
 
 
     m_outputFile->cd();
-    //myEvents->Write();
 
     for(int hist=0; hist<SYSHIST; hist++) {
         myhisto[hist] ->Write();
     }
-
     m_outputFile->Close();
-
 
 
     HgammaAnalysis::finalize();

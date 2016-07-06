@@ -37,7 +37,13 @@ private:
   int NPV_var;
   float mu_var;
 //  int isMC_var;
-  float initWeight_var;
+  float totWeight_var;
+  float lumiXsecWeight_var;
+  float evtWeight_var;
+  float mcWeight_var;
+  float pileupWeight_var;
+  float vertexWeight_var;
+
 //  float xsecBrFilterEff_var;
   //float myy_var;
   /* float phi_yy_met_var; */
@@ -60,6 +66,7 @@ private:
 
   int isPassed_var;
   int isPassedJetEventClean_var;
+  int isDalitz_var;
   //  ===========================  Reco objects  information  =========================== //
 
   //
@@ -70,7 +77,7 @@ private:
   float photon_Py[MAXPARTICLES];
   float photon_Pz[MAXPARTICLES];
   float photon_E[MAXPARTICLES];
-  //int photon_Author[MAXPARTICLES];
+
 /*
   float photon_Eps[MAXPARTICLES];
   float photon_E1[MAXPARTICLES];
@@ -99,13 +106,13 @@ private:
   float electron_Py[MAXPARTICLES];
   float electron_Pz[MAXPARTICLES];
   float electron_E[MAXPARTICLES];
+  int electron_charge[MAXPARTICLES];
 /*
   int electron_Author[MAXPARTICLES];
   float electron_Eps[MAXPARTICLES];
   float electron_E1[MAXPARTICLES];
   float electron_E2[MAXPARTICLES];
   float electron_E3[MAXPARTICLES];
-  float electron_charge[MAXPARTICLES];
   int electron_isTight[MAXPARTICLES];
   int electron_isMedium[MAXPARTICLES];
   int electron_isIsoLoose[MAXPARTICLES];
@@ -119,12 +126,13 @@ private:
   float muon_Py[MAXPARTICLES];
   float muon_Pz[MAXPARTICLES];
   float muon_E[MAXPARTICLES];
+  int muon_charge[MAXPARTICLES];
+
 /*
   float muon_Eps[MAXPARTICLES];
   float muon_E1[MAXPARTICLES];
   float muon_E2[MAXPARTICLES];
   float muon_E3[MAXPARTICLES];
-  float muon_charge[MAXPARTICLES];
   int   muon_passIPcut[MAXPARTICLES];
   float muon_topoCone20[MAXPARTICLES];
   float muon_ptvarCone20[MAXPARTICLES];
@@ -153,7 +161,7 @@ private:
   float met;
   float sumet;
   float phi_met;
-//  float metSig_var;
+//float metSig_var;
 
 
 

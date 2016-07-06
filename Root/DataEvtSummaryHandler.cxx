@@ -42,11 +42,12 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("RunNumber",                      	&evSummary_.RunNumber);
     t_->SetBranchAddress("EventNumber",                      	&evSummary_.EventNumber);
     t_->SetBranchAddress("LumiBlock",                      	&evSummary_.LumiBlock);
-    t_->SetBranchAddress("isMC",                      		&evSummary_.isMC);
     t_->SetBranchAddress("NPV",                      		&evSummary_.NPV);
     t_->SetBranchAddress("mu",                      		&evSummary_.mu);
-    t_->SetBranchAddress("initWeight",             		&evSummary_.initWeight);
-    t_->SetBranchAddress("passVertex",          		&evSummary_.passVertex);
+    t_->SetBranchAddress("totWeight",             		&evSummary_.totWeight);
+    t_->SetBranchAddress("lumiXsecWeight",             		&evSummary_.lumiXsecWeight);
+    t_->SetBranchAddress("evtWeight",             		&evSummary_.evtWeight);
+//    t_->SetBranchAddress("passVertex",          		&evSummary_.passVertex);
 
 
 
@@ -55,12 +56,13 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("photon_Py",                   	evSummary_.photon_Py);
     t_->SetBranchAddress("photon_Pz",                   	evSummary_.photon_Pz);
     t_->SetBranchAddress("photon_E",                   		evSummary_.photon_E);
+/*
     t_->SetBranchAddress("photon_isTight",                   	evSummary_.photon_isTight);
     t_->SetBranchAddress("photon_isIsoFixedCutTight",   	evSummary_.photon_isIsoFixedCutTight);
     t_->SetBranchAddress("photon_isIsoFixedCutLoose",   	evSummary_.photon_isIsoFixedCutLoose);
     t_->SetBranchAddress("photon_isIsoFixedCutTightCaloOnly",  evSummary_.photon_isIsoFixedCutTightCaloOnly);
     t_->SetBranchAddress("photon_isIsoFixedCutLooseCaloOnly",  evSummary_.photon_isIsoFixedCutLooseCaloOnly);
-
+*/
 
 
     t_->SetBranchAddress("nElectrons",                      	&evSummary_.nElectrons);
@@ -69,10 +71,11 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("electron_Pz",                   	evSummary_.electron_Pz);
     t_->SetBranchAddress("electron_E",                   	evSummary_.electron_E);
     t_->SetBranchAddress("electron_charge",                     evSummary_.electron_charge);
+/*
     t_->SetBranchAddress("electron_isTight",                   	evSummary_.electron_isTight);
     t_->SetBranchAddress("electron_isMedium",                   evSummary_.electron_isMedium);
     t_->SetBranchAddress("electron_isIsoLoose",                 evSummary_.electron_isIsoLoose);
-
+*/
 
 
     t_->SetBranchAddress("nMuons",                     		&evSummary_.nMuons);
@@ -81,10 +84,11 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("muon_Pz",                   		evSummary_.muon_Pz);
     t_->SetBranchAddress("muon_E",                   		evSummary_.muon_E);
     t_->SetBranchAddress("muon_charge",                         evSummary_.muon_charge);
+/*
     t_->SetBranchAddress("muon_isIsoGradientLoose",             evSummary_.muon_isIsoGradientLoose);
     t_->SetBranchAddress("muon_isIsoGradient",                  evSummary_.muon_isIsoGradient);
     t_->SetBranchAddress("muon_isIsoLoose",                 	evSummary_.muon_isIsoLoose);
-
+*/
 
 
     t_->SetBranchAddress("nJets",                      		&evSummary_.nJets);
@@ -92,7 +96,7 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("jet_Py",                   		evSummary_.jet_Py);
     t_->SetBranchAddress("jet_Pz",                   		evSummary_.jet_Pz);
     t_->SetBranchAddress("jet_E",                   		evSummary_.jet_E);
-    t_->SetBranchAddress("jet_Jvt",                   		evSummary_.jet_Jvt);
+//    t_->SetBranchAddress("jet_Jvt",                   		evSummary_.jet_Jvt);
 
 
 
