@@ -1,0 +1,662 @@
+{
+  "proc": [
+    {
+      "isdata": false, 
+      "color": "832", 
+      "lcolor": "1", 
+      "tag": "V#gamma#gamma", 
+      "marker": 832, 
+      "data": [
+        {
+          "dtag": "mc15c.Sherpa_ZeegammagammaPt17myy80.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_ZmumugammagammaPt17myy80.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_ZnunugammagammaPt17myy80.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_ZtautaugammagammaPt17myy80.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_enugammagammaPt17myy80.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_munugammagammaPt17myy80.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_taunugammagammaPt17myy80.NTuple", 
+          "split": 1
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "856", 
+      "lcolor": "1", 
+      "tag": "V#gamma", 
+      "marker": 856, 
+      "data": [
+        {
+          "dtag": "mc15c.Sherpa_eegammaPt10_35.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_eegammaPt35_70.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_eegammaPt70_140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_eegammaPt140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_mumugammaPt10_35.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_mumugammaPt35_70.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_mumugammaPt70_140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_mumugammaPt140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_tautaugammaPt10_35.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_tautaugammaPt35_70.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_tautaugammaPt70_140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_tautaugammaPt140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_nunugammaPt35_70.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_nunugammaPt70_140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_nunugammaPt140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_enugammaPt10_35.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_enugammaPt35_70.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_enugammaPt70_140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_enugammaPt140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_munugammaPt10_35.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_munugammaPt35_70.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_munugammaPt70_140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_munugammaPt140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_taunugammaPt10_35.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_taunugammaPt35_70.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_taunugammaPt70_140.NTuple", 
+          "split": 1
+        }, 
+        {
+          "dtag": "mc15c.Sherpa_taunugammaPt140.NTuple", 
+          "split": 1
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "901", 
+      "lcolor": "1", 
+      "tag": "SMHiggs", 
+      "marker": 901, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.4552, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.PowhegPy8_ggH125.NTuple", 
+          "nevts": 1921000, 
+          "xsec": 30.182
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 0.9793, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.PowhegPy8_VBF125.NTuple", 
+          "nevts": 984000, 
+          "xsec": 3.8272
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.2438, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.Pythia8_WH125.NTuple", 
+          "nevts": 49200, 
+          "xsec": 0.0025297
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.438, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.Pythia8_ZH125.NTuple", 
+          "nevts": 49800, 
+          "xsec": 0.0013788
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.2626, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.Pythia8_ttH125.NTuple", 
+          "nevts": 49800, 
+          "xsec": 0.00091822
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.aMCnloPy8_bbH125_yb2.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.41324
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "842", 
+      "lcolor": "1", 
+      "tag": "#gamma+jets", 
+      "marker": 842, 
+      "data": [
+        {
+          "filtEff": 0.44135, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_15-35_CVetoBVeto.NTuple", 
+          "xsec": 5.1947E+5
+        }, 
+        {
+          "filtEff": 0.41028, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_35-70_CVetoBVeto.NTuple", 
+          "nevts": 19956800, 
+          "xsec": 34988.0
+        }, 
+        {
+          "filtEff": 0.3996, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_70-140_CVetoBVeto.NTuple", 
+          "nevts": 1999200, 
+          "xsec": 3129.0
+        }, 
+        {
+          "filtEff": 0.41049, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_140-280_CVetoBVeto.NTuple", 
+          "nevts": 9976800, 
+          "xsec": 247.41
+        }, 
+        {
+          "filtEff": 0.41834, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_280-500_CVetoBVeto.NTuple", 
+          "nevts": 997200, 
+          "xsec": 13.648
+        }, 
+        {
+          "filtEff": 0.38226, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_500-1000_CVetoBVeto.NTuple", 
+          "nevts": 200000, 
+          "xsec": 0.92334
+        }, 
+        {
+          "filtEff": 0.37036, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_1000-2000_CVetoBVeto.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.018432
+        }, 
+        {
+          "filtEff": 0.36729, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_2000-4000_CVetoBVeto.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.000079682
+        }, 
+        {
+          "filtEff": 0.40351, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_4000_CVetoBVeto.NTuple", 
+          "nevts": 1000, 
+          "xsec": 2.4843E-9
+        }, 
+        {
+          "filtEff": 0.48261, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_15-35_CFilterBVeto.NTuple", 
+          "xsec": 5.1949E+5
+        }, 
+        {
+          "filtEff": 0.48609, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_35-70_CFilterBVeto.NTuple", 
+          "nevts": 9981800, 
+          "xsec": 34986.0
+        }, 
+        {
+          "filtEff": 0.48199, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_70-140_CFilterBVeto.NTuple", 
+          "nevts": 1997400, 
+          "xsec": 3132.9
+        }, 
+        {
+          "filtEff": 0.50284, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_140-280_CFilterBVeto.NTuple", 
+          "nevts": 1993200, 
+          "xsec": 247.39
+        }, 
+        {
+          "filtEff": 0.47349, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_280-500_CFilterBVeto.NTuple", 
+          "nevts": 500000, 
+          "xsec": 13.617
+        }, 
+        {
+          "filtEff": 0.47148, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_500-1000_CFilterBVeto.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.92185
+        }, 
+        {
+          "filtEff": 0.46691, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_1000-2000_CFilterBVeto.NTuple", 
+          "nevts": 50000, 
+          "xsec": 0.018388
+        }, 
+        {
+          "filtEff": 0.46642, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_2000-4000_CFilterBVeto.NTuple", 
+          "nevts": 49500, 
+          "xsec": 0.000080331
+        }, 
+        {
+          "filtEff": 0.41614, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_4000_CFilterBVeto.NTuple", 
+          "nevts": 800, 
+          "xsec": 2.5134E-9
+        }, 
+        {
+          "filtEff": 0.075953, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_15-35_BFilter.NTuple", 
+          "xsec": 5.1941E+5
+        }, 
+        {
+          "filtEff": 0.10752, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_35-70_BFilter.NTuple", 
+          "nevts": 1995800, 
+          "xsec": 35002.0
+        }, 
+        {
+          "filtEff": 0.11728, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_70-140_BFilter.NTuple", 
+          "nevts": 493400, 
+          "xsec": 3135.2
+        }, 
+        {
+          "filtEff": 0.12874, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_140-280_BFilter.NTuple", 
+          "nevts": 997600, 
+          "xsec": 249.37
+        }, 
+        {
+          "filtEff": 0.14069, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_280-500_BFilter.NTuple", 
+          "nevts": 97800, 
+          "xsec": 13.874
+        }, 
+        {
+          "filtEff": 0.14811, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_500-1000_BFilter.NTuple", 
+          "nevts": 20000, 
+          "xsec": 0.93819
+        }, 
+        {
+          "filtEff": 0.15751, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_1000-2000_BFilter.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.019046
+        }, 
+        {
+          "filtEff": 0.1692, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_2000-4000_BFilter.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.000082035
+        }, 
+        {
+          "filtEff": 0.14831, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamjet_4000_BFilter.NTuple", 
+          "nevts": 1000, 
+          "xsec": 2.5431E-9
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "798", 
+      "lcolor": "1", 
+      "tag": "#gamma#gamma", 
+      "marker": 798, 
+      "data": [
+        {
+          "filtEff": 0.00058997, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Pythia81Hard1BremDP40.NTuple", 
+          "xsec": 16616
+        }, 
+        {
+          "filtEff": 0.24320, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_0-55.NTuple", 
+          "nevts": 996400, 
+          "xsec": 140.90
+        }, 
+        {
+          "filtEff": 0.45653, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_55-100.NTuple", 
+          "nevts": 1000000, 
+          "xsec": 147.86
+        }, 
+        {
+          "filtEff": 0.49904, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_100-160.NTuple", 
+          "nevts": 4980400, 
+          "xsec": 40.127
+        }, 
+        {
+          "filtEff": 0.47885, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_160-250.NTuple", 
+          "nevts": 497200, 
+          "xsec": 11.986
+        }, 
+        {
+          "filtEff": 0.43294, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_250-400.NTuple", 
+          "nevts": 499800, 
+          "xsec": 3.7062
+        }, 
+        {
+          "filtEff": 0.35105, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_400-650.NTuple", 
+          "nevts": 500000, 
+          "xsec": 1.0114
+        }, 
+        {
+          "filtEff": 0.25105, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_650-1000.NTuple", 
+          "nevts": 499000, 
+          "xsec": 0.23503
+        }, 
+        {
+          "filtEff": 0.16729, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_1000-1500.NTuple", 
+          "nevts": 1992800, 
+          "xsec": 0.060489
+        }, 
+        {
+          "filtEff": 0.11035, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_1500-2000.NTuple", 
+          "nevts": 499500, 
+          "xsec": 0.012409
+        }, 
+        {
+          "filtEff": 0.080306, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_2000-2500.NTuple", 
+          "nevts": 499500, 
+          "xsec": 0.0033581
+        }, 
+        {
+          "filtEff": 0.061888, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_2500-3000.NTuple", 
+          "nevts": 99000, 
+          "xsec": 0.0010460
+        }, 
+        {
+          "filtEff": 0.050045, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_3000-3500.NTuple", 
+          "nevts": 99800, 
+          "xsec": 0.00035256
+        }, 
+        {
+          "filtEff": 0.041190, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_3500-4000.NTuple", 
+          "nevts": 99800, 
+          "xsec": 0.00012396
+        }, 
+        {
+          "filtEff": 0.035153, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_4000-4500.NTuple", 
+          "nevts": 99400, 
+          "xsec": 0.000044474
+        }, 
+        {
+          "filtEff": 0.030293, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_4500-5000.NTuple", 
+          "nevts": 99600, 
+          "xsec": 0.000016024
+        }, 
+        {
+          "filtEff": 0.024712, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "mc15c.Sherpa_gamgam_2DP20_5000-inf.NTuple", 
+          "nevts": 99200, 
+          "xsec": 0.0000086793
+        }
+      ]
+    }, 
+    {
+      "isdata": true, 
+      "color": 1, 
+      "tag": "Data", 
+      "marker": 20, 
+      "data": [
+        {
+          "dtag": "data16_13TeV.periodAll25ns_3568ipb.physics_Main.NTuple", 
+          "split": 1
+        }
+      ], 
+      "fill": 0
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)MZ(10)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "dtag": "mc15c.MGPy8_zphxx_gg_mzp10_mx1.NTuple", 
+          "split": 1
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }
+  ]
+}

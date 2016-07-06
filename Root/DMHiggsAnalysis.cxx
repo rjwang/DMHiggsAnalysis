@@ -58,6 +58,7 @@ EL::StatusCode DMHiggsAnalysis::createOutput()
     // registry is already filled.
 
 
+    //histoStore()->createTH1F("mu", 50, 0, 50);
 
     //Create a TTree
     //  TFile *outfile = wk()->getOutputFile("MxAOD");
@@ -75,7 +76,13 @@ void DMHiggsAnalysis::declareVariables()
     myEvents->Branch("EventNumber",&EventNumber,"EventNumber/I");
     myEvents->Branch("NPV",&NPV_var,"NPV_var/I");
     myEvents->Branch("mu",&mu_var,"mu_var/F");
-    myEvents->Branch("initWeight",&initWeight_var,"initWeight_var/F");
+    myEvents->Branch("totWeight",&totWeight_var,"totWeight_var/F");
+    myEvents->Branch("lumiXsecWeight",&lumiXsecWeight_var,"lumiXsecWeight_var/F");
+    myEvents->Branch("evtWeight",&evtWeight_var,"evtWeight_var/F");
+    myEvents->Branch("mcWeight",&mcWeight_var,"mcWeight_var/F");
+    myEvents->Branch("pileupWeight",&pileupWeight_var,"pileupWeight_var/F");
+    myEvents->Branch("vertexWeight",&vertexWeight_var,"vertexWeight_var/F");
+
 
     myEvents->Branch("nPhotons", &nPhotons,"nPhotons/I");
     myEvents->Branch("photon_Px", photon_Px,"photon_Px[nPhotons]/F");
@@ -88,12 +95,14 @@ void DMHiggsAnalysis::declareVariables()
     myEvents->Branch("electron_Py", electron_Py,"electron_Py[nElectrons]/F");
     myEvents->Branch("electron_Pz", electron_Pz,"electron_Pz[nElectrons]/F");
     myEvents->Branch("electron_E",  electron_E, "electron_E[nElectrons]/F");
+    myEvents->Branch("electron_charge",electron_charge,"electron_charge[nElectrons]/I");
 
     myEvents->Branch("nMuons", &nMuons,"nMuons/I");
     myEvents->Branch("muon_Px", muon_Px,"muon_Px[nMuons]/F");
     myEvents->Branch("muon_Py", muon_Py,"muon_Py[nMuons]/F");
     myEvents->Branch("muon_Pz", muon_Pz,"muon_Pz[nMuons]/F");
     myEvents->Branch("muon_E",  muon_E, "muon_E[nMuons]/F");
+    myEvents->Branch("muon_charge",muon_charge,"muon_charge[nMuons]/I");
 
 
     myEvents->Branch("nJets", &nJets,"nJets/I");
@@ -115,6 +124,8 @@ EL::StatusCode DMHiggsAnalysis::initialize()
 
     using namespace std;
     HgammaAnalysis::initialize();
+
+
     std::string inputfileName = wk()->inputFileName();
     //currentfilename = inputfileName;
     inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
@@ -141,6 +152,9 @@ EL::StatusCode DMHiggsAnalysis::initialize()
     myEvents = new TTree("DMHiggsAnalysis","DMHiggsAnalysis");
     declareVariables();
 
+
+
+
     return EL::StatusCode::SUCCESS;
 }
 
@@ -164,9 +178,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
     SG::AuxElement::Accessor<int> NPV("numberOfPrimaryVertices");
     SG::AuxElement::Accessor<float> mu("mu");
-    SG::AuxElement::Accessor<float> initWeight("weightInitial");
     SG::AuxElement::Accessor<char> isPassed("isPassed");
     SG::AuxElement::Accessor<char> isPassedJetEventClean("isPassedJetEventClean");
+    SG::AuxElement::Accessor<char> isDalitz("isDalitz");
     SG::AuxElement::Accessor<float> met_TST("met_TST");
     SG::AuxElement::Accessor<float> met_sumet("sumet_TST");
     SG::AuxElement::Accessor<float> met_phi("phi_TST");
@@ -187,12 +201,15 @@ EL::StatusCode DMHiggsAnalysis::execute()
     isPassed_var = isPassed(*HGameventInfo) == 1 ? 1 : 0 ;
     isPassedJetEventClean_var = isPassedJetEventClean(*HGameventInfo) == 1 ? 1 : 0 ;
     if(!isPassed_var || !isPassedJetEventClean_var) return EL::StatusCode::SUCCESS;
+    if(isMC()){
+	 isDalitz_var = isDalitz(*HGameventInfo) == 1 ? 1 : 0 ;
+	 if(isDalitz_var) return EL::StatusCode::SUCCESS;
+    }
 
 
     RunNumber = runNumber( *eventInfo );
     LumiBlock = lumiBlock( *eventInfo );
     EventNumber = eventNumber( *eventInfo );
-    if(isMC()) initWeight_var = HgammaAnalysis::weightFinal(); //initWeight(*HGameventInfo);
     NPV_var = NPV(*HGameventInfo);
     mu_var = mu(*HGameventInfo);
 
@@ -207,6 +224,24 @@ EL::StatusCode DMHiggsAnalysis::execute()
     xAOD::ElectronContainer electrons = electronHandler()->applySelection(electrons_H);
     xAOD::MuonContainer muons = muonHandler()->applySelection(muons_H);
     xAOD::JetContainer jets = jetHandler()->applySelection(jets_H);
+
+
+    //histoStore()->fillTH1F("mu", eventHandler()->mu(), weight());
+
+    if(isMC()) {
+    	HgammaAnalysis::setSelectedObjects(&photons, &electrons, &muons, &jets);
+	//lumiXsecWeight_var * evtWeight_var
+	totWeight_var = HgammaAnalysis::weightFinal();
+
+	lumiXsecWeight_var = HgammaAnalysis::lumiXsecWeight();
+	// mcWeight_var * pileupWeight_var * vertexWeight_var * weigth from Photon SF
+	evtWeight_var = HgammaAnalysis::weight();
+
+	mcWeight_var = eventHandler()->mcWeight();
+	pileupWeight_var = eventHandler()->pileupWeight();
+	vertexWeight_var = eventHandler()->vertexWeight();
+
+    }
 
 
 /*
@@ -224,12 +259,22 @@ EL::StatusCode DMHiggsAnalysis::execute()
     //
     nPhotons=0;
     for(size_t gn=0; gn<photons.size(); gn++) {
-        photon_Px[nPhotons] = photons[gn]->p4().Px();
-        photon_Py[nPhotons] = photons[gn]->p4().Py();
-        photon_Pz[nPhotons] = photons[gn]->p4().Pz();
-        photon_E[nPhotons] = photons[gn]->p4().E();
-        nPhotons++;
 
+        double pt = photons[gn]->p4().Pt();
+        double eta = photons[gn]->p4().Eta();
+        double phi = photons[gn]->p4().Phi();
+        double e = photons[gn]->p4().E();
+
+	TLorentzVector pho;
+	pho.Clear();
+	pho.SetPtEtaPhiE(pt,eta,phi,e);
+
+        photon_Px[nPhotons] = pho.Px();
+        photon_Py[nPhotons] = pho.Py();
+        photon_Pz[nPhotons] = pho.Pz();
+        photon_E[nPhotons] =  pho.E();
+
+        nPhotons++;
     }
 
 
@@ -238,10 +283,23 @@ EL::StatusCode DMHiggsAnalysis::execute()
     //
     nElectrons=0;
     for(size_t gn=0; gn<electrons.size(); gn++) {
-        electron_Px[nElectrons] = electrons[gn]->p4().Px();
-        electron_Py[nElectrons] = electrons[gn]->p4().Py();
-        electron_Pz[nElectrons] = electrons[gn]->p4().Pz();
-        electron_E[nElectrons] = electrons[gn]->e();
+
+        double pt = electrons[gn]->p4().Pt();
+        double eta = electrons[gn]->p4().Eta();
+        double phi = electrons[gn]->p4().Phi();
+        double e = electrons[gn]->p4().E();
+
+	TLorentzVector pho;
+	pho.Clear();
+	pho.SetPtEtaPhiE(pt,eta,phi,e);
+
+
+        electron_Px[nElectrons] = pho.Px();
+        electron_Py[nElectrons] = pho.Py();
+        electron_Pz[nElectrons] = pho.Pz();
+        electron_E[nElectrons]  = pho.E();
+
+	electron_charge[nElectrons] = electrons[gn]->charge();
         nElectrons++;
     }
 
@@ -252,11 +310,22 @@ EL::StatusCode DMHiggsAnalysis::execute()
     //
     nMuons=0;
     for(size_t gn=0; gn<muons.size(); gn++) {
-        muon_Px[nMuons] = muons[gn]->p4().Px();
-        muon_Py[nMuons] = muons[gn]->p4().Py();
-        muon_Pz[nMuons] = muons[gn]->p4().Pz();
-        muon_E[nMuons] = muons[gn]->e();
 
+        double pt = muons[gn]->p4().Pt();
+        double eta = muons[gn]->p4().Eta();
+        double phi = muons[gn]->p4().Phi();
+        double e = muons[gn]->p4().E();
+
+        TLorentzVector pho;
+        pho.Clear();
+        pho.SetPtEtaPhiE(pt,eta,phi,e);
+
+        muon_Px[nMuons] = pho.Px();
+        muon_Py[nMuons] = pho.Py();
+        muon_Pz[nMuons] = pho.Pz();
+        muon_E[nMuons]  = pho.E();
+
+	muon_charge[nMuons] = muons[gn]->charge();
         nMuons++;
     }
 
@@ -266,10 +335,20 @@ EL::StatusCode DMHiggsAnalysis::execute()
     //
     nJets=0;
     for(size_t gn=0; gn<jets.size(); gn++) {
-        jet_Px[nJets] = jets[gn]->px();
-        jet_Py[nJets] = jets[gn]->py();
-        jet_Pz[nJets] = jets[gn]->pz();
-        jet_E[nJets]  = jets[gn]->e();
+
+        double pt = jets[gn]->p4().Pt();
+        double eta = jets[gn]->p4().Eta();
+        double phi = jets[gn]->p4().Phi();
+        double e = jets[gn]->p4().E();
+
+        TLorentzVector pho;
+        pho.Clear();
+        pho.SetPtEtaPhiE(pt,eta,phi,e);
+
+        jet_Px[nJets] = pho.Px();
+        jet_Py[nJets] = pho.Py();
+        jet_Pz[nJets] = pho.Pz();
+        jet_E[nJets]  = pho.E();
 
         nJets++;
     }

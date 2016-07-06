@@ -50,13 +50,6 @@ int main(int argc, char *argv[])
     bool isMC_gamjet = isMC && (inputUrl.Contains("_gamjet_"));
 
 
-
-    double xsec     = runProcess.getNum("xsec");
-    double BR     = runProcess.getNum("BR");
-    double filtEff     = runProcess.getNum("filtEff");
-    double kfactor     = runProcess.getNum("kfactor");
-
-
     TFile *inputFile = TFile::Open(inputUrl);
     printf("Looping on %s\n",inputUrl.Data());
     if(inputFile==0) return -1;
@@ -74,24 +67,6 @@ int main(int argc, char *argv[])
     }
 
 
-
-    //MC normalization (to 1/pb)
-    double sumInitialEvents=1.0;
-    double skim_eff=1.0;
-    if(isMC) {
-        TH1F* H_noDalitz_weighted = (TH1F *) inputFile->Get("CutFlow_noDalitz_weighted");
-        TH1F* H_weighted 	  = (TH1F *) inputFile->Get("CutFlow_weighted");
-        sumInitialEvents = H_noDalitz_weighted->GetBinContent(3);
-
-        // Hard-coding to bin number 1,2
-        double NxAOD      = H_weighted->GetBinContent(1);
-        double NDxAOD     = H_weighted->GetBinContent(2);
-        skim_eff = NDxAOD / NxAOD;
-
-        printf("sumInitialEvents = %f, DxAOD skimming efficiency = %f\n",sumInitialEvents, skim_eff);
-    }
-
-
     TString outdir=runProcess.getStr("OutputDir");
     TString outUrl( outdir );
     gSystem->Exec("mkdir -p " + outUrl);
@@ -99,11 +74,18 @@ int main(int argc, char *argv[])
     TString outFileUrl(gSystem->BaseName(inputUrl));
     outFileUrl.ReplaceAll(".root","");
 
+    TString outTxtUrl_final= outUrl + "/" + outFileUrl + "_FinalList.txt";
+    FILE* outTxtFile_final = NULL;
+    outTxtFile_final = fopen(outTxtUrl_final.Data(), "w");
+    printf("TextFile URL = %s\n",outTxtUrl_final.Data());
+    fprintf(outTxtFile_final,"run event diphotonmass categorybin evtWeight lumiWeight pthard diphotonpt met\n");
+
 
     TString outTreeUrl = outUrl + "/";
     outTreeUrl += outFileUrl + "_tree.root";
-    //bool ifsaveEvents = (!isMC || isSignal || isMC_H125 || isMC_gamgam || isMC_gamjet);
-    bool ifsaveEvents = true;
+    bool ifsaveEvents = (!isMC || isSignal || isMC_H125 || isMC_gamgam || isMC_gamjet);
+    //always save tree
+    ifsaveEvents = true;
 
     TFile *otreefile=TFile::Open(outTreeUrl, "recreate");
 
@@ -115,12 +97,6 @@ int main(int argc, char *argv[])
         //myEvents->Branch("weight_t", &weight_t,"weight_t/D");
         //myEvents->Branch("weight_all", &weight_all,"weight_all/D");
     */
-
-    TTree *myEvents_bin0 = new TTree("tree_bin0","tree_bin0");
-    double mgg_bin0(0.), weight_bin0_t(1.);
-    myEvents_bin0->Branch("mgg",&mgg_bin0,"mgg/D");
-    myEvents_bin0->Branch("weight_t", &weight_bin0_t,"weight_t/D");
-
 
     TTree *myEvents_bin1 = new TTree("tree_bin1","tree_bin1");
     double mgg_bin1(0.), weight_bin1_t(1.);
@@ -138,6 +114,20 @@ int main(int argc, char *argv[])
     double mgg_bin3(0.), weight_bin3_t(1.);
     myEvents_bin3->Branch("mgg",&mgg_bin3,"mgg/D");
     myEvents_bin3->Branch("weight_t", &weight_bin3_t,"weight_t/D");
+
+
+    TTree *myEvents_bin4 = new TTree("tree_bin4","tree_bin4");
+    double mgg_bin4(0.), weight_bin4_t(1.);
+    myEvents_bin4->Branch("mgg",&mgg_bin4,"mgg/D");
+    myEvents_bin4->Branch("weight_t", &weight_bin4_t,"weight_t/D");
+
+
+    TTree *myEvents_bin5 = new TTree("tree_bin5","tree_bin5");
+    double mgg_bin5(0.), weight_bin5_t(1.);
+    myEvents_bin5->Branch("mgg",&mgg_bin5,"mgg/D");
+    myEvents_bin5->Branch("weight_t", &weight_bin5_t,"weight_t/D");
+
+
 
 
     TTree *myEvents_allbins = new TTree("tree_allbins","tree_allbins");
@@ -161,8 +151,8 @@ int main(int argc, char *argv[])
     SmartSelectionMonitor mon;
 
 
-    mon.addHistogram( new TH1F( "pu_sel", ";pileup;Events", 50,0,50) );
-    mon.addHistogram( new TH1F( "puwgt_sel", ";pileup;Events", 50,0,50) );
+    mon.addHistogram( new TH1F( "pu_sel", ";Pileup;Events", 50,0,50) );
+    mon.addHistogram( new TH1F( "puwgt_sel", ";Pileup;Events", 50,0,50) );
 
     mon.addHistogram( new TH1F( "nvtx_sel",     ";Vertices;Events",50,0,50) );
     mon.addHistogram( new TH1F( "nvtxwgt_sel",  ";Vertices;Events",50,0,50) );
@@ -170,27 +160,103 @@ int main(int argc, char *argv[])
     //for MC normalization (to 1/pb)
     TH1F* Hcutflow  = (TH1F*) mon.addHistogram(  new TH1F ("cutflow"    , "cutflow"    ,6,0,6) ) ;
 
+
+    TH1F* Heventflow  = (TH1F*) mon.addHistogram(  new TH1F ("eventflow"    , "eventflow"    ,15+6+2,0,15+6+2) ) ;
+
     mon.addHistogram( new TH1F( "diphoton_mass_sel",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
     mon.addHistogram( new TH1F( "diphoton_pt_sel",    ";#it{p}_{T}^{#gamma#gamma} [GeV];Events", 100,0,600) );
     mon.addHistogram( new TH1F( "met_sel",    	      ";#it{E}_{T}^{miss} [GeV];Events", 100,0,600) );
+    mon.addHistogram( new TH1F( "sumet_sel",            ";sumE_{T} [GeV];Events", 100,50,1050) );
+    mon.addHistogram( new TH1F( "metsig_sel",         ";E_{T}^{miss} Significance [GeV];Events", 100,0,10) );
     mon.addHistogram( new TH1F( "balancedif_sel",     ";|E_{T}^{miss}-#it{p}_{T}^{#gamma#gamma}|/#it{p}_{T}^{#gamma#gamma};Events", 5,0,1.0) );
     mon.addHistogram( new TH1F( "metphi_sel",         ";#phi(#it{E}_{T}^{miss}) [rad];Events", 50,-TMath::Pi(),TMath::Pi()) );
     mon.addHistogram( new TH1F( "pthard_sel",         ";#it{p}_{T}^{hard} [GeV];Events", 100,0,600) );
-
-    mon.addHistogram( new TH1F( "dphiGamGamMET_sel",   ";#Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss});Events", 50,0,TMath::Pi()) );
+    mon.addHistogram( new TH1F( "dphiGamGamMET_sel",   ";#Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", 50,0,TMath::Pi()) );
 
     mon.addHistogram( new TH1F( "leadingpho_pt_sel",    ";Leading #it{p}_{T}^{#gamma} [GeV];Events", 100,0,600) );
     mon.addHistogram( new TH1F( "trailingpho_pt_sel",    ";Trailing #it{p}_{T}^{#gamma} [GeV];Events", 100,0,600) );
     mon.addHistogram( new TH1F( "leadingpho_eta_sel",    ";Leading #it{#eta}^{#gamma};Events", 50,-2.4,2.4) );
     mon.addHistogram( new TH1F( "trailingpho_eta_sel",    ";Trailing #it{#eta}^{#gamma};Events", 50,-2.4,2.4) );
-    mon.addHistogram( new TH1F( "leadingpho_phi_sel",    ";Leading #it{#phi}^{#gamma};Events", 50,-1.*TMath::Pi(),TMath::Pi()) );
-    mon.addHistogram( new TH1F( "trailingpho_phi_sel",    ";Trailing #it{#phi}^{#gamma};Events", 50,-1.*TMath::Pi(),TMath::Pi()) );
+    mon.addHistogram( new TH1F( "leadingpho_phi_sel",    ";Leading #it{#phi}^{#gamma} [rad];Events", 50,-1.*TMath::Pi(),TMath::Pi()) );
+    mon.addHistogram( new TH1F( "trailingpho_phi_sel",    ";Trailing #it{#phi}^{#gamma} [rad];Events", 50,-1.*TMath::Pi(),TMath::Pi()) );
+
+    mon.addHistogram( new TH1F( "dphiGamGamMET_bin1",   ";#Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", 50,0,TMath::Pi()) );
+    mon.addHistogram( new TH1F( "metsig_bin1",         ";E_{T}^{miss} Significance [GeV];Events", 100,0,10) );
+    mon.addHistogram( new TH1F( "balancedif_bin1",     ";|E_{T}^{miss}-#it{p}_{T}^{#gamma#gamma}|/#it{p}_{T}^{#gamma#gamma};Events", 5,0,1.0) );
 
 
-    mon.addHistogram( new TH1F( "diphoton_mass_bin0_sel",    ";#it{m}_{#gamma#gamma} [GeV];Events", 55,105,160) );
-    mon.addHistogram( new TH1F( "diphoton_mass_bin1_sel",    ";#it{m}_{#gamma#gamma} [GeV];Events", 55,105,160) );
-    mon.addHistogram( new TH1F( "diphoton_mass_bin2_sel",    ";#it{m}_{#gamma#gamma} [GeV];Events", 55,105,160) );
-    mon.addHistogram( new TH1F( "diphoton_mass_bin3_sel",    ";#it{m}_{#gamma#gamma} [GeV];Events", 55,105,160) );
+    //optimization
+    std::vector<double> optim_Cuts_METSig;
+    std::vector<double> optim_Cuts_MET;
+    std::vector<double> optim_Cuts_DphiyyMET;
+
+
+    for(double metsig=0; metsig<=10; metsig+=0.5) {
+        optim_Cuts_METSig     .push_back(metsig);
+    }
+    for(double met=0; met<=200; met+=10) {
+        optim_Cuts_MET     .push_back(met);
+    }
+    for(double dphi=0; dphi<=3.1; dphi+=0.31) {
+        optim_Cuts_DphiyyMET  .push_back(dphi);
+    }
+
+    size_t nOptims_METSig = optim_Cuts_METSig.size();
+    size_t nOptims_MET = optim_Cuts_MET.size();
+    size_t nOptims_DphiyyMET = optim_Cuts_DphiyyMET.size();
+
+    TH2F *h2 = (TH2F*) mon.addHistogram( new TH2F( "yields_dphi_vs_metsig",";E_{T}^{miss} Significance; #Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", nOptims_METSig,0,nOptims_METSig, nOptims_DphiyyMET,0,nOptims_DphiyyMET) );
+
+    TH2F *h3 = (TH2F*) mon.addHistogram( new TH2F( "yields_dphi_vs_met",";E_{T}^{miss} [GeV]; #Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", nOptims_MET,0,nOptims_MET, nOptims_DphiyyMET,0,nOptims_DphiyyMET) );
+
+
+    for(int ibin=1; ibin<=h2->GetXaxis()->GetNbins(); ibin++) {
+        if(ibin%4 != 0 ) continue;
+        TString label("");
+        label +="> ";
+        std::ostringstream buff;
+        buff << fixed  << setprecision(0) << optim_Cuts_METSig[ibin-1];
+        std::string str = buff.str();
+        TString title = str;
+        label += title;
+        h2->GetXaxis()->SetBinLabel(ibin,label);
+    }
+    for(int ibin=1; ibin<=h2->GetYaxis()->GetNbins(); ibin++) {
+        if(ibin%2 !=0 ) continue;
+        TString label("");
+        label +="> ";
+        std::ostringstream buff;
+        buff << fixed  << setprecision(1) << optim_Cuts_DphiyyMET[ibin-1];
+        std::string str = buff.str();
+        TString title = str;
+        label += title;
+        h2->GetYaxis()->SetBinLabel(ibin,label);
+    }
+
+
+    for(int ibin=1; ibin<=h3->GetXaxis()->GetNbins(); ibin++) {
+        if(ibin%4 != 0 ) continue;
+        TString label("");
+        label +="> ";
+        std::ostringstream buff;
+        buff << fixed  << setprecision(0) << optim_Cuts_MET[ibin-1];
+        std::string str = buff.str();
+        TString title = str;
+        label += title;
+        h3->GetXaxis()->SetBinLabel(ibin,label);
+    }
+    for(int ibin=1; ibin<=h3->GetYaxis()->GetNbins(); ibin++) {
+        if(ibin%2 !=0 ) continue;
+        TString label("");
+        label +="> ";
+        std::ostringstream buff;
+        buff << fixed  << setprecision(1) << optim_Cuts_DphiyyMET[ibin-1];
+        std::string str = buff.str();
+        TString title = str;
+        label += title;
+        h3->GetYaxis()->SetBinLabel(ibin,label);
+    }
+
 
 
 
@@ -230,12 +296,49 @@ int main(int argc, char *argv[])
         h1->GetXaxis()->SetBinLabel(ibin,label);
     }
 
-    h1 = (TH1F*) mon.addHistogram( new TH1F( "yields_finalsel",";;Events", 4,0,4) );
+    h1 = (TH1F*) mon.addHistogram( new TH1F( "yields_finalsel",";;Events", 5,0,5) );
     h1->GetXaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
     h1->GetXaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
     h1->GetXaxis()->SetBinLabel(3,"Intermediate #it{E}_{T}^{miss}");
-    h1->GetXaxis()->SetBinLabel(4,"Rest");
+    h1->GetXaxis()->SetBinLabel(4,"Rest category");
+    h1->GetXaxis()->SetBinLabel(5,"HMHP, METSig>6, dphi>2.4");
 
+
+
+    //MC normalization (to 1/pb)
+    double sumInitialEvents=1.0;
+    double skim_eff=1.0;
+    if(isMC) {
+        TH1F* H_noDalitz_weighted = (TH1F *) inputFile->Get("CutFlow_noDalitz_weighted");
+        TH1F* H_weighted 	  = (TH1F *) inputFile->Get("CutFlow_weighted");
+        sumInitialEvents = H_noDalitz_weighted->GetBinContent(3);
+
+        // Hard-coding to bin number 1,2
+        double NxAOD      = H_weighted->GetBinContent(1);
+        double NDxAOD     = H_weighted->GetBinContent(2);
+        skim_eff = NDxAOD / NxAOD;
+
+        printf("sumInitialEvents = %f, DxAOD skimming efficiency = %f\n",sumInitialEvents, skim_eff);
+
+
+        for(int bin=1; bin < Heventflow->GetNbinsX()+1; bin++) {
+            if(bin<16) {
+                Heventflow -> SetBinContent(bin, H_noDalitz_weighted->GetBinContent(bin));
+                Heventflow -> GetXaxis()->SetBinLabel(bin,H_noDalitz_weighted->GetXaxis()->GetBinLabel(bin));
+            }
+        }
+
+        Heventflow->GetXaxis()->SetBinLabel(16+1,"m_{#gamma#gamma}");
+        Heventflow->GetXaxis()->SetBinLabel(16+2,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
+        Heventflow->GetXaxis()->SetBinLabel(17+2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
+        Heventflow->GetXaxis()->SetBinLabel(18+2,"Intermediate #it{E}_{T}^{miss}");
+        Heventflow->GetXaxis()->SetBinLabel(19+2,"Rest category");
+
+
+
+
+
+    }
 
     Hcutflow->SetBinContent(1,sumInitialEvents/skim_eff);
 
@@ -246,6 +349,7 @@ int main(int argc, char *argv[])
     //####################################################################################################################
 
 
+    float lumiXsecWeight(1.0);
     // loop on all the events
     int treeStep = (evEnd-evStart)/50;
     if(treeStep==0)treeStep=1;
@@ -270,7 +374,8 @@ int main(int argc, char *argv[])
 
         //all the weights, include XS*BR*EFF, genWeights * PU * PVz
         float weight = 1.0;
-        if(isMC) weight *= ev.initWeight;
+        if(isMC) weight *= ev.totWeight;
+        if(isMC) lumiXsecWeight = ev.lumiXsecWeight;
         // add PhysicsEvent_t class, get all tree to physics objects
         PhysicsEvent_t phys=getPhysicsEventFrom(ev);
 
@@ -296,10 +401,10 @@ int main(int argc, char *argv[])
                         //if(!hasTightIdandIso) continue;
 
             */
-            nGoodPhotons++;
             std::pair <int,LorentzVector> goodpho;
             goodpho = std::make_pair(phoid,pho);
             GoodPhotons.push_back(goodpho);
+            nGoodPhotons++;
         }
 
         if(nGoodPhotons<2) continue; // 2 tight photons
@@ -308,41 +413,36 @@ int main(int argc, char *argv[])
 
         LorentzVector pho1 = GoodPhotons[0].second;
         LorentzVector pho2 = GoodPhotons[1].second;
+        /*
+                //find the leading and trailing photon
+                if(pho1.pt()<pho2.pt()) {
+                    LorentzVector pho_ = pho1;
+                    pho1 = pho2;
+                    pho2 = pho_;
+                }
 
-        //find the leading and trailing photon
-        if(pho1.pt()<pho2.pt()) {
-            LorentzVector pho_ = pho1;
-            pho1 = pho2;
-            pho2 = pho_;
-        }
-
-        for(size_t ipho=2; ipho<GoodPhotons.size(); ipho++) {
-            LorentzVector pho_ = GoodPhotons[ipho].second;
-            if( pho_.pt() > pho1.pt() ) {
-                pho2 = pho1;
-                pho1 = pho_;
-            }
-            if( pho_.pt() > pho2.pt() && pho_.pt() < pho1.pt() ) {
-                pho2 = pho_;
-            }
-        }
+                for(size_t ipho=2; ipho<GoodPhotons.size(); ipho++) {
+                    LorentzVector pho_ = GoodPhotons[ipho].second;
+                    if( pho_.pt() > pho1.pt() ) {
+                        pho2 = pho1;
+                        pho1 = pho_;
+                    }
+                    if( pho_.pt() > pho2.pt() && pho_.pt() < pho1.pt() ) {
+                        pho2 = pho_;
+                    }
+                }
+        */
 
         LorentzVector diphoton(pho1+pho2);
 
         bool passLeadingPhoton (pho1.pt()/diphoton.mass() > 0.35);
         bool passTrailingPhoton (pho2.pt()/diphoton.mass() > 0.25);
-//        bool passmassWindow(diphoton.mass()>105 && diphoton.mass()<160);
-        bool passmassWindow(diphoton.mass()>105 && diphoton.mass()<180);
+        bool passmassWindow(diphoton.mass()>105 && diphoton.mass()<160);
 
 
         LorentzVector met = phys.met;
         double dphiGamGamMET=fabs(deltaPhi(diphoton.phi(),met.phi()));
         double balanceDif = fabs(1-met.pt()/diphoton.pt());
-
-
-
-
-        if(!passLeadingPhoton || !passTrailingPhoton || !passmassWindow) continue;
 
 
         //
@@ -479,6 +579,27 @@ int main(int argc, char *argv[])
         }
 
 
+
+        /*
+        	fprintf(outTxtFile_final,"%d %d %.5f %d %.5f %.5f %.5f %.5f %.5f\n",ev.RunNumber, ev.EventNumber, diphoton.mass(), 0, ev.evtWeight, ev.lumiXsecWeight, hardsum.pt(), diphoton.pt(), met.pt());
+        	fprintf(outTxtFile_final,"   %.5f %.5f %.5f %.5f\n",pho1.pt(),pho1.eta(),pho1.phi(),pho1.E());
+        	fprintf(outTxtFile_final,"   %.5f %.5f %.5f %.5f\n",pho2.pt(),pho2.eta(),pho2.phi(),pho2.E());
+        	for(size_t ipho=2; ipho<GoodPhotons.size(); ipho++) {
+                    LorentzVector pho = GoodPhotons[ipho].second;
+        	    fprintf(outTxtFile_final,"   %.5f %.5f %.5f %.5f\n",pho.pt(),pho.eta(),pho.phi(),pho.E());
+
+        	}
+
+        */
+
+
+        if(!passLeadingPhoton || !passTrailingPhoton || !passmassWindow) continue;
+
+
+
+        float sum_et = ev.sumet/1000.;
+        float met_sig = met.pt()/sqrt(sum_et);
+
         mon.fillHisto("pu_sel",   tags, ev.mu,      1.0);
         mon.fillHisto("puwgt_sel",tags, ev.mu,      weight);
         //# of PV
@@ -487,9 +608,10 @@ int main(int argc, char *argv[])
 
 
         mon.fillHisto("nphotons_sel",tags, nGoodPhotons, weight);
-        mon.fillHisto("diphoton_mass_sel", tags, diphoton.mass(), weight);
         mon.fillHisto("diphoton_pt_sel", tags, diphoton.pt(), weight);
         mon.fillHisto("met_sel", tags, met.pt(), weight);
+        mon.fillHisto("sumet_sel", tags, sum_et, weight);
+        mon.fillHisto("metsig_sel", tags, met_sig, weight);
         mon.fillHisto("balancedif_sel"           ,tags, balanceDif, weight);
         mon.fillHisto("metphi_sel", tags, met.phi(), weight);
         mon.fillHisto("dphiGamGamMET_sel",tags, dphiGamGamMET, weight);
@@ -506,21 +628,79 @@ int main(int argc, char *argv[])
         mon.fillHisto("njets_sel",tags, GoodJets.size(), weight);
         mon.fillHisto("pthard_sel",tags, hardsum.pt(), weight);
 
+        if(isMC) {
+            mon.fillHisto("diphoton_mass_sel", tags, diphoton.mass(), weight);
+        }
+        if(!isMC && (diphoton.mass()<120 || diphoton.mass()>130)) {
+            mon.fillHisto("diphoton_mass_sel", tags, diphoton.mass(), weight);
+        }
 
+        if(met.pt()>50 && diphoton.pt()>50 && dphiGamGamMET>2.4 && met_sig>6) {
+            mon.fillHisto("yields_finalsel",tags, 4, weight);
+        }
+
+
+//        if(diphoton.mass()>122 && diphoton.mass()<128) {
+
+            for(size_t metsig=0; metsig<optim_Cuts_METSig.size(); metsig++) {
+                for(size_t dphi=0; dphi<optim_Cuts_DphiyyMET.size(); dphi++) {
+
+                    if(met.pt()>50 && diphoton.pt()>50 && dphiGamGamMET>optim_Cuts_DphiyyMET[dphi] && met_sig > optim_Cuts_METSig[metsig]) {
+                        mon.fillHisto("yields_dphi_vs_metsig",tags, metsig, dphi, weight);
+                    }
+                }
+            }
+
+            for(size_t imet=0; imet<optim_Cuts_MET.size(); imet++) {
+                for(size_t dphi=0; dphi<optim_Cuts_DphiyyMET.size(); dphi++) {
+
+                    if(met.pt()>optim_Cuts_MET[imet] && diphoton.pt()>optim_Cuts_MET[imet] && dphiGamGamMET>optim_Cuts_DphiyyMET[dphi]) {
+                        mon.fillHisto("yields_dphi_vs_met",tags, imet, dphi, weight);
+                    }
+                }
+            }
+
+
+
+
+//        }
+
+
+
+        mon.fillHisto("eventflow",tags, 15+1, weight);
         if(met.pt()>100) {
-            if(diphoton.pt()>100) {
-                if(diphoton.mass()>122 && diphoton.mass()<128) mon.fillHisto("yields_finalsel",tags, 0, weight);
-                mon.fillHisto("diphoton_mass_bin0_sel", tags, diphoton.mass(), weight);
-            } else {
-                if(diphoton.mass()>122 && diphoton.mass()<128) mon.fillHisto("yields_finalsel",tags, 1, weight);
-                mon.fillHisto("diphoton_mass_bin1_sel", tags, diphoton.mass(), weight);
+            if(isMC) {
+                if(diphoton.pt()>100) {
+                    //if(diphoton.mass()>122 && diphoton.mass()<128) {
+                    mon.fillHisto("yields_finalsel",tags, 0, weight);
+                    mon.fillHisto("eventflow",tags, 15+2, weight);
+
+                    mon.fillHisto("metsig_bin1", tags, met_sig, weight);
+                    mon.fillHisto("balancedif_bin1", tags, balanceDif, weight);
+                    mon.fillHisto("dphiGamGamMET_bin1",tags, dphiGamGamMET, weight);
+
+                    fprintf(outTxtFile_final,"%d %d %.5f %d %.5f %.5f %.5f %.5f %.5f\n",ev.RunNumber, ev.EventNumber, diphoton.mass(), 1, ev.evtWeight, ev.lumiXsecWeight, hardsum.pt(), diphoton.pt(), met.pt());
+                    //}
+                } else {
+                    //if(diphoton.mass()>122 && diphoton.mass()<128) {
+                    mon.fillHisto("yields_finalsel",tags, 1, weight);
+                    mon.fillHisto("eventflow",tags, 16+2, weight);
+                    fprintf(outTxtFile_final,"%d %d %.5f %d %.5f %.5f %.5f %.5f %.5f\n",ev.RunNumber, ev.EventNumber, diphoton.mass(), 2, ev.evtWeight, ev.lumiXsecWeight, hardsum.pt(), diphoton.pt(), met.pt());
+                    //}
+                }
             }
         } else if(met.pt()>50 && hardsum.pt()>40) {
-            if(diphoton.mass()>122 && diphoton.mass()<128) mon.fillHisto("yields_finalsel",tags, 2, weight);
-            mon.fillHisto("diphoton_mass_bin2_sel", tags, diphoton.mass(), weight);
+            //if(diphoton.mass()>122 && diphoton.mass()<128) {
+            mon.fillHisto("yields_finalsel",tags, 2, weight);
+            mon.fillHisto("eventflow",tags, 17+2, weight);
+            fprintf(outTxtFile_final,"%d %d %.5f %d %.5f %.5f %.5f %.5f %.5f\n",ev.RunNumber, ev.EventNumber, diphoton.mass(), 3, ev.evtWeight, ev.lumiXsecWeight, hardsum.pt(), diphoton.pt(), met.pt());
+            //}
         } else if( diphoton.pt()>15) {
-            if(diphoton.mass()>122 && diphoton.mass()<128) mon.fillHisto("yields_finalsel",tags, 3, weight);
-            mon.fillHisto("diphoton_mass_bin3_sel", tags, diphoton.mass(), weight);
+            //if(diphoton.mass()>122 && diphoton.mass()<128) {
+            mon.fillHisto("yields_finalsel",tags, 3, weight);
+            mon.fillHisto("eventflow",tags, 18+2, weight);
+            fprintf(outTxtFile_final,"%d %d %.5f %d %.5f %.5f %.5f %.5f %.5f\n",ev.RunNumber, ev.EventNumber, diphoton.mass(), 4, ev.evtWeight, ev.lumiXsecWeight, hardsum.pt(), diphoton.pt(), met.pt());
+            //}
         }
 
 
@@ -534,35 +714,46 @@ int main(int argc, char *argv[])
 
 
 
-        if( ifsaveEvents && (diphoton.mass()<120 || diphoton.mass()>130) ) {
+        if( ifsaveEvents /*&& (diphoton.mass()<120 || diphoton.mass()>130)*/ ) {
+
+            if(!isMC && diphoton.mass()>120 && diphoton.mass()<130) continue;
+
+
+            if(met.pt()>50 && diphoton.pt()>50 && dphiGamGamMET>2.4 && met_sig>6) {
+
+                mgg_bin5 = diphoton.mass();
+                weight_bin5_t = weight;
+                myEvents_bin5->Fill();
+            }
 
             if(met.pt()>100) {
                 if(diphoton.pt()>100) {
-
-                    mgg_bin0 = diphoton.mass();
-                    weight_bin0_t = weight;
-                    myEvents_bin0->Fill();
-
-                } else {
 
                     mgg_bin1 = diphoton.mass();
                     weight_bin1_t = weight;
                     myEvents_bin1->Fill();
 
+
+                } else {
+
+                    mgg_bin2 = diphoton.mass();
+                    weight_bin2_t = weight;
+                    myEvents_bin2->Fill();
+
                 }
             } else if(met.pt()>50 && hardsum.pt()>40) {
 
 
-                mgg_bin2 = diphoton.mass();
-                weight_bin2_t = weight;
-                myEvents_bin2->Fill();
+                mgg_bin3 = diphoton.mass();
+                weight_bin3_t = weight;
+                myEvents_bin3->Fill();
 
 
             } else if(diphoton.pt()>15) {
 
-                mgg_bin3 = diphoton.mass();
-                weight_bin3_t = weight;
-                myEvents_bin3->Fill();
+                mgg_bin4 = diphoton.mass();
+                weight_bin4_t = weight;
+                myEvents_bin4->Fill();
 
             }
 
@@ -582,7 +773,15 @@ int main(int argc, char *argv[])
     } // loop on all events END
 
 
+    if(isMC) {
 
+        for(int bin=1; bin < Heventflow->GetNbinsX()+1; bin++) {
+            if(bin<16) {
+                float bincontent = Heventflow->GetBinContent(bin);
+                Heventflow -> SetBinContent(bin, bincontent * lumiXsecWeight);
+            }
+        }
+    }
 
     //##############################################
     //########     SAVING HISTO TO FILE     ########
@@ -602,10 +801,11 @@ int main(int argc, char *argv[])
     // saving hgg tree to output file
     if(ifsaveEvents) {
         otreefile->cd();
-        myEvents_bin0->Write();
         myEvents_bin1->Write();
         myEvents_bin2->Write();
         myEvents_bin3->Write();
+        myEvents_bin4->Write();
+        myEvents_bin5->Write();
         myEvents_allbins->Write();
         printf("Tree saved in %s\n", outTreeUrl.Data());
     }
@@ -616,6 +816,7 @@ int main(int argc, char *argv[])
     inputFile->Close();
 
 
+    if(outTxtFile_final)fclose(outTxtFile_final);
 
     return 0;
 }

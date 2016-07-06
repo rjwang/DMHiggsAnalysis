@@ -580,7 +580,7 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
 
 
    TLegend* legA  = new TLegend();
-   if(!(isDataBlind||noratio)) legA  = new TLegend(0.45,0.7,0.9,0.95, "NDC");
+   if(!(isDataBlind||noratio)) legA  = new TLegend(0.50,0.80,0.95,0.98, "NDC");
    else legA = new TLegend(0.45,0.78-0.03,0.9,0.98-0.03, "NDC");
 
    legA->SetNColumns(3);
@@ -801,6 +801,22 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
 	 if(tSaveName.Contains("eleTightFakePt")) maximumFound*= 20;
 	 if(tSaveName.Contains("FakeEta")) maximumFound*= 40;
 	 if(tSaveName.Contains("eventflow")) maximumFound*= 100;
+
+	 if(tSaveName.Contains("pho_phi_sel")) maximumFound*= 50;
+         if(tSaveName.Contains("pho_eta_sel")) maximumFound*= 50;
+         if(tSaveName.Contains("pho_pt_sel")) maximumFound*= 50;
+         if(tSaveName.Contains("met_sel")) maximumFound*= 50;
+         if(tSaveName.Contains("diphoton_pt_sel") || tSaveName.Contains("pthard")) maximumFound*= 50;
+         if(tSaveName.Contains("diphoton_mass_sel")) maximumFound*= 50;
+         if(tSaveName.Contains("balancedif_sel")) maximumFound*= 50;
+         if(tSaveName.Contains("dphi")) maximumFound*= 50;
+	 if(tSaveName.Contains("nphotons") || tSaveName.Contains("nelectrons") || tSaveName.Contains("nmuons") || tSaveName.Contains("njets") ) maximumFound*= 100;
+	 if(tSaveName.Contains("metphi_sel")) maximumFound*= 50;
+	 if(tSaveName.Contains("pu_sel") || tSaveName.Contains("puwgt_sel")) maximumFound*= 50;
+         if(tSaveName.Contains("yields")) maximumFound*= 100;
+	 if(tSaveName.Contains("metsig")) maximumFound*= 100;
+
+
 	 maximumFound *= scaleYMax;
 
 	 stack->SetMaximum(maximumFound);
@@ -888,20 +904,25 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
        pave->Draw();
      }
 
-   TPaveText* T = new TPaveText(0.7,0.994,0.95,0.94, "NDC");
+//   TPaveText* T = new TPaveText(0.7,0.994,0.95,0.94, "NDC");
+   TPaveText* T = new TPaveText(0.18,0.80,0.43,0.85, "NDC");
    if(isDataBlind || noratio) T = new TPaveText(0.7,0.994,0.95,0.95, "NDC");
    T->SetFillColor(0);
    T->SetFillStyle(0);  T->SetLineColor(0);
    T->SetTextAlign(22);
    char Buffer[1024];
-   if(iLumi>1000) sprintf(Buffer, "%.1f fb^{-1} (%.0f TeV)", iLumi/1000,iEcm);
-   else		  sprintf(Buffer, "%.1f pb^{-1} (%.0f TeV)", iLumi, iEcm);
+   //if(iLumi>1000) sprintf(Buffer, "%.1f fb^{-1} (%.0f TeV)", iLumi/1000,iEcm);
+   //else		  sprintf(Buffer, "%.1f pb^{-1} (%.0f TeV)", iLumi, iEcm);
+   if(iLumi>1000) sprintf(Buffer, "#sqrt{s} = %.0f TeV, %.1f fb^{-1}", iEcm, iLumi/1000);
+   else 	  sprintf(Buffer, "#sqrt{s} = %.0f TeV, %.1f pb^{-1}", iEcm, iLumi);
+
 
    T->AddText(Buffer);
    T->Draw("same");
    T->SetBorderSize(0);
 
-   T = new TPaveText(0.06,0.994,0.58, 0.935, "NDC");
+   //T = new TPaveText(0.06,0.994,0.58, 0.935, "NDC");
+   T = new TPaveText(0.18, 0.83, 0.43, 0.96, "NDC");
    if(isDataBlind || noratio) T = new TPaveText(0.05,0.994,0.45, 0.95, "NDC");
    if(isSim) T->AddText("#it{#bf{ATLAS}} Simulation");
    else if(isinProgress) T->AddText("#it{#bf{ATLAS}} Work in Progress");
@@ -991,6 +1012,8 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
    else if(spimpose.size()>0) compDists=spimpose;
    if(mc && compDists.size() && !isDataBlind && !noratio)
      {
+       t1->SetTopMargin(0.03);
+       t1->SetRightMargin(0.03);
        c1->cd();
        TPad* t2 = new TPad("t2","t2", 0.0, 0.0, 1.0, 0.3);
        t2->Draw();
@@ -998,6 +1021,7 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
        t2->SetGridy(true);
        //t2->SetTopMargin(0);
        t2->SetTopMargin(0.05);
+       t2->SetRightMargin(0.03);
        t2->SetBottomMargin(0.5);
        //mc stats
        TH1D *denRelUncH=0;

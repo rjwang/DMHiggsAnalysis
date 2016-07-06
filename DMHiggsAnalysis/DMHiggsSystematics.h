@@ -73,6 +73,7 @@ private:
 
     int isPassed_var;
     int isPassedJetEventClean_var;
+    int isDalitz_var;
     //  ===========================  Reco objects  information  =========================== //
 
     //
@@ -227,7 +228,7 @@ private:
 
     std::vector<TString> syslist;
     int SYSHIST;
-    TH1F *myhisto[100]; //!
+    TH1F *myhisto[1000]; //!
 
     //std::map<std::string,TH1F*> m_histCutFlow; //!
     /* std::map<std::string,TFile*> m_outputFiles; //! */
