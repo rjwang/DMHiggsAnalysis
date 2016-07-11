@@ -219,6 +219,114 @@
     }, 
     {
       "isdata": false, 
+      "color": "901", 
+      "lcolor": "1", 
+      "tag": "ggH125", 
+      "marker": 901, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.4552, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.PowhegPy8_ggH125.NTuple", 
+          "nevts": 1921000, 
+          "xsec": 30.182
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "901", 
+      "lcolor": "1", 
+      "tag": "VBFH125", 
+      "marker": 901, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 0.9793, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.PowhegPy8_VBF125.NTuple", 
+          "nevts": 984000, 
+          "xsec": 3.8272
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "901", 
+      "lcolor": "1", 
+      "tag": "WH125", 
+      "marker": 901, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.2438, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.Pythia8_WH125.NTuple", 
+          "nevts": 49200, 
+          "xsec": 0.0025297
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "901", 
+      "lcolor": "1", 
+      "tag": "ZH125", 
+      "marker": 901, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.438, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.Pythia8_ZH125.NTuple", 
+          "nevts": 49800, 
+          "xsec": 0.0013788
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "901", 
+      "lcolor": "1", 
+      "tag": "ttH125", 
+      "marker": 901, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.2626, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.Pythia8_ttH125.NTuple", 
+          "nevts": 49800, 
+          "xsec": 0.00091822
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "901", 
+      "lcolor": "1", 
+      "tag": "bbH125", 
+      "marker": 901, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "mc15c.aMCnloPy8_bbH125_yb2.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.41324
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
       "color": "842", 
       "lcolor": "1", 
       "tag": "#gamma+jets", 

@@ -128,6 +128,71 @@ int main(int argc, char *argv[])
     myEvents_bin5->Branch("weight_t", &weight_bin5_t,"weight_t/D");
 
 
+    TTree *myEvents_bin6 = new TTree("tree_bin6","tree_bin6");
+    double mgg_bin6(0.), weight_bin6_t(1.);
+    myEvents_bin6->Branch("mgg",&mgg_bin6,"mgg/D");
+    myEvents_bin6->Branch("weight_t", &weight_bin6_t,"weight_t/D");
+
+
+    TTree *myEvents_bin7 = new TTree("tree_bin7","tree_bin7");
+    double mgg_bin7(0.), weight_bin7_t(1.);
+    myEvents_bin7->Branch("mgg",&mgg_bin7,"mgg/D");
+    myEvents_bin7->Branch("weight_t", &weight_bin7_t,"weight_t/D");
+
+
+    TTree *myEvents_bin8 = new TTree("tree_bin8","tree_bin8");
+    double mgg_bin8(0.), weight_bin8_t(1.);
+    myEvents_bin8->Branch("mgg",&mgg_bin8,"mgg/D");
+    myEvents_bin8->Branch("weight_t", &weight_bin8_t,"weight_t/D");
+
+
+    TTree *myEvents_bin9 = new TTree("tree_bin9","tree_bin9");
+    double mgg_bin9(0.), weight_bin9_t(1.);
+    myEvents_bin9->Branch("mgg",&mgg_bin9,"mgg/D");
+    myEvents_bin9->Branch("weight_t", &weight_bin9_t,"weight_t/D");
+
+
+    TTree *myEvents_bin10 = new TTree("tree_bin10","tree_bin10");
+    double mgg_bin10(0.), weight_bin10_t(1.);
+    myEvents_bin10->Branch("mgg",&mgg_bin10,"mgg/D");
+    myEvents_bin10->Branch("weight_t", &weight_bin10_t,"weight_t/D");
+
+
+    TTree *myEvents_bin11 = new TTree("tree_bin11","tree_bin11");
+    double mgg_bin11(0.), weight_bin11_t(1.);
+    myEvents_bin11->Branch("mgg",&mgg_bin11,"mgg/D");
+    myEvents_bin11->Branch("weight_t", &weight_bin11_t,"weight_t/D");
+
+
+    TTree *myEvents_bin12 = new TTree("tree_bin12","tree_bin12");
+    double mgg_bin12(0.), weight_bin12_t(1.);
+    myEvents_bin12->Branch("mgg",&mgg_bin12,"mgg/D");
+    myEvents_bin12->Branch("weight_t", &weight_bin12_t,"weight_t/D");
+
+
+    TTree *myEvents_bin13 = new TTree("tree_bin13","tree_bin13");
+    double mgg_bin13(0.), weight_bin13_t(1.);
+    myEvents_bin13->Branch("mgg",&mgg_bin13,"mgg/D");
+    myEvents_bin13->Branch("weight_t", &weight_bin13_t,"weight_t/D");
+
+
+    TTree *myEvents_bin14 = new TTree("tree_bin14","tree_bin14");
+    double mgg_bin14(0.), weight_bin14_t(1.);
+    myEvents_bin14->Branch("mgg",&mgg_bin14,"mgg/D");
+    myEvents_bin14->Branch("weight_t", &weight_bin14_t,"weight_t/D");
+
+
+    TTree *myEvents_bin15 = new TTree("tree_bin15","tree_bin15");
+    double mgg_bin15(0.), weight_bin15_t(1.);
+    myEvents_bin15->Branch("mgg",&mgg_bin15,"mgg/D");
+    myEvents_bin15->Branch("weight_t", &weight_bin15_t,"weight_t/D");
+
+
+    TTree *myEvents_bin16 = new TTree("tree_bin16","tree_bin16");
+    double mgg_bin16(0.), weight_bin16_t(1.);
+    myEvents_bin16->Branch("mgg",&mgg_bin16,"mgg/D");
+    myEvents_bin16->Branch("weight_t", &weight_bin16_t,"weight_t/D");
+
 
 
     TTree *myEvents_allbins = new TTree("tree_allbins","tree_allbins");
@@ -296,12 +361,35 @@ int main(int argc, char *argv[])
         h1->GetXaxis()->SetBinLabel(ibin,label);
     }
 
-    h1 = (TH1F*) mon.addHistogram( new TH1F( "yields_finalsel",";;Events", 5,0,5) );
+    h1 = (TH1F*) mon.addHistogram( new TH1F( "yields_finalsel",";;Events", 16,0,16) );
     h1->GetXaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
     h1->GetXaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
     h1->GetXaxis()->SetBinLabel(3,"Intermediate #it{E}_{T}^{miss}");
     h1->GetXaxis()->SetBinLabel(4,"Rest category");
-    h1->GetXaxis()->SetBinLabel(5,"HMHP, METSig>6, dphi>2.4");
+    //model independent limits
+    h1->GetXaxis()->SetBinLabel(5,"#it{E}_{T}^{miss} > 10, #it{p}_{T}^{#gamma#gamma} > 10");
+    h1->GetXaxis()->SetBinLabel(6,"#it{E}_{T}^{miss} > 20, #it{p}_{T}^{#gamma#gamma} > 20");
+    h1->GetXaxis()->SetBinLabel(7,"#it{E}_{T}^{miss} > 30, #it{p}_{T}^{#gamma#gamma} > 30");
+    h1->GetXaxis()->SetBinLabel(8,"#it{E}_{T}^{miss} > 40, #it{p}_{T}^{#gamma#gamma} > 40");
+    h1->GetXaxis()->SetBinLabel(9,"#it{E}_{T}^{miss} > 50, #it{p}_{T}^{#gamma#gamma} > 50");
+    h1->GetXaxis()->SetBinLabel(10,"#it{E}_{T}^{miss} > 60, #it{p}_{T}^{#gamma#gamma} > 60");
+    h1->GetXaxis()->SetBinLabel(11,"#it{E}_{T}^{miss} > 70, #it{p}_{T}^{#gamma#gamma} > 70");
+    h1->GetXaxis()->SetBinLabel(12,"#it{E}_{T}^{miss} > 80, #it{p}_{T}^{#gamma#gamma} > 80");
+    h1->GetXaxis()->SetBinLabel(13,"#it{E}_{T}^{miss} > 90, #it{p}_{T}^{#gamma#gamma} > 90");
+    h1->GetXaxis()->SetBinLabel(14,"#it{E}_{T}^{miss} > 100, #it{p}_{T}^{#gamma#gamma} > 100");
+    h1->GetXaxis()->SetBinLabel(15,"#it{E}_{T}^{miss} > 110, #it{p}_{T}^{#gamma#gamma} > 110");
+    h1->GetXaxis()->SetBinLabel(16,"#it{E}_{T}^{miss} > 120, #it{p}_{T}^{#gamma#gamma} > 120");
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -635,11 +723,6 @@ int main(int argc, char *argv[])
             mon.fillHisto("diphoton_mass_sel", tags, diphoton.mass(), weight);
         }
 
-        if(met.pt()>50 && diphoton.pt()>50 && dphiGamGamMET>2.4 && met_sig>6) {
-            mon.fillHisto("yields_finalsel",tags, 4, weight);
-        }
-
-
 //        if(diphoton.mass()>122 && diphoton.mass()<128) {
 
             for(size_t metsig=0; metsig<optim_Cuts_METSig.size(); metsig++) {
@@ -703,6 +786,28 @@ int main(int argc, char *argv[])
             //}
         }
 
+	if(met.pt()>10 && diphoton.pt()>10) mon.fillHisto("yields_finalsel",tags, 4, weight);
+	if(met.pt()>20 && diphoton.pt()>20) mon.fillHisto("yields_finalsel",tags, 5, weight);
+	if(met.pt()>30 && diphoton.pt()>30) mon.fillHisto("yields_finalsel",tags, 6, weight);
+	if(met.pt()>40 && diphoton.pt()>40) mon.fillHisto("yields_finalsel",tags, 7, weight);
+	if(met.pt()>50 && diphoton.pt()>50) mon.fillHisto("yields_finalsel",tags, 8, weight);
+	if(met.pt()>60 && diphoton.pt()>60) mon.fillHisto("yields_finalsel",tags, 9, weight);
+	if(met.pt()>70 && diphoton.pt()>70) mon.fillHisto("yields_finalsel",tags, 10, weight);
+	if(met.pt()>80 && diphoton.pt()>80) mon.fillHisto("yields_finalsel",tags, 11, weight);
+	if(met.pt()>90 && diphoton.pt()>90) mon.fillHisto("yields_finalsel",tags, 12, weight);
+	if(met.pt()>100 && diphoton.pt()>100) mon.fillHisto("yields_finalsel",tags, 13, weight);
+	if(met.pt()>110 && diphoton.pt()>110) mon.fillHisto("yields_finalsel",tags, 14, weight);
+	if(met.pt()>120 && diphoton.pt()>120) mon.fillHisto("yields_finalsel",tags, 15, weight);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -717,14 +822,6 @@ int main(int argc, char *argv[])
         if( ifsaveEvents /*&& (diphoton.mass()<120 || diphoton.mass()>130)*/ ) {
 
             if(!isMC && diphoton.mass()>120 && diphoton.mass()<130) continue;
-
-
-            if(met.pt()>50 && diphoton.pt()>50 && dphiGamGamMET>2.4 && met_sig>6) {
-
-                mgg_bin5 = diphoton.mass();
-                weight_bin5_t = weight;
-                myEvents_bin5->Fill();
-            }
 
             if(met.pt()>100) {
                 if(diphoton.pt()>100) {
@@ -757,6 +854,69 @@ int main(int argc, char *argv[])
 
             }
 
+
+
+            if(met.pt()>10 && diphoton.pt()>10 ) {
+                mgg_bin5 = diphoton.mass();
+                weight_bin5_t = weight;
+                myEvents_bin5->Fill();
+            }
+            if(met.pt()>20 && diphoton.pt()>20 ) {
+                mgg_bin6 = diphoton.mass();
+                weight_bin6_t = weight;
+                myEvents_bin6->Fill();
+            }
+            if(met.pt()>30 && diphoton.pt()>30 ) {
+                mgg_bin7 = diphoton.mass();
+                weight_bin7_t = weight;
+                myEvents_bin7->Fill();
+            }
+            if(met.pt()>40 && diphoton.pt()>40 ) {
+                mgg_bin8 = diphoton.mass();
+                weight_bin8_t = weight;
+                myEvents_bin8->Fill();
+            }
+            if(met.pt()>50 && diphoton.pt()>50 ) {
+                mgg_bin9 = diphoton.mass();
+                weight_bin9_t = weight;
+                myEvents_bin9->Fill();
+            }
+            if(met.pt()>60 && diphoton.pt()>60 ) {
+                mgg_bin10 = diphoton.mass();
+                weight_bin10_t = weight;
+                myEvents_bin10->Fill();
+            }
+
+            if(met.pt()>70 && diphoton.pt()>70 ) {
+                mgg_bin11 = diphoton.mass();
+                weight_bin11_t = weight;
+                myEvents_bin11->Fill();
+            }
+            if(met.pt()>80 && diphoton.pt()>80 ) {
+                mgg_bin12 = diphoton.mass();
+                weight_bin12_t = weight;
+                myEvents_bin12->Fill();
+            }
+            if(met.pt()>90 && diphoton.pt()>90 ) {
+                mgg_bin13 = diphoton.mass();
+                weight_bin13_t = weight;
+                myEvents_bin13->Fill();
+            }
+            if(met.pt()>100 && diphoton.pt()>100 ) {
+                mgg_bin14 = diphoton.mass();
+                weight_bin14_t = weight;
+                myEvents_bin14->Fill();
+            }
+            if(met.pt()>110 && diphoton.pt()>110 ) {
+                mgg_bin15 = diphoton.mass();
+                weight_bin15_t = weight;
+                myEvents_bin15->Fill();
+            }
+            if(met.pt()>120 && diphoton.pt()>120 ) {
+                mgg_bin16 = diphoton.mass();
+                weight_bin16_t = weight;
+                myEvents_bin16->Fill();
+            }
 
 
             mgg_allbins = diphoton.mass();
@@ -805,7 +965,20 @@ int main(int argc, char *argv[])
         myEvents_bin2->Write();
         myEvents_bin3->Write();
         myEvents_bin4->Write();
+        //model indepedent
         myEvents_bin5->Write();
+        myEvents_bin6->Write();
+        myEvents_bin7->Write();
+        myEvents_bin8->Write();
+        myEvents_bin9->Write();
+        myEvents_bin10->Write();
+        myEvents_bin11->Write();
+        myEvents_bin12->Write();
+        myEvents_bin13->Write();
+        myEvents_bin14->Write();
+        myEvents_bin15->Write();
+        myEvents_bin16->Write();
+
         myEvents_allbins->Write();
         printf("Tree saved in %s\n", outTreeUrl.Data());
     }

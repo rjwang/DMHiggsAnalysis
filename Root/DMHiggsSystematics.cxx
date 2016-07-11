@@ -123,7 +123,7 @@ EL::StatusCode DMHiggsSystematics::initialize()
             TString tempSys = line;
             std::cout << "using sys: " << tempSys << std::endl;
             syslist.push_back(tempSys);
-	    //break; //for testing
+            //break; //for testing
         }
     } else {
         std::cout << "Unable to open systematic list: " << sysListDir <<std::endl;
@@ -137,12 +137,26 @@ EL::StatusCode DMHiggsSystematics::initialize()
         TString Hname = "mgg";
         if(syslist[hist]!="") Hname += ("_"+syslist[hist]);
 
-        myhisto[hist] = new TH1F( Hname.Data() , ";;Events" , 4, 0, 4);
+        myhisto[hist] = new TH1F( Hname.Data() , ";;Events" , 14, 0, 14);
 
         myhisto[hist]->GetXaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
         myhisto[hist]->GetXaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
         myhisto[hist]->GetXaxis()->SetBinLabel(3,"Intermediate #it{E}_{T}^{miss}");
         myhisto[hist]->GetXaxis()->SetBinLabel(4,"Rest Category");
+        //model independent limits
+        myhisto[hist]->GetXaxis()->SetBinLabel(5,"#it{E}_{T}^{miss} > 10, #it{p}_{T}^{#gamma#gamma} > 10");
+        myhisto[hist]->GetXaxis()->SetBinLabel(6,"#it{E}_{T}^{miss} > 20, #it{p}_{T}^{#gamma#gamma} > 20");
+        myhisto[hist]->GetXaxis()->SetBinLabel(7,"#it{E}_{T}^{miss} > 30, #it{p}_{T}^{#gamma#gamma} > 30");
+        myhisto[hist]->GetXaxis()->SetBinLabel(8,"#it{E}_{T}^{miss} > 40, #it{p}_{T}^{#gamma#gamma} > 40");
+        myhisto[hist]->GetXaxis()->SetBinLabel(9,"#it{E}_{T}^{miss} > 50, #it{p}_{T}^{#gamma#gamma} > 50");
+        myhisto[hist]->GetXaxis()->SetBinLabel(10,"#it{E}_{T}^{miss} > 60, #it{p}_{T}^{#gamma#gamma} > 60");
+        myhisto[hist]->GetXaxis()->SetBinLabel(11,"#it{E}_{T}^{miss} > 70, #it{p}_{T}^{#gamma#gamma} > 70");
+        myhisto[hist]->GetXaxis()->SetBinLabel(12,"#it{E}_{T}^{miss} > 80, #it{p}_{T}^{#gamma#gamma} > 80");
+        myhisto[hist]->GetXaxis()->SetBinLabel(13,"#it{E}_{T}^{miss} > 90, #it{p}_{T}^{#gamma#gamma} > 90");
+        myhisto[hist]->GetXaxis()->SetBinLabel(14,"#it{E}_{T}^{miss} > 100, #it{p}_{T}^{#gamma#gamma} > 100");
+        myhisto[hist]->GetXaxis()->SetBinLabel(15,"#it{E}_{T}^{miss} > 110, #it{p}_{T}^{#gamma#gamma} > 110");
+        myhisto[hist]->GetXaxis()->SetBinLabel(16,"#it{E}_{T}^{miss} > 120, #it{p}_{T}^{#gamma#gamma} > 120");
+
 
     }
 
@@ -379,6 +393,21 @@ EL::StatusCode DMHiggsSystematics::execute()
         } else if( diphoton.pt()>15) {
             myhisto[hist] -> Fill(3.,weight);
         }
+
+
+        if(goodMET.pt()>10 && diphoton.pt()>10) myhisto[hist] -> Fill(4, weight);
+        if(goodMET.pt()>20 && diphoton.pt()>20) myhisto[hist] -> Fill(5, weight);
+        if(goodMET.pt()>30 && diphoton.pt()>30) myhisto[hist] -> Fill(6, weight);
+        if(goodMET.pt()>40 && diphoton.pt()>40) myhisto[hist] -> Fill(7, weight);
+        if(goodMET.pt()>50 && diphoton.pt()>50) myhisto[hist] -> Fill(8, weight);
+        if(goodMET.pt()>60 && diphoton.pt()>60) myhisto[hist] -> Fill(9, weight);
+        if(goodMET.pt()>70 && diphoton.pt()>70) myhisto[hist] -> Fill(10, weight);
+        if(goodMET.pt()>80 && diphoton.pt()>80) myhisto[hist] -> Fill(11, weight);
+        if(goodMET.pt()>90 && diphoton.pt()>90) myhisto[hist] -> Fill(12, weight);
+        if(goodMET.pt()>100 && diphoton.pt()>100) myhisto[hist] -> Fill(13, weight);
+        if(goodMET.pt()>110 && diphoton.pt()>110) myhisto[hist] -> Fill(14, weight);
+        if(goodMET.pt()>120 && diphoton.pt()>120) myhisto[hist] -> Fill(15, weight);
+
 
 
 

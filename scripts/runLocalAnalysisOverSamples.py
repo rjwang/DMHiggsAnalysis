@@ -199,7 +199,7 @@ for proc in procList :
 			SCRIPT.writelines('submit2batch.sh -q'+queue+' -G'+queuelog+'/'+dtag+str(segment)+'.log'+' -R"' + requirementtoBatch + '" -J' + dtag + str(segment) + ' `which wrapLocalAnalysisRun.sh` ' + theExecutable + ' ' + cfgfile + '\n\n')
 			SCRIPT_L.writelines(theExecutable + ' ' + cfgfile + ' >& '+queuelog+'/'+dtag+str(segment)+'.log'+' & \n\n')
 			count = count + 1
-			if count % 20 == 0: SCRIPT_L.writelines('sleep 25\n\n')
+			if count % 20 == 0: SCRIPT_L.writelines('sleep 15\n\n')
 
 			SCRIPT_Temp.writelines(theExecutable + ' ' + cfgfile + ' >& '+queuelog+'/'+dtag+str(segment)+'.log'+' & \n\n')
 			SCRIPT_DTag.writelines(theExecutable + ' ' + cfgfile + ' >& '+queuelog+'/'+dtag+str(segment)+'.log'+' & \n\n')
