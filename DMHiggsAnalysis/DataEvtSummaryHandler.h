@@ -93,6 +93,9 @@ struct DataEvtSummary_t {
   float sumet;
   float phi_met;
 
+  float met_hv;
+  float sumet_hv;
+  float phi_met_hv;
 };
 
 class DataEvtSummaryHandler {

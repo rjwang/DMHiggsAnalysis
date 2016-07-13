@@ -53,10 +53,10 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
         njet++;
     }
 
-
-    // MET
-    phys.met 	 = LorentzVector( ev.met*cos(ev.phi_met)/1000., ev.met*sin(ev.phi_met)/1000., 0, ev.met/1000. );
-
+    // MET (using diphoton vertex )
+    phys.met     = LorentzVector( ev.met*cos(ev.phi_met)/1000., ev.met*sin(ev.phi_met)/1000., 0, ev.met/1000. );
+    // MET using hardest vertex
+    phys.met_hv  = LorentzVector( ev.met_hv*cos(ev.phi_met_hv)/1000., ev.met_hv*sin(ev.phi_met_hv)/1000., 0, ev.met_hv/1000. );
 
     return phys;
 }

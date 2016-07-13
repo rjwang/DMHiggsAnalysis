@@ -254,6 +254,7 @@ int main(int argc, char *argv[])
     std::vector<double> optim_Cuts_METSig;
     std::vector<double> optim_Cuts_MET;
     std::vector<double> optim_Cuts_DphiyyMET;
+    std::vector<double> optim_Cuts_yypt;
 
 
     for(double metsig=0; metsig<=10; metsig+=0.5) {
@@ -265,15 +266,18 @@ int main(int argc, char *argv[])
     for(double dphi=0; dphi<=3.1; dphi+=0.31) {
         optim_Cuts_DphiyyMET  .push_back(dphi);
     }
+    for(double yypt=0; yypt<=150; yypt+=10) {
+        optim_Cuts_yypt  .push_back(yypt);
+    }
 
     size_t nOptims_METSig = optim_Cuts_METSig.size();
     size_t nOptims_MET = optim_Cuts_MET.size();
     size_t nOptims_DphiyyMET = optim_Cuts_DphiyyMET.size();
+    size_t nOptims_yypt = optim_Cuts_yypt.size();
 
     TH2F *h2 = (TH2F*) mon.addHistogram( new TH2F( "yields_dphi_vs_metsig",";E_{T}^{miss} Significance; #Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", nOptims_METSig,0,nOptims_METSig, nOptims_DphiyyMET,0,nOptims_DphiyyMET) );
-
     TH2F *h3 = (TH2F*) mon.addHistogram( new TH2F( "yields_dphi_vs_met",";E_{T}^{miss} [GeV]; #Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", nOptims_MET,0,nOptims_MET, nOptims_DphiyyMET,0,nOptims_DphiyyMET) );
-
+    TH2F *h4 = (TH2F*) mon.addHistogram( new TH2F( "yields_metsig_vs_yypt", ";#it{p}_{T}^{#gamma#gamma}; E_{T}^{miss} Significance; Events", nOptims_yypt,0,nOptims_yypt, nOptims_METSig,0,nOptims_METSig) );
 
     for(int ibin=1; ibin<=h2->GetXaxis()->GetNbins(); ibin++) {
         if(ibin%4 != 0 ) continue;
@@ -321,6 +325,33 @@ int main(int argc, char *argv[])
         label += title;
         h3->GetYaxis()->SetBinLabel(ibin,label);
     }
+
+
+    for(int ibin=1; ibin<=h4->GetXaxis()->GetNbins(); ibin++) {
+        if(ibin%4 != 0 ) continue;
+        TString label("");
+        label +="> ";
+        std::ostringstream buff;
+        buff << fixed  << setprecision(0) << optim_Cuts_yypt[ibin-1];
+        std::string str = buff.str();
+        TString title = str;
+        label += title;
+        h4->GetXaxis()->SetBinLabel(ibin,label);
+    }
+    for(int ibin=1; ibin<=h4->GetYaxis()->GetNbins(); ibin++) {
+        if(ibin%2 !=0 ) continue;
+        TString label("");
+        label +="> ";
+        std::ostringstream buff;
+        buff << fixed  << setprecision(1) <<optim_Cuts_METSig[ibin-1];
+        std::string str = buff.str();
+        TString title = str;
+        label += title;
+        h4->GetYaxis()->SetBinLabel(ibin,label);
+    }
+
+
+
 
 
 
@@ -528,7 +559,8 @@ int main(int argc, char *argv[])
         bool passmassWindow(diphoton.mass()>105 && diphoton.mass()<160);
 
 
-        LorentzVector met = phys.met;
+        LorentzVector met = phys.met; // diphoton vertex based
+        //LorentzVector met = phys.met_hv; // hardest vertex based
         double dphiGamGamMET=fabs(deltaPhi(diphoton.phi(),met.phi()));
         double balanceDif = fabs(1-met.pt()/diphoton.pt());
 
@@ -745,6 +777,16 @@ int main(int argc, char *argv[])
 
 
 
+            for(size_t ipt=0; ipt<optim_Cuts_yypt.size(); ipt++) {
+		for(size_t metsig=0; metsig<optim_Cuts_METSig.size(); metsig++) {
+
+                    if( diphoton.pt()>optim_Cuts_yypt[ipt] && met_sig > optim_Cuts_METSig[metsig]) {
+                        mon.fillHisto("yields_metsig_vs_yypt",tags, ipt, metsig, weight);
+                    }
+                }
+            }
+
+
 
 //        }
 
@@ -763,7 +805,6 @@ int main(int argc, char *argv[])
                     mon.fillHisto("dphiGamGamMET_bin1",tags, dphiGamGamMET, weight);
 
                     fprintf(outTxtFile_final,"%d %d %.5f %d %.5f %.5f %.5f %.5f %.5f\n",ev.RunNumber, ev.EventNumber, diphoton.mass(), 1, ev.evtWeight, ev.lumiXsecWeight, hardsum.pt(), diphoton.pt(), met.pt());
-                    //}
                 } else {
                     //if(diphoton.mass()>122 && diphoton.mass()<128) {
                     mon.fillHisto("yields_finalsel",tags, 1, weight);
@@ -823,12 +864,21 @@ int main(int argc, char *argv[])
 
             if(!isMC && diphoton.mass()>120 && diphoton.mass()<130) continue;
 
-            if(met.pt()>100) {
-                if(diphoton.pt()>100) {
-
+	    //MET sig > 7, diphton pt > 90
+	    if(met_sig>7 && diphoton.pt()>90){
                     mgg_bin1 = diphoton.mass();
                     weight_bin1_t = weight;
                     myEvents_bin1->Fill();
+	    }
+
+
+
+            if(met.pt()>100) {
+                if(diphoton.pt()>100) {
+
+                    //mgg_bin1 = diphoton.mass();
+                    //weight_bin1_t = weight;
+                    //myEvents_bin1->Fill();
 
 
                 } else {

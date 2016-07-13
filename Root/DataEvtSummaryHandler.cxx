@@ -106,6 +106,9 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("sumet",                    		&evSummary_.sumet);
     t_->SetBranchAddress("phi_met",                  		&evSummary_.phi_met);
 
+    t_->SetBranchAddress("met_hv",                                      &evSummary_.met_hv);
+    t_->SetBranchAddress("sumet_hv",                                    &evSummary_.sumet_hv);
+    t_->SetBranchAddress("phi_met_hv",                                  &evSummary_.phi_met_hv);
 
 
 
