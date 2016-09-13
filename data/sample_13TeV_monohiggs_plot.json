@@ -1,0 +1,1115 @@
+{
+  "proc": [
+    {
+      "isdata": false, 
+      "color": "400", 
+      "lcolor": "1", 
+      "tag": "VV", 
+      "marker": 400, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_WplvWmqq.NTuple", 
+          "nevts": 1494800, 
+          "xsec": 25.995
+        }, 
+        {
+          "filtEff": 1.0169, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_WpqqWmlv.NTuple", 
+          "nevts": 1492400, 
+          "xsec": 25.974
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_WlvZqq.NTuple", 
+          "nevts": 748400, 
+          "xsec": 12.543
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_WqqZll.NTuple", 
+          "nevts": 249400, 
+          "xsec": 3.7583
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_WqqZvv.NTuple", 
+          "nevts": 448400, 
+          "xsec": 7.4151
+        }, 
+        {
+          "filtEff": 0.14253, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_ZqqZll.NTuple", 
+          "nevts": 99400, 
+          "xsec": 16.59
+        }, 
+        {
+          "filtEff": 0.28096, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_ZqqZvv.NTuple", 
+          "nevts": 149000, 
+          "xsec": 16.492
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_llvvjj_ss_EW4.NTuple", 
+          "nevts": 492000, 
+          "xsec": 0.025797
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_llvvjj_ss_EW6.NTuple", 
+          "nevts": 488000, 
+          "xsec": 0.043004
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_lllljj_EW6.NTuple", 
+          "nevts": 60000, 
+          "xsec": 0.031496
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_lllvjj_EW6.NTuple", 
+          "nevts": 9800, 
+          "xsec": 0.042017
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "832", 
+      "lcolor": "1", 
+      "tag": "V#gamma#gamma", 
+      "marker": 832, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_enugammagammaPt50GeV.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.0055474
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_munugammagammaPt50GeV.NTuple", 
+          "nevts": 9800, 
+          "xsec": 0.0056072
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_taunugammagammaPt50GeV.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.0056491
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_ZeegammagammaPt50GeV.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.0018851
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_ZmumugammagammaPt50GeV.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.0019001
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_ZtautaugammagammaPt50GeV.NTuple", 
+          "nevts": 8000, 
+          "xsec": 0.0018949
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_ZnunugammagammaPt50GeV.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.0027702
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "856", 
+      "lcolor": "1", 
+      "tag": "V#gamma", 
+      "marker": 856, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_eegammaPt10_35.NTuple", 
+          "nevts": 4957800, 
+          "xsec": 52.706
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_eegammaPt35_70.NTuple", 
+          "nevts": 500000, 
+          "xsec": 5.242
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_eegammaPt70_140.NTuple", 
+          "nevts": 246400, 
+          "xsec": 0.38455
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_eegammaPt140.NTuple", 
+          "nevts": 250000, 
+          "xsec": 0.047209
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_mumugammaPt10_35.NTuple", 
+          "nevts": 4981400, 
+          "xsec": 52.708
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_mumugammaPt35_70.NTuple", 
+          "nevts": 498600, 
+          "xsec": 5.2455
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_mumugammaPt70_140.NTuple", 
+          "nevts": 249800, 
+          "xsec": 0.38548
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_mumugammaPt140.NTuple", 
+          "nevts": 249200, 
+          "xsec": 0.04724
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_tautaugammaPt35_70.NTuple", 
+          "nevts": 499000, 
+          "xsec": 5.249
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_tautaugammaPt70_140.NTuple", 
+          "nevts": 249800, 
+          "xsec": 0.38482
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_tautaugammaPt140.NTuple", 
+          "nevts": 249000, 
+          "xsec": 0.047025
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_nunugammaPt35_70.NTuple", 
+          "nevts": 498400, 
+          "xsec": 4.0365
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_nunugammaPt70_140.NTuple", 
+          "nevts": 249000, 
+          "xsec": 0.97151
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_nunugammaPt140.NTuple", 
+          "nevts": 248600, 
+          "xsec": 0.16994
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_enugammaPt10_35.NTuple", 
+          "nevts": 2743000, 
+          "xsec": 200.75
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_enugammaPt35_70.NTuple", 
+          "nevts": 499200, 
+          "xsec": 15.348
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_enugammaPt70_140.NTuple", 
+          "nevts": 250000, 
+          "xsec": 1.5282
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_enugammaPt140.NTuple", 
+          "nevts": 249800, 
+          "xsec": 0.24155
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_munugammaPt10_35.NTuple", 
+          "nevts": 2990200, 
+          "xsec": 200.91
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_munugammaPt35_70.NTuple", 
+          "nevts": 499000, 
+          "xsec": 15.272
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_munugammaPt70_140.NTuple", 
+          "nevts": 249400, 
+          "xsec": 1.5235
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_munugammaPt140.NTuple", 
+          "nevts": 249400, 
+          "xsec": 0.24183
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_taunugammaPt10_35.NTuple", 
+          "nevts": 2990000, 
+          "xsec": 200.78
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_taunugammaPt35_70.NTuple", 
+          "nevts": 498200, 
+          "xsec": 15.297
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_taunugammaPt70_140.NTuple", 
+          "nevts": 249600, 
+          "xsec": 1.529
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_taunugammaPt140.NTuple", 
+          "nevts": 249600, 
+          "xsec": 0.2426
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "901", 
+      "lcolor": "1", 
+      "tag": "SMHiggs", 
+      "marker": 901, 
+      "data": [
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.4552, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "PowhegPy8_ggH125.NTuple", 
+          "nevts": 1921000, 
+          "xsec": 30.182
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 0.9793, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "PowhegPy8_VBF125.NTuple", 
+          "nevts": 984000, 
+          "xsec": 3.8272
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.2438, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "Pythia8_WH125.NTuple", 
+          "nevts": 49200, 
+          "xsec": 0.0025297
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.438, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "Pythia8_ZH125.NTuple", 
+          "nevts": 49800, 
+          "xsec": 0.0013788
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1.2626, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "Pythia8_ttH125.NTuple", 
+          "nevts": 49800, 
+          "xsec": 0.00091822
+        }, 
+        {
+          "filtEff": 1.0, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 0.002270, 
+          "dtag": "aMCnloPy8_bbH125_yb2.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.41324
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "900", 
+      "lcolor": "1", 
+      "tag": "QCD", 
+      "marker": 900, 
+      "data": [
+        {
+          "filtEff": 0.97723, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ0W.NTuple", 
+          "nevts": 1959369, 
+          "xsec": 78420000000.0
+        }, 
+        {
+          "filtEff": 0.00065705, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ1W.NTuple", 
+          "nevts": 1999000, 
+          "xsec": 78420000000.0
+        }, 
+        {
+          "filtEff": 0.00033141, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ2W.NTuple", 
+          "nevts": 1994600, 
+          "xsec": 2433100000.0
+        }, 
+        {
+          "filtEff": 0.00032182, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ3W.NTuple", 
+          "nevts": 1990500, 
+          "xsec": 26454000.0
+        }, 
+        {
+          "filtEff": 0.00052982, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ4W.NTuple", 
+          "nevts": 1989200, 
+          "xsec": 254630.0
+        }, 
+        {
+          "filtEff": 0.00092255, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ5W.NTuple", 
+          "nevts": 1994700, 
+          "xsec": 4553.5
+        }, 
+        {
+          "filtEff": 0.00094016, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ6W.NTuple", 
+          "nevts": 1892356, 
+          "xsec": 257.53
+        }, 
+        {
+          "filtEff": 0.00039282, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ7W.NTuple", 
+          "nevts": 1785200, 
+          "xsec": 16.215
+        }, 
+        {
+          "filtEff": 0.010162, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ8W.NTuple", 
+          "nevts": 1741825, 
+          "xsec": 0.62502
+        }, 
+        {
+          "filtEff": 0.012054, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ9W.NTuple", 
+          "nevts": 478000, 
+          "xsec": 0.019639
+        }, 
+        {
+          "filtEff": 0.0058935, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ10W.NTuple", 
+          "nevts": 490000, 
+          "xsec": 0.0011962
+        }, 
+        {
+          "filtEff": 0.0027015, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ11W.NTuple", 
+          "nevts": 486000, 
+          "xsec": 0.000042258
+        }, 
+        {
+          "filtEff": 0.00042502, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_jetjet_JZ12W.NTuple", 
+          "nevts": 499782, 
+          "xsec": 0.0000010367
+        }, 
+        {
+          "filtEff": 0.0034956, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "PowhegPy8_JZ1.NTuple", 
+          "nevts": 1993547, 
+          "xsec": 421630000000.0
+        }, 
+        {
+          "filtEff": 0.0004107, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "PowhegPy8_JZ2.NTuple", 
+          "nevts": 1993600, 
+          "xsec": 48024000000.0
+        }, 
+        {
+          "filtEff": 0.00014988, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "PowhegPy8_JZ3.NTuple", 
+          "nevts": 1993164, 
+          "xsec": 1908400000.0
+        }, 
+        {
+          "filtEff": 0.000018654, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "PowhegPy8_JZ4.NTuple", 
+          "nevts": 1991593, 
+          "xsec": 173620000.0
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "842", 
+      "lcolor": "1", 
+      "tag": "#gamma+jets", 
+      "marker": 842, 
+      "data": [
+        {
+          "filtEff": 0.44135, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_15-35_CVetoBVeto.NTuple", 
+          "xsec": 5.1947E+5
+        }, 
+        {
+          "filtEff": 0.41028, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_35-70_CVetoBVeto.NTuple", 
+          "nevts": 19956800, 
+          "xsec": 34988.0
+        }, 
+        {
+          "filtEff": 0.3996, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_70-140_CVetoBVeto.NTuple", 
+          "nevts": 1999200, 
+          "xsec": 3129.0
+        }, 
+        {
+          "filtEff": 0.41049, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_140-280_CVetoBVeto.NTuple", 
+          "nevts": 9976800, 
+          "xsec": 247.41
+        }, 
+        {
+          "filtEff": 0.41834, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_280-500_CVetoBVeto.NTuple", 
+          "nevts": 997200, 
+          "xsec": 13.648
+        }, 
+        {
+          "filtEff": 0.38226, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_500-1000_CVetoBVeto.NTuple", 
+          "nevts": 200000, 
+          "xsec": 0.92334
+        }, 
+        {
+          "filtEff": 0.37036, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_1000-2000_CVetoBVeto.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.018432
+        }, 
+        {
+          "filtEff": 0.36729, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_2000-4000_CVetoBVeto.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.000079682
+        }, 
+        {
+          "filtEff": 0.40351, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_4000_CVetoBVeto.NTuple", 
+          "nevts": 1000, 
+          "xsec": 2.4843E-9
+        }, 
+        {
+          "filtEff": 0.48261, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_15-35_CFilterBVeto.NTuple", 
+          "xsec": 5.1949E+5
+        }, 
+        {
+          "filtEff": 0.48609, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_35-70_CFilterBVeto.NTuple", 
+          "nevts": 9981800, 
+          "xsec": 34986.0
+        }, 
+        {
+          "filtEff": 0.48199, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_70-140_CFilterBVeto.NTuple", 
+          "nevts": 1997400, 
+          "xsec": 3132.9
+        }, 
+        {
+          "filtEff": 0.50284, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_140-280_CFilterBVeto.NTuple", 
+          "nevts": 1993200, 
+          "xsec": 247.39
+        }, 
+        {
+          "filtEff": 0.47349, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_280-500_CFilterBVeto.NTuple", 
+          "nevts": 500000, 
+          "xsec": 13.617
+        }, 
+        {
+          "filtEff": 0.47148, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_500-1000_CFilterBVeto.NTuple", 
+          "nevts": 100000, 
+          "xsec": 0.92185
+        }, 
+        {
+          "filtEff": 0.46691, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_1000-2000_CFilterBVeto.NTuple", 
+          "nevts": 50000, 
+          "xsec": 0.018388
+        }, 
+        {
+          "filtEff": 0.46642, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_2000-4000_CFilterBVeto.NTuple", 
+          "nevts": 49500, 
+          "xsec": 0.000080331
+        }, 
+        {
+          "filtEff": 0.41614, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_4000_CFilterBVeto.NTuple", 
+          "nevts": 800, 
+          "xsec": 2.5134E-9
+        }, 
+        {
+          "filtEff": 0.075953, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_15-35_BFilter.NTuple", 
+          "xsec": 5.1941E+5
+        }, 
+        {
+          "filtEff": 0.10752, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_35-70_BFilter.NTuple", 
+          "nevts": 1995800, 
+          "xsec": 35002.0
+        }, 
+        {
+          "filtEff": 0.11728, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_70-140_BFilter.NTuple", 
+          "nevts": 493400, 
+          "xsec": 3135.2
+        }, 
+        {
+          "filtEff": 0.12874, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_140-280_BFilter.NTuple", 
+          "nevts": 997600, 
+          "xsec": 249.37
+        }, 
+        {
+          "filtEff": 0.14069, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_280-500_BFilter.NTuple", 
+          "nevts": 97800, 
+          "xsec": 13.874
+        }, 
+        {
+          "filtEff": 0.14811, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_500-1000_BFilter.NTuple", 
+          "nevts": 20000, 
+          "xsec": 0.93819
+        }, 
+        {
+          "filtEff": 0.15751, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_1000-2000_BFilter.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.019046
+        }, 
+        {
+          "filtEff": 0.1692, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_2000-4000_BFilter.NTuple", 
+          "nevts": 10000, 
+          "xsec": 0.000082035
+        }, 
+        {
+          "filtEff": 0.14831, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamjet_4000_BFilter.NTuple", 
+          "nevts": 1000, 
+          "xsec": 2.5431E-9
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "885", 
+      "lcolor": "1", 
+      "tag": "DY", 
+      "marker": 885, 
+      "data": [
+        {
+          "filtEff": 1, 
+          "kfactor": 1.0289, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "PowhegPy8_Zee.NTuple", 
+          "nevts": 19916520, 
+          "xsec": 1895.9
+        }
+      ]
+    }, 
+    {
+      "isdata": false, 
+      "color": "798", 
+      "lcolor": "1", 
+      "tag": "#gamma#gamma", 
+      "marker": 798, 
+      "data": [
+        {
+          "filtEff": 0.00058997, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Pythia8_1Hard1BremDP40.NTuple", 
+          "xsec": 16616
+        }, 
+        {
+          "filtEff": 0.24320, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_0-55.NTuple", 
+          "nevts": 996400, 
+          "xsec": 140.90
+        }, 
+        {
+          "filtEff": 0.45653, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_55-100.NTuple", 
+          "nevts": 1000000, 
+          "xsec": 147.86
+        }, 
+        {
+          "filtEff": 0.49904, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_100-160_3jets.NTuple", 
+          "nevts": 4980400, 
+          "xsec": 40.127
+        }, 
+        {
+          "filtEff": 0.47885, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_160-250.NTuple", 
+          "nevts": 497200, 
+          "xsec": 11.986
+        }, 
+        {
+          "filtEff": 0.43294, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_250-400.NTuple", 
+          "nevts": 499800, 
+          "xsec": 3.7062
+        }, 
+        {
+          "filtEff": 0.35105, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_400-650.NTuple", 
+          "nevts": 500000, 
+          "xsec": 1.0114
+        }, 
+        {
+          "filtEff": 0.25105, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_650-1000.NTuple", 
+          "nevts": 499000, 
+          "xsec": 0.23503
+        }, 
+        {
+          "filtEff": 0.16729, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_1000-1500.NTuple", 
+          "nevts": 1992800, 
+          "xsec": 0.060489
+        }, 
+        {
+          "filtEff": 0.11035, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_1500-2000.NTuple", 
+          "nevts": 499500, 
+          "xsec": 0.012409
+        }, 
+        {
+          "filtEff": 0.080306, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_2000-2500.NTuple", 
+          "nevts": 499500, 
+          "xsec": 0.0033581
+        }, 
+        {
+          "filtEff": 0.061888, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_2500-3000.NTuple", 
+          "nevts": 99000, 
+          "xsec": 0.0010460
+        }, 
+        {
+          "filtEff": 0.050045, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_3000-3500.NTuple", 
+          "nevts": 99800, 
+          "xsec": 0.00035256
+        }, 
+        {
+          "filtEff": 0.041190, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_3500-4000.NTuple", 
+          "nevts": 99800, 
+          "xsec": 0.00012396
+        }, 
+        {
+          "filtEff": 0.035153, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_4000-4500.NTuple", 
+          "nevts": 99400, 
+          "xsec": 0.000044474
+        }, 
+        {
+          "filtEff": 0.030293, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_4500-5000.NTuple", 
+          "nevts": 99600, 
+          "xsec": 0.000016024
+        }, 
+        {
+          "filtEff": 0.024712, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1, 
+          "dtag": "Sherpa_gamgam_2DP20_5000-inf.NTuple", 
+          "nevts": 99200, 
+          "xsec": 0.0000086793
+        }
+      ]
+    }, 
+    {
+      "isdata": true, 
+      "color": 1, 
+      "tag": "Data", 
+      "marker": 20, 
+      "data": [
+        {
+          "dtag": "data15_13TeV.periodAll25ns.physics_Main.NTuple", 
+          "split": 1
+        }
+      ], 
+      "fill": 0
+    }, 
+    {
+      "isdata": false, 
+      "color": "809", 
+      "issignal": true, 
+      "tag": "Mx(1)MZ(10)", 
+      "lwidth": 2, 
+      "marker": 809, 
+      "data": [
+        {
+          "filtEff": 0.55614, 
+          "kfactor": 1, 
+          "split": 1, 
+          "BR": 1.0, 
+          "dtag": "MGPy8_zphxx_gg_mzp10_mx1.NTuple", 
+          "xsec": 0.005430504
+        }
+      ], 
+      "fill": 0, 
+      "spimpose": true, 
+      "lcolor": "809", 
+      "lstyle": 8
+    }
+  ]
+}
