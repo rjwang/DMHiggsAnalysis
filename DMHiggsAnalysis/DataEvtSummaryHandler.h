@@ -37,6 +37,9 @@ struct DataEvtSummary_t {
   float totWeight;
   float lumiXsecWeight;
   float evtWeight;
+  float pileupWeight;
+
+
 //  int passVertex;
 
   //photons
@@ -92,6 +95,20 @@ struct DataEvtSummary_t {
   float met;
   float sumet;
   float phi_met;
+
+  float met_hv;
+  float sumet_hv;
+  float phi_met_hv;
+
+  float mc_sumet;
+
+    //gen level event
+    int nmcparticles;
+    float mc_px[MAXPARTICLES],mc_py[MAXPARTICLES],mc_pz[MAXPARTICLES],mc_en[MAXPARTICLES];
+    int mc_id[MAXPARTICLES], mc_type[MAXPARTICLES], mc_origin[MAXPARTICLES];
+
+
+
 
 };
 

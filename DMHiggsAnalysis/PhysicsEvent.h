@@ -81,6 +81,7 @@ struct PhysicsEvent_t {
     PhysicsObjectPhotonCollection photons;
     PhysicsObjectJetCollection jets;
     LorentzVector met;
+    LorentzVector met_hv;
 
     PhysicsObjectCollection genneutrinos,genleptons,genWIMPs,genGravitons,genPhotons;
     PhysicsObjectCollection genjets;
