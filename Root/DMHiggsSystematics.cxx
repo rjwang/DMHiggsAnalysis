@@ -1,5 +1,6 @@
 #include "DMHiggsAnalysis/DMHiggsSystematics.h"
 #include "HGamAnalysisFramework/HgammaIncludes.h"
+#include "HGamAnalysisFramework/HGamVariables.h"
 
 
 
@@ -110,8 +111,7 @@ EL::StatusCode DMHiggsSystematics::initialize()
     //#############################
 
     // Set the function type:
-//    TString sysListDir = "/afs/cern.ch/work/r/rewang/monoHiggs/hgam_012_000247/DMHiggsAnalysis/data/SysList_data16_h012_rel20p7.txt";
-    TString sysListDir = "/afs/cern.ch/work/r/rewang/monoHiggs/hgam_012_000247/DMHiggsAnalysis/data/SysList_data16_h012_rel20p7_noMuonElev2.txt";
+    TString sysListDir = "/afs/cern.ch/work/r/rewang/monoHiggs/h013/DMHiggsAnalysis/data/SysList_data16_h013.txt";
     std::ifstream sysListFile (sysListDir.Data());
     syslist.clear();
     syslist.push_back(""); //norminal
@@ -137,7 +137,7 @@ EL::StatusCode DMHiggsSystematics::initialize()
         TString Hname = "mgg";
         if(syslist[hist]!="") Hname += ("_"+syslist[hist]);
 
-        myhisto[hist] = new TH1F( Hname.Data() , ";;Events" , 14, 0, 14);
+        myhisto[hist] = new TH1F( Hname.Data() , ";;Events" , 20, 0, 20);
 
         myhisto[hist]->GetXaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
         myhisto[hist]->GetXaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
@@ -188,6 +188,7 @@ EL::StatusCode DMHiggsSystematics::execute()
     SG::AuxElement::Accessor<int> NPV("numberOfPrimaryVertices");
     SG::AuxElement::Accessor<float> mu("mu");
     SG::AuxElement::Accessor<float> initWeight("weightInitial");
+    SG::AuxElement::Accessor<float> myy("m_yy");
     SG::AuxElement::Accessor<char> isPassed("isPassed");
     SG::AuxElement::Accessor<char> isPassedJetEventClean("isPassedJetEventClean");
     SG::AuxElement::Accessor<char> isDalitz("isDalitz");
@@ -216,7 +217,12 @@ EL::StatusCode DMHiggsSystematics::execute()
         if(event()->retrieve(eventInfo,"EventInfo").isFailure() )
             HG::fatal("Cannot retrieve event Info .");
 
+        double myy_var = myy(*HGameventInfo);
+
         isPassed_var = isPassed(*HGameventInfo) == 1 ? 1 : 0 ;
+        //isPassed_var=0;
+        //if(var::cutFlow()>13 && 105 <= myy_var/1e3 && myy_var/1e3 < 160) isPassed_var=1;
+
         isPassedJetEventClean_var = isPassedJetEventClean(*HGameventInfo) == 1 ? 1 : 0 ;
         if(!isPassed_var || !isPassedJetEventClean_var) return EL::StatusCode::SUCCESS;
 
@@ -382,13 +388,16 @@ EL::StatusCode DMHiggsSystematics::execute()
 
         LorentzVector goodMET =  LorentzVector( met*cos(phi_met)/1000., met*sin(phi_met)/1000., 0, met/1000. );
 
-        if(goodMET.pt()>100) {
-            if(diphoton.pt()>100) {
+	double met_sig = goodMET.pt()/sqrt(sumet/1000.);
+
+
+        if(met_sig>7) {
+            if(diphoton.pt()>90) {
                 myhisto[hist] -> Fill(0.,weight);
             } else {
                 myhisto[hist] -> Fill(1.,weight);
             }
-        } else if(goodMET.pt()>50 && hardsum.pt()>40) {
+        } else if(met_sig>4 && diphoton.pt()>25) {
             myhisto[hist] -> Fill(2.,weight);
         } else if( diphoton.pt()>15) {
             myhisto[hist] -> Fill(3.,weight);

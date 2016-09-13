@@ -1,6 +1,6 @@
 #include "DMHiggsAnalysis/DMHiggsAnalysis.h"
 #include "HGamAnalysisFramework/HgammaIncludes.h"
-
+#include "HGamAnalysisFramework/HGamVariables.h"
 
 
 
@@ -62,8 +62,6 @@ EL::StatusCode DMHiggsAnalysis::createOutput()
 
     //Create a TTree
     //  TFile *outfile = wk()->getOutputFile("MxAOD");
-
-
 
     return EL::StatusCode::SUCCESS;
 }
@@ -128,6 +126,15 @@ void DMHiggsAnalysis::declareVariables()
     myEvents->Branch("phi_met_hv", &phi_met_hv,"phi_met_hv/F");
     myEvents->Branch("sumet_hv", &sumet_hv,"sumet_hv/F");
 
+    myEvents->Branch("mc_sumet", &mc_sumet,"mc_sumet/F");
+
+
+    myEvents->Branch("vertexZ", &vertexZ,"vertexZ/F");
+    myEvents->Branch("vertexZ_hv", &vertexZ_hv,"vertexZ_hv/F");
+
+
+
+
     //mc truth
     myEvents->Branch("nmcparticles",  &nmcparticles,   "nmcparticles/I");
     myEvents->Branch("mc_px",         mc_px,           "mc_px[nmcparticles]/F");
@@ -159,7 +166,7 @@ EL::StatusCode DMHiggsAnalysis::initialize()
 
     m_outputFile = TFile::Open(InputfileName.Data(),"RECREATE");
 
-    if(TagName.Contains("Pythia8_WH125") || TagName.Contains("Pythia8_ZH125") ) TagName += "_big";
+    //if(TagName.Contains("Pythia8_WH125") || TagName.Contains("Pythia8_ZH125") ) TagName += "_big";
     if(TagName.Contains("Pythia8_1Hard1BremDP40")) TagName = "Pythia81Hard1BremDP40";
 
     // copy cutflow hists
@@ -201,6 +208,7 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
     SG::AuxElement::Accessor<int> NPV("numberOfPrimaryVertices");
     SG::AuxElement::Accessor<float> mu("mu");
+    SG::AuxElement::Accessor<float> myy("m_yy");
     SG::AuxElement::Accessor<char> isPassed("isPassed");
     SG::AuxElement::Accessor<char> isPassedJetEventClean("isPassedJetEventClean");
     SG::AuxElement::Accessor<char> isDalitz("isDalitz");
@@ -228,20 +236,29 @@ EL::StatusCode DMHiggsAnalysis::execute()
     if(event()->retrieve(eventInfo,"EventInfo").isFailure() )
         HG::fatal("Cannot retrieve event Info .");
 
-    isPassed_var = isPassed(*HGameventInfo) == 1 ? 1 : 0 ;
-    isPassedJetEventClean_var = isPassedJetEventClean(*HGameventInfo) == 1 ? 1 : 0 ;
-    if(!isPassed_var || !isPassedJetEventClean_var) return EL::StatusCode::SUCCESS;
-    if(isMC()) {
-        isDalitz_var = isDalitz(*HGameventInfo) == 1 ? 1 : 0 ;
-        if(isDalitz_var) return EL::StatusCode::SUCCESS;
-    }
-
-
     RunNumber = runNumber( *eventInfo );
     LumiBlock = lumiBlock( *eventInfo );
     EventNumber = eventNumber( *eventInfo );
     NPV_var = NPV(*HGameventInfo);
     mu_var = mu(*HGameventInfo);
+    myy_var = myy(*HGameventInfo);
+
+
+
+    isPassed_var = isPassed(*HGameventInfo) == 1 ? 1 : 0 ;
+    //isPassed_var=0;
+    //if(var::cutFlow()>13 && 105 <= myy_var/1e3 && myy_var/1e3 < 160) isPassed_var=1;
+
+
+    isPassedJetEventClean_var = isPassedJetEventClean(*HGameventInfo) == 1 ? 1 : 0 ;
+    if(!isPassed_var || !isPassedJetEventClean_var) return EL::StatusCode::SUCCESS;
+
+
+    if(isMC()) {
+        isDalitz_var = isDalitz(*HGameventInfo) == 1 ? 1 : 0 ;
+        if(isDalitz_var) return EL::StatusCode::SUCCESS;
+    }
+
 
 
     xAOD::PhotonContainer photons_H = photonHandler()->getCorrectedContainer() ;
@@ -261,11 +278,11 @@ EL::StatusCode DMHiggsAnalysis::execute()
     if(isMC()) {
         HgammaAnalysis::setSelectedObjects(&photons, &electrons, &muons, &jets);
         //lumiXsecWeight_var * evtWeight_var
-        totWeight_var = HgammaAnalysis::weightFinal();
+        totWeight_var = HgammaAnalysis::weightFinal() * eventHandler()->getVar<float>("weightJvt");
 
         lumiXsecWeight_var = HgammaAnalysis::lumiXsecWeight();
         // mcWeight_var * pileupWeight_var * vertexWeight_var * weigth from Photon SF
-        evtWeight_var = HgammaAnalysis::weight();
+        evtWeight_var = HgammaAnalysis::weight() * eventHandler()->getVar<float>("weightJvt");
 
         mcWeight_var = eventHandler()->mcWeight();
         pileupWeight_var = eventHandler()->pileupWeight();
@@ -413,6 +430,9 @@ EL::StatusCode DMHiggsAnalysis::execute()
     }
 
 
+    //Vertex
+    vertexZ     = eventHandler()->selectedVertexZ();
+    vertexZ_hv  = eventHandler()->hardestVertexZ();
 
     //
     // Generator-level information
@@ -429,10 +449,10 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
         for( xAOD::TruthParticle* truthpart : truthPhotons) {
 
-            mc_px[nmcparticles] = truthpart->p4().Px();
-            mc_py[nmcparticles] = truthpart->p4().Py();
-            mc_pz[nmcparticles] = truthpart->p4().Pz();
-            mc_en[nmcparticles] = truthpart->p4().E();
+            mc_px[nmcparticles] = truthpart->p4().Px()/1000.;
+            mc_py[nmcparticles] = truthpart->p4().Py()/1000.;
+            mc_pz[nmcparticles] = truthpart->p4().Pz()/1000.;
+            mc_en[nmcparticles] = truthpart->p4().E()/1000.;
             mc_origin[nmcparticles] = truthOrigin( *truthpart );
             mc_type[nmcparticles] = truthType( *truthpart );
             mc_id[nmcparticles] = 22;
@@ -443,11 +463,11 @@ EL::StatusCode DMHiggsAnalysis::execute()
 
 
 
-
-        mc_px[nmcparticles] = truthMET["NonInt"]->mpx();
-        mc_py[nmcparticles] = truthMET["NonInt"]->mpy();
+	mc_sumet = truthMET["NonInt"]->sumet()/1000.;
+        mc_px[nmcparticles] = truthMET["NonInt"]->mpx()/1000.;
+        mc_py[nmcparticles] = truthMET["NonInt"]->mpy()/1000.;
         mc_pz[nmcparticles] = 0;
-        mc_en[nmcparticles] = truthMET["NonInt"]->met();
+        mc_en[nmcparticles] = truthMET["NonInt"]->met()/1000.;
         mc_origin[nmcparticles] = -1;
         mc_type[nmcparticles] = -1;
         mc_id[nmcparticles] = 0; //met pdgid assgined as 0

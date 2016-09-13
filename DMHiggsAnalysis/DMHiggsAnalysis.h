@@ -48,7 +48,7 @@ private:
     int id1,id2;
 
 //  float xsecBrFilterEff_var;
-    //float myy_var;
+    float myy_var;
     /* float phi_yy_met_var; */
     /* float phi_yyj_met_var; */
     /* float phi_jj_met_var; */
@@ -165,12 +165,16 @@ private:
     float sumet;
     float phi_met;
 
-  float met_hv;
-  float sumet_hv;
-  float phi_met_hv;
+    float met_hv;
+    float sumet_hv;
+    float phi_met_hv;
+
+    float mc_sumet;
 //float metSig_var;
 
 
+    float vertexZ;
+    float vertexZ_hv;
 
 
     // ===========================  Truth information  =========================== //

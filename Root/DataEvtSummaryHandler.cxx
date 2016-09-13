@@ -47,6 +47,7 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("totWeight",             		&evSummary_.totWeight);
     t_->SetBranchAddress("lumiXsecWeight",             		&evSummary_.lumiXsecWeight);
     t_->SetBranchAddress("evtWeight",             		&evSummary_.evtWeight);
+    t_->SetBranchAddress("pileupWeight",             		&evSummary_.pileupWeight);
 //    t_->SetBranchAddress("passVertex",          		&evSummary_.passVertex);
 
 
@@ -110,6 +111,19 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("sumet_hv",                                    &evSummary_.sumet_hv);
     t_->SetBranchAddress("phi_met_hv",                                  &evSummary_.phi_met_hv);
 
+    t_->SetBranchAddress("mc_sumet",                               &evSummary_.mc_sumet);
+
+
+    //mc truth
+    t_->SetBranchAddress("nmcparticles",  &evSummary_.nmcparticles);
+    t_->SetBranchAddress("mc_px",         evSummary_.mc_px);
+    t_->SetBranchAddress("mc_py",         evSummary_.mc_py);
+    t_->SetBranchAddress("mc_pz",         evSummary_.mc_pz);
+    t_->SetBranchAddress("mc_en",         evSummary_.mc_en);
+    t_->SetBranchAddress("mc_id",         evSummary_.mc_id);
+    t_->SetBranchAddress("mc_type",       evSummary_.mc_type);
+    t_->SetBranchAddress("mc_origin",     evSummary_.mc_origin);
+
 
 
     return true;
@@ -123,6 +137,7 @@ void DataEvtSummaryHandler::resetStruct()
     evSummary_.nElectrons=0;
     evSummary_.nMuons=0;
     evSummary_.nJets=0;
+    evSummary_.nmcparticles=0;
 }
 
 /*
