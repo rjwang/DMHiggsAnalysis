@@ -88,6 +88,15 @@ struct DataEvtSummary_t {
   float jet_Py[MAXPARTICLES];
   float jet_Pz[MAXPARTICLES];
   float jet_E[MAXPARTICLES];
+
+
+
+  //DarkMatterTruths
+  int ntruthDarkMatters;
+  float DarkMatterTruth_Px[MAXPARTICLES];
+  float DarkMatterTruth_Py[MAXPARTICLES];
+  float DarkMatterTruth_Pz[MAXPARTICLES];
+  float DarkMatterTruth_E[MAXPARTICLES];
 //  float jet_Jvt[MAXPARTICLES];
 
 
@@ -108,7 +117,8 @@ struct DataEvtSummary_t {
     int mc_id[MAXPARTICLES], mc_type[MAXPARTICLES], mc_origin[MAXPARTICLES];
 
 
-
+  float vertexZ;
+  float vertexZ_hv;
 
 };
 

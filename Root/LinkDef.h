@@ -1,3 +1,5 @@
+#include <DMHiggsAnalysis/DMMETSystematics.h>
+
 #include <DMHiggsAnalysis/DMHiggsAnalysis.h>
 #include <DMHiggsAnalysis/DMHiggsSystematics.h>
 
@@ -18,3 +20,7 @@
 #pragma link C++ class DMHiggsSystematics+;
 #endif
 
+
+#ifdef __CINT__
+#pragma link C++ class DMMETSystematics+;
+#endif

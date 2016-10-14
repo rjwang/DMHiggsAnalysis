@@ -595,9 +595,17 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
    std::string SaveName = "";
    std::vector<JSONWrapper::Object> Process = Root["proc"].daughters();
    std::vector<TH1*> fakeStack;
+
+   // // ===================  Alvaro has added  ==================
+   // std::map<std::string,TGraphAsymmErrors*> vector_SystErrors;
+   // TGraphAsymmErrors* sys_error = new TGraphAsymmErrors();
+   // // =========================================================
+
    for(unsigned int i=0;i<Process.size();i++){
       if(Process[i]["isinvisible"].toBool())continue;
       TH1* hist = NULL;
+      
+      //      string FileSys;
       std::vector<JSONWrapper::Object> Samples = (Process[i])["data"].daughters();
       for(unsigned int j=0;j<Samples.size();j++){
          double Weight = 1.0;
@@ -625,7 +633,7 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
 	   string segmentExt; if(split>1) { char buf[255]; sprintf(buf,"_%i",s); segmentExt += buf; }
 
 	    string FileName = RootDir + (Samples[j])["dtag"].toString() + ((Samples[j].isTag("suffix"))?(Samples[j])["suffix"].toString():string("")) + segmentExt + filtExt + ".root";
-            if(!FileExist[FileName]){continue;}
+	    if(!FileExist[FileName]){continue;}
             TFile* File = new TFile(FileName.c_str());
             if(!File || File->IsZombie() || !File->IsOpen() || File->TestBit(TFile::kRecovered) )continue;
             TH1* tmptmphist = NULL;
@@ -644,6 +652,12 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
             //if(Process[i]["isdata"].toBool())printf("%s --> %f\n",(Samples[j])["dtag"].toString().c_str(), tmptmphist->Integral());
 	    //cout << ">>>>>>>>>>>>> debug tmphist: " << tmptmphist->GetNbinsX() << " weight: " << Weight << " File: " << FileName.c_str() << endl;
 
+	    // ======================= Alvaro Added =============================
+	    // if( !TString(FileName).Contains("data") )
+	    //   FileSys = "/afs/cern.ch/work/a/alopezso/private/DMAnalysis20.7/Plots/"+(FileName.substr(FileName.find("mc15c.")+6)).replace(FileName.find(".NTuple.root"),-1,"")+"/"+(FileName.substr(FileName.find("mc15c.")+6)).replace(FileName.find(".NTuple.root"),-1,"_SysBand.root");
+	    // else
+	    //   FileSys="";
+	    // ==================================================================
             delete tmptmphist;
             delete File;
          }
@@ -652,7 +666,26 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
          delete tmphist;
       }
       if(!hist)continue;
+      // // ===================  Alvaro has added  ==================
+      // if( FileSys != ""  || !TFile::Open( FileSys.c_str(),"READ")->IsOpen() ){
+      // 	TFile* fileSyst = TFile::Open( FileSys.c_str(),"READ"); 
+      // 	vector_SystErrors[Process[i]["tag"].c_str()] = (TGraphAsymmErrors*)fileSyst->Get("SysBand");
 
+      // 	for( int j = 0 ; j < hist->GetNbinsX() ; ++j){
+      // 	  double err_up = vector_SystErrors[Process[i]["tag"].c_str()]->GetErrorYhigh(j);
+      // 	  double err_down = vector_SystErrors[Process[i]["tag"].c_str()]->GetErrorYlow(j);
+      // 	  double err2_up =  sys_error ? sys_error->GetErrorYhigh(j) : 0;
+      // 	  double err2_down = sys_error ? sys_error->GetErrorYlow(j) : 0;
+
+      // 	  err2_up += pow(err_up*hist->GetBinContent(j+1),2);
+      // 	  err2_down += pow(err_down*hist->GetBinContent(j+1),2);
+
+      // 	  vector_SystErrors[Process[i]["tag"].c_str()]->SetPointError(j,0,0,err_down*hist->GetBinContent(j+1),err_up*hist->GetBinContent(j+1));
+      // 	  sys_error->SetPoint(j,hist->GetXaxis()->GetBinCenter(j+1),1);	
+      // 	  sys_error->SetPointError(j,0,0,err2_down,err2_up);	
+      // 	}
+      // }
+      // // =========================================================
 
       SaveName = hist->GetName();
       TString postfix(""); postfix+=i;
@@ -729,8 +762,6 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
    //cout << mc->GetNbinsX() << endl;
    if(mc &&  maximumFound<mc->GetBinContent(mc->GetMaximumBin()) ) maximumFound=mc->GetBinContent(mc->GetMaximumBin())*5.0;//1.1;
    if(data &&  maximumFound<data->GetBinContent(data->GetMaximumBin()) ) maximumFound=data->GetBinContent(data->GetMaximumBin())*5.0;//1.1;
-
-
 
    bool canvasIsFilled(false);
 
@@ -877,11 +908,20 @@ void Draw1DHistogram(JSONWrapper::Object& Root, std::string RootDir, NameAndType
           }
         mctotalUnc->SetDirectory(0);
 
-        TGraphErrors *mcgr=new TGraphErrors;
+	TGraphErrors *mcgr=new TGraphErrors;
+        //TGraphAsymmErrors *mcgr=new TGraphAsymmErrors;
         for(int ibin=1; ibin<=mctotalUnc->GetXaxis()->GetNbins(); ibin++)
           {
+	    // // Alvaro includes 
+
+	    // double err_up = sys_error->GetErrorYhigh(ibin-1);
+	    // double err_down = sys_error->GetErrorYlow(ibin-1) ;	     
+	    // double err_stat = mctotalUnc->GetBinError(ibin);
+	    // //
+
         	mcgr->SetPoint(ibin-1,mctotalUnc->GetXaxis()->GetBinCenter(ibin),mctotalUnc->GetBinContent(ibin));
-                mcgr->SetPointError(ibin-1,mctotalUnc->GetXaxis()->GetBinWidth(ibin)/2,mctotalUnc->GetBinError(ibin));
+		mcgr->SetPointError(ibin-1,mctotalUnc->GetXaxis()->GetBinWidth(ibin)/2,mctotalUnc->GetBinError(ibin));
+                //mcgr->SetPointError(ibin-1 , 0 , 0 , mctotalUnc->GetBinContent(ibin)-sqrt(pow(err_stat,2) + err_down ) , mctotalUnc->GetBinContent(ibin)+sqrt(pow(err_stat,2) + err_up ) );
           }
        	mcgr->SetFillStyle(3254);
        	mcgr->SetFillColor(1);

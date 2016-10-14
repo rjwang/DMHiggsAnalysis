@@ -1,4 +1,4 @@
-#include "DMHiggsAnalysis/DMHiggsSystematics.h"
+#include "DMHiggsAnalysis/DMMETSystematics.h"
 #include "HGamAnalysisFramework/HgammaIncludes.h"
 #include "HGamAnalysisFramework/HGamVariables.h"
 
@@ -47,50 +47,47 @@ typedef std::vector<LorentzVector> LorentzVectorCollection;
 
 
 // this is needed to distribute the algorithm to the workers
-ClassImp(DMHiggsSystematics)
+ClassImp(DMMETSystematics)
 
 
 
-DMHiggsSystematics::DMHiggsSystematics(const char *name)
+DMMETSystematics::DMMETSystematics(const char *name)
     : HgammaAnalysis(name)
 {
-    // Here you put any code for the base initialization of variables,
-    // e.g. initialize all pointers to 0.  Note that you should only put
-    // the most basic initialization here, since this method will be
-    // called on both the submission and the worker node.  Most of your
-    // initialization code will go into histInitialize() and
-    // initialize().
 
 }
 
 
 
-DMHiggsSystematics::~DMHiggsSystematics()
+DMMETSystematics::~DMMETSystematics()
 {
     // Here you delete any memory you allocated during your analysis.
 }
 
 
 
-EL::StatusCode DMHiggsSystematics::createOutput()
+EL::StatusCode DMMETSystematics::createOutput()
 {
-    // Here you setup the histograms needed for you analysis. This method
-    // gets called after the Handlers are initialized, so that the systematic
-    // registry is already filled.
-
-
-
-    //Create a TTree
-    //  TFile *outfile = wk()->getOutputFile("MxAOD");
-
-
 
     return EL::StatusCode::SUCCESS;
 }
 
 
+void DMMETSystematics::declareBranches()
+{
+  myEvents->Branch("MET",&m_met,"m_met/D");
+  myEvents->Branch("METSig",&m_metSig,"m_metSig/D");
+  myEvents->Branch("pTyy",&m_pTyy,"m_pTyy/D");
 
-EL::StatusCode DMHiggsSystematics::initialize()
+  for( auto itMap : sys_weights){
+    myEvents->Branch(itMap.first.c_str(),&(itMap.second),(itMap.first+"/D").c_str());
+  }
+
+}
+
+
+
+EL::StatusCode DMMETSystematics::initialize()
 {
 
     HgammaAnalysis::initialize();
@@ -98,13 +95,12 @@ EL::StatusCode DMHiggsSystematics::initialize()
     //currentfilename = inputfileName;
     inputfileName.replace(inputfileName.find(".MxAOD") , -1, "") ;
     TString TagName = inputfileName;
-    inputfileName.append(".NTuple.root");
+    inputfileName.append(".SYSHIST.root");
 
-    m_outputFile = TFile::Open(inputfileName.c_str(),"RECREATE");
-
-
-
-
+    m_outputHistFile = TFile::Open(inputfileName.c_str(),"RECREATE");
+    inputfileName.replace(inputfileName.find(".SYSHIST"),-1,".SYSNTuple.root");
+    m_outputTreeFile = TFile::Open(inputfileName.c_str(),"RECREATE");
+    myEvents = new TTree("DMSystematics","DMSystematics");
 
     //#############################
     // doing systematics
@@ -134,38 +130,44 @@ EL::StatusCode DMHiggsSystematics::initialize()
     SYSHIST = syslist.size();
     for(int hist=0; hist<SYSHIST; hist++) {
 
-        TString Hname = "mgg";
+        TString Hname = "METSIG";
+	std::string BranchName = "METSIG";
         if(syslist[hist]!="") Hname += ("_"+syslist[hist]);
+        if(syslist[hist]!="") BranchName += ("_"+syslist[hist]);
 
-        myhisto[hist] = new TH1F( Hname.Data() , ";;Events" , 20, 0, 20);
+	sys_weights[BranchName] = 0;
 
-        myhisto[hist]->GetXaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
-        myhisto[hist]->GetXaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
-        myhisto[hist]->GetXaxis()->SetBinLabel(3,"Intermediate #it{E}_{T}^{miss}");
-        myhisto[hist]->GetXaxis()->SetBinLabel(4,"Rest Category");
+        myhisto[hist] = new TH2F( Hname.Data() , ";E^{miss}_{T} Significance;;Events" , 40,0,20,20, 0, 20);
+
+        myhisto[hist]->GetYaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
+        myhisto[hist]->GetYaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
+        myhisto[hist]->GetYaxis()->SetBinLabel(3,"Intermediate #it{E}_{T}^{miss}");
+        myhisto[hist]->GetYaxis()->SetBinLabel(4,"Rest Category");
         //model independent limits
-        myhisto[hist]->GetXaxis()->SetBinLabel(5,"#it{E}_{T}^{miss} > 10, #it{p}_{T}^{#gamma#gamma} > 10");
-        myhisto[hist]->GetXaxis()->SetBinLabel(6,"#it{E}_{T}^{miss} > 20, #it{p}_{T}^{#gamma#gamma} > 20");
-        myhisto[hist]->GetXaxis()->SetBinLabel(7,"#it{E}_{T}^{miss} > 30, #it{p}_{T}^{#gamma#gamma} > 30");
-        myhisto[hist]->GetXaxis()->SetBinLabel(8,"#it{E}_{T}^{miss} > 40, #it{p}_{T}^{#gamma#gamma} > 40");
-        myhisto[hist]->GetXaxis()->SetBinLabel(9,"#it{E}_{T}^{miss} > 50, #it{p}_{T}^{#gamma#gamma} > 50");
-        myhisto[hist]->GetXaxis()->SetBinLabel(10,"#it{E}_{T}^{miss} > 60, #it{p}_{T}^{#gamma#gamma} > 60");
-        myhisto[hist]->GetXaxis()->SetBinLabel(11,"#it{E}_{T}^{miss} > 70, #it{p}_{T}^{#gamma#gamma} > 70");
-        myhisto[hist]->GetXaxis()->SetBinLabel(12,"#it{E}_{T}^{miss} > 80, #it{p}_{T}^{#gamma#gamma} > 80");
-        myhisto[hist]->GetXaxis()->SetBinLabel(13,"#it{E}_{T}^{miss} > 90, #it{p}_{T}^{#gamma#gamma} > 90");
-        myhisto[hist]->GetXaxis()->SetBinLabel(14,"#it{E}_{T}^{miss} > 100, #it{p}_{T}^{#gamma#gamma} > 100");
-        myhisto[hist]->GetXaxis()->SetBinLabel(15,"#it{E}_{T}^{miss} > 110, #it{p}_{T}^{#gamma#gamma} > 110");
-        myhisto[hist]->GetXaxis()->SetBinLabel(16,"#it{E}_{T}^{miss} > 120, #it{p}_{T}^{#gamma#gamma} > 120");
+        myhisto[hist]->GetYaxis()->SetBinLabel(5,"#it{E}_{T}^{miss} > 10, #it{p}_{T}^{#gamma#gamma} > 10");
+        myhisto[hist]->GetYaxis()->SetBinLabel(6,"#it{E}_{T}^{miss} > 20, #it{p}_{T}^{#gamma#gamma} > 20");
+        myhisto[hist]->GetYaxis()->SetBinLabel(7,"#it{E}_{T}^{miss} > 30, #it{p}_{T}^{#gamma#gamma} > 30");
+        myhisto[hist]->GetYaxis()->SetBinLabel(8,"#it{E}_{T}^{miss} > 40, #it{p}_{T}^{#gamma#gamma} > 40");
+        myhisto[hist]->GetYaxis()->SetBinLabel(9,"#it{E}_{T}^{miss} > 50, #it{p}_{T}^{#gamma#gamma} > 50");
+        myhisto[hist]->GetYaxis()->SetBinLabel(10,"#it{E}_{T}^{miss} > 60, #it{p}_{T}^{#gamma#gamma} > 60");
+        myhisto[hist]->GetYaxis()->SetBinLabel(11,"#it{E}_{T}^{miss} > 70, #it{p}_{T}^{#gamma#gamma} > 70");
+        myhisto[hist]->GetYaxis()->SetBinLabel(12,"#it{E}_{T}^{miss} > 80, #it{p}_{T}^{#gamma#gamma} > 80");
+        myhisto[hist]->GetYaxis()->SetBinLabel(13,"#it{E}_{T}^{miss} > 90, #it{p}_{T}^{#gamma#gamma} > 90");
+        myhisto[hist]->GetYaxis()->SetBinLabel(14,"#it{E}_{T}^{miss} > 100, #it{p}_{T}^{#gamma#gamma} > 100");
+        myhisto[hist]->GetYaxis()->SetBinLabel(15,"#it{E}_{T}^{miss} > 110, #it{p}_{T}^{#gamma#gamma} > 110");
+        myhisto[hist]->GetYaxis()->SetBinLabel(16,"#it{E}_{T}^{miss} > 120, #it{p}_{T}^{#gamma#gamma} > 120");
 
 
     }
 
 
 
+    declareBranches();
+
     return EL::StatusCode::SUCCESS;
 }
 
-EL::StatusCode DMHiggsSystematics::execute()
+EL::StatusCode DMMETSystematics::execute()
 {
     // Here you do everything that needs to be done on every single
     // events, e.g. read input variables, apply cuts, and fill
@@ -196,12 +198,17 @@ EL::StatusCode DMHiggsSystematics::execute()
     SG::AuxElement::Accessor<float> met_sumet("sumet_TST");
     SG::AuxElement::Accessor<float> met_phi("phi_TST");
 
+    for( auto itMap: sys_weights)
+      itMap.second = 0;
 
 
 
     // Systematics loop
 
     for(int hist=0; hist<SYSHIST; hist++) {
+
+	std::string BranchName = "METSIG";
+        if(syslist[hist]!="") BranchName += ("_"+syslist[hist]);
 
         TString HGamEventInfoTag = "HGamEventInfo";
         if(syslist[hist]!="") HGamEventInfoTag += ("_"+syslist[hist]);
@@ -390,58 +397,66 @@ EL::StatusCode DMHiggsSystematics::execute()
 
 	double met_sig = goodMET.pt()/sqrt(sumet/1000.);
 
+	m_metSig=met_sig;
+	m_pTyy=diphoton.pt();
+	m_met=goodMET.pt();
 
         if(met_sig>7) {
             if(diphoton.pt()>90) {
-                myhisto[hist] -> Fill(0.,weight);
+                myhisto[hist] -> Fill(met_sig,0.,weight);
             } else {
-                myhisto[hist] -> Fill(1.,weight);
+                myhisto[hist] -> Fill(met_sig,1.,weight);
             }
         } else if(met_sig>4 && diphoton.pt()>25) {
-            myhisto[hist] -> Fill(2.,weight);
+            myhisto[hist] -> Fill(met_sig,2.,weight);
         } else if( diphoton.pt()>15) {
-            myhisto[hist] -> Fill(3.,weight);
+            myhisto[hist] -> Fill(met_sig,3.,weight);
         }
 
 
-        if(goodMET.pt()>10 && diphoton.pt()>10) myhisto[hist] -> Fill(4, weight);
-        if(goodMET.pt()>20 && diphoton.pt()>20) myhisto[hist] -> Fill(5, weight);
-        if(goodMET.pt()>30 && diphoton.pt()>30) myhisto[hist] -> Fill(6, weight);
-        if(goodMET.pt()>40 && diphoton.pt()>40) myhisto[hist] -> Fill(7, weight);
-        if(goodMET.pt()>50 && diphoton.pt()>50) myhisto[hist] -> Fill(8, weight);
-        if(goodMET.pt()>60 && diphoton.pt()>60) myhisto[hist] -> Fill(9, weight);
-        if(goodMET.pt()>70 && diphoton.pt()>70) myhisto[hist] -> Fill(10, weight);
-        if(goodMET.pt()>80 && diphoton.pt()>80) myhisto[hist] -> Fill(11, weight);
-        if(goodMET.pt()>90 && diphoton.pt()>90) myhisto[hist] -> Fill(12, weight);
-        if(goodMET.pt()>100 && diphoton.pt()>100) myhisto[hist] -> Fill(13, weight);
-        if(goodMET.pt()>110 && diphoton.pt()>110) myhisto[hist] -> Fill(14, weight);
-        if(goodMET.pt()>120 && diphoton.pt()>120) myhisto[hist] -> Fill(15, weight);
+        if(goodMET.pt()>10 && diphoton.pt()>10) myhisto[hist] -> Fill(met_sig,4, weight);
+        if(goodMET.pt()>20 && diphoton.pt()>20) myhisto[hist] -> Fill(met_sig,5, weight);
+        if(goodMET.pt()>30 && diphoton.pt()>30) myhisto[hist] -> Fill(met_sig,6, weight);
+        if(goodMET.pt()>40 && diphoton.pt()>40) myhisto[hist] -> Fill(met_sig,7, weight);
+        if(goodMET.pt()>50 && diphoton.pt()>50) myhisto[hist] -> Fill(met_sig,8, weight);
+        if(goodMET.pt()>60 && diphoton.pt()>60) myhisto[hist] -> Fill(met_sig,9, weight);
+        if(goodMET.pt()>70 && diphoton.pt()>70) myhisto[hist] -> Fill(met_sig,10, weight);
+        if(goodMET.pt()>80 && diphoton.pt()>80) myhisto[hist] -> Fill(met_sig,11, weight);
+        if(goodMET.pt()>90 && diphoton.pt()>90) myhisto[hist] -> Fill(met_sig,12, weight);
+        if(goodMET.pt()>100 && diphoton.pt()>100) myhisto[hist] -> Fill(met_sig,13, weight);
+        if(goodMET.pt()>110 && diphoton.pt()>110) myhisto[hist] -> Fill(met_sig,14, weight);
+        if(goodMET.pt()>120 && diphoton.pt()>120) myhisto[hist] -> Fill(met_sig,15, weight);
 
 
-
+	sys_weights[BranchName]=weight; 
 
 
 
 
     }//systematics loop
 
+    myEvents->Fill();
 
     return EL::StatusCode::SUCCESS;
 }
 
 
 
-EL::StatusCode DMHiggsSystematics::finalize()
+EL::StatusCode DMMETSystematics::finalize()
 {
 
 
-    m_outputFile->cd();
+    m_outputHistFile->cd();
 
     for(int hist=0; hist<SYSHIST; hist++) {
         myhisto[hist] ->Write();
     }
-    m_outputFile->Close();
+    m_outputHistFile->Close();
 
+
+    m_outputTreeFile->cd();
+    myEvents->Write();
+    m_outputTreeFile->Close();
 
     HgammaAnalysis::finalize();
 
