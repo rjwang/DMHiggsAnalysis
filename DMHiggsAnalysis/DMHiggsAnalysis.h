@@ -236,6 +236,17 @@ private:
     float metTruthNonInt;
     float sumetTruthNonInt;
 
+    float metPhiTruthInt ;
+    float metPhiTruthNonInt ;
+
+    int ntruthDarkMatters;
+    float DarkMatterTruthPx[MAXPARTICLES];
+    float DarkMatterTruthPy[MAXPARTICLES];
+    float DarkMatterTruthPz[MAXPARTICLES];
+    float DarkMatterTruthE[MAXPARTICLES];
+
+
+
     //std::map<std::string,TH1F*> m_histCutFlow; //!
     /* std::map<std::string,TFile*> m_outputFiles; //! */
     /* std::map<std::string,TTree*> m_outputTTree; //! */
@@ -257,6 +268,12 @@ public:
     // these are the functions inherited from HgammaAnalysis
 
     void declareVariables();
+
+    bool isTruthPhoton(const xAOD::TruthParticle* truth);
+    bool isTruthHiggsPhoton(const xAOD::TruthParticle* truth);
+    bool isDarkMatter(const xAOD::TruthParticle* truth);
+
+    bool m_isMxAOD;
 
     virtual EL::StatusCode createOutput();
     virtual EL::StatusCode initialize();
