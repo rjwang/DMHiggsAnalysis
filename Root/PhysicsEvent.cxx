@@ -21,6 +21,8 @@ PhysicsEvent_t getPhysicsEventFrom(DataEvtSummary_t &ev)
     phys.lumi=ev.LumiBlock;
     phys.nvtx = ev.NPV;
 
+    phys.pv_hard_z=ev.vertexZ_hv;
+    phys.pv_diphot_z=ev.vertexZ;
 
     size_t npho(0);
     for(Int_t i=0; i<ev.nPhotons; i++) {

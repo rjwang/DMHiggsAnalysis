@@ -97,8 +97,16 @@ bool DataEvtSummaryHandler::attachToTree(TTree *t)
     t_->SetBranchAddress("jet_Py",                   		evSummary_.jet_Py);
     t_->SetBranchAddress("jet_Pz",                   		evSummary_.jet_Pz);
     t_->SetBranchAddress("jet_E",                   		evSummary_.jet_E);
+
+    t_->SetBranchAddress("ntruthDarkMatters",                      		&evSummary_.ntruthDarkMatters);
+    t_->SetBranchAddress("DarkMatterTruthPx",                   		evSummary_.DarkMatterTruth_Px);
+    t_->SetBranchAddress("DarkMatterTruthPy",                   		evSummary_.DarkMatterTruth_Py);
+    t_->SetBranchAddress("DarkMatterTruthPz",                   		evSummary_.DarkMatterTruth_Pz);
+    t_->SetBranchAddress("DarkMatterTruthE",                   		evSummary_.DarkMatterTruth_E);
 //    t_->SetBranchAddress("jet_Jvt",                   		evSummary_.jet_Jvt);
 
+    t_->SetBranchAddress("vertexZ",                                 &evSummary_.vertexZ);
+    t_->SetBranchAddress("vertexZ_hv",                               &evSummary_.vertexZ_hv);
 
 
 

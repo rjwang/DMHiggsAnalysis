@@ -83,6 +83,9 @@ struct PhysicsEvent_t {
     LorentzVector met;
     LorentzVector met_hv;
 
+    float pv_hard_z;
+    float pv_diphot_z;
+
     PhysicsObjectCollection genneutrinos,genleptons,genWIMPs,genGravitons,genPhotons;
     PhysicsObjectCollection genjets;
 };

@@ -15,6 +15,7 @@
 #include "TEventList.h"
 #include "TROOT.h"
 #include "TMath.h"
+#include "TList.h"
 
 #include "DMHiggsAnalysis/SmartSelectionMonitor.h"
 #include "DMHiggsAnalysis/deltaR.h"
@@ -22,6 +23,99 @@
 
 
 using namespace std;
+
+bool symemtricCuts(double met, double ptyy,int cut){
+
+  return   met >= cut*10 && ptyy >= cut*10;
+
+}
+bool Categorisation(std::vector<double> variables,int category){
+
+
+  //  double met = variables[0];
+  double metSig = variables[0];
+  double ptyy = variables[1];
+  double ptHard = variables[2];
+  double Nlep = variables[3];
+
+
+  switch(category){
+
+
+  case 0 :
+
+    return true;
+    break;
+  case 4 :
+
+    if( ptyy >= 15 && ( ptyy <= 25  ||  metSig <= 4 ) )
+      return true;
+
+
+    break;
+  case 3 :
+    if(  ptyy > 25  && ( metSig > 4 && metSig <= 7 ) )
+      return true;
+
+    
+    break;
+  case 2 :
+    
+    if(  ptyy <= 90  && ( metSig > 7 ) )
+      return true;
+
+    break;
+  case 1 :
+
+    if(  ptyy > 90  && ( metSig > 7 ) )
+      return true;    
+    break;
+
+  case 5 :
+
+    if(  ptyy > 90  && ( metSig > 7 && Nlep == 0 ) )
+      return true;    
+    break;
+  default :
+
+    std::cout << " Category number " << category << " is not defined. Currently there are 4 different categories." << std::endl;
+    
+    break;
+
+  }
+
+
+
+  return false;
+}
+
+
+int getCategory(std::vector<double> variables){
+
+
+  //  double met = variables[0];
+  double metSig = variables[0];
+  double ptyy = variables[1];
+  //  double ptHard = variables[2];
+
+
+  if(  metSig > 7  ){
+    if( ptyy > 90 )
+      return 1; 
+    else
+      return 2;
+  } else{
+    if( metSig > 4 && ptyy > 25 )
+      return 3;
+    else
+      if( ptyy > 15 )
+	return 4;
+  }
+
+  return 0;
+}
+
+
 
 int main(int argc, char *argv[])
 {
@@ -53,6 +147,7 @@ int main(int argc, char *argv[])
     bool isMC_gamjet = isMC && (SampleName=="#gamma+jets");
     bool isMC_gamgam =  isMC && (SampleName=="#gamma#gamma");
     bool isMC_vgam = isMC && (SampleName=="V#gamma");
+
 
 
     TFile *inputFile = TFile::Open(inputUrl);
@@ -213,14 +308,6 @@ int main(int argc, char *argv[])
     myEvents_allbins->Branch("mycat", &mycat_idx,"mycat_idx/I");
 
 
-
-
-
-
-
-
-
-
     //##################################################################################
     //##########################    INITIATING HISTOGRAMS     ##########################
     //##################################################################################
@@ -277,25 +364,20 @@ int main(int argc, char *argv[])
 
     mon.addHistogram( new TH1F( "diphoton_mass_3jetctrl",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
 
-    mon.addHistogram( new TH1F( "dphiGamGamMET_bin1",   ";#Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", 50,0,TMath::Pi()) );
-    mon.addHistogram( new TH1F( "metsig_bin1",         ";E_{T}^{miss} Significance [GeV];Events", 100,0,10) );
-    mon.addHistogram( new TH1F( "balancedif_bin1",     ";|E_{T}^{miss}-#it{p}_{T}^{#gamma#gamma}|/#it{p}_{T}^{#gamma#gamma};Events", 5,0,1.0) );
+    // mon.addHistogram( new TH1F( "dphiGamGamMET_bin1",   ";#Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", 50,0,TMath::Pi()) );
+    // mon.addHistogram( new TH1F( "metsig_bin1",         ";E_{T}^{miss} Significance [GeV];Events", 100,0,10) );
+    // mon.addHistogram( new TH1F( "balancedif_bin1",     ";|E_{T}^{miss}-#it{p}_{T}^{#gamma#gamma}|/#it{p}_{T}^{#gamma#gamma};Events", 5,0,1.0) );
 
-    mon.addHistogram( new TH1F( "diphoton_mass_bin1",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
-    mon.addHistogram( new TH1F( "diphoton_mass_bin2",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
-    mon.addHistogram( new TH1F( "diphoton_mass_bin3",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
-    mon.addHistogram( new TH1F( "diphoton_mass_bin4",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
+    // mon.addHistogram( new TH1F( "diphoton_mass_bin1",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
+    // mon.addHistogram( new TH1F( "diphoton_mass_bin2",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
+    // mon.addHistogram( new TH1F( "diphoton_mass_bin3",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
+    // mon.addHistogram( new TH1F( "diphoton_mass_bin4",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
 
-    mon.addHistogram( new TH1F( "yields_diphoton_mass_bin0",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
-    mon.addHistogram( new TH1F( "yields_diphoton_mass_bin1",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
-    mon.addHistogram( new TH1F( "yields_diphoton_mass_bin2",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
-    mon.addHistogram( new TH1F( "yields_diphoton_mass_bin3",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
-    mon.addHistogram( new TH1F( "yields_diphoton_mass_bin4",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
-
-
-
-
-
+    // mon.addHistogram( new TH1F( "yields_diphoton_mass_bin0",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
+    // mon.addHistogram( new TH1F( "yields_diphoton_mass_bin1",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
+    // mon.addHistogram( new TH1F( "yields_diphoton_mass_bin2",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
+    // mon.addHistogram( new TH1F( "yields_diphoton_mass_bin3",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
+    // mon.addHistogram( new TH1F( "yields_diphoton_mass_bin4",    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
 
 
     mon.addHistogram( new TH1F( "met_mu0_10_sel",            ";#it{E}_{T}^{miss} [GeV];Events", 100,0,600) );
@@ -328,10 +410,39 @@ int main(int argc, char *argv[])
     mon.addHistogram( new TH1F( "diphoton_pt_metsigbeg6",    ";#it{p}_{T}^{#gamma#gamma} [GeV];Events", 100,0,600) );
 
 
+    mon.addHistogram( new TH2F( "pv_dist_vs_met_sig",    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);E^{miss}_{T} significance;Events", 100,-1.5,1.5,20,0,20) );
+    mon.addHistogram( new TH1F( "pv_dist",    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);E^{miss}_{T} significance;Events", 100,-1.5,1.5) );
+    mon.addHistogram( new TH1F( "pv_dist_metsigbeg1",    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);Events", 100,-1.5,1.5) );
+    mon.addHistogram( new TH1F( "pv_dist_metsigbeg2",    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);Events", 100,-1.5,1.5) );
+    mon.addHistogram( new TH1F( "pv_dist_metsigbeg3",    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);Events", 100,-1.5,1.5) );
+    mon.addHistogram( new TH1F( "pv_dist_metsigbeg4",    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);Events", 100,-1.5,1.5) );
+    mon.addHistogram( new TH1F( "pv_dist_metsigbeg5",    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);Events", 100,-1.5,1.5) );
+    mon.addHistogram( new TH1F( "pv_dist_metsigbeg6",    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);Events", 100,-1.5,1.5) );
+
+ 
+    mon.addHistogram( new TH2F( "allpart_phi_vs_met_sig",    ";|#Delta#phi(hardObj,E^{miss}_{T})|;E^{miss}_{T} significance;Events", 50,0,TMath::Pi(),20,0,20) );
+    mon.addHistogram( new TH1F( "allpart_phi",    ";|#Delta#phi(hardObj,E^{miss}_{T})|;Events", 50,0,TMath::Pi()) );
+    mon.addHistogram( new TH1F( "allpart_phi_metsigbeg1",    ";|#Delta#phi(hardObj,E^{miss}_{T})|;Events", 50,0,TMath::Pi()) );
+    mon.addHistogram( new TH1F( "allpart_phi_metsigbeg2",    ";|#Delta#phi(hardObj,E^{miss}_{T})|;Events", 50,0,TMath::Pi()) );
+    mon.addHistogram( new TH1F( "allpart_phi_metsigbeg3",    ";|#Delta#phi(hardObj,E^{miss}_{T})|;Events", 50,0,TMath::Pi()) );
+    mon.addHistogram( new TH1F( "allpart_phi_metsigbeg4",    ";|#Delta#phi(hardObj,E^{miss}_{T})|;Events", 50,0,TMath::Pi()) );
+    mon.addHistogram( new TH1F( "allpart_phi_metsigbeg5",    ";|#Delta#phi(hardObj,E^{miss}_{T})|;Events", 50,0,TMath::Pi()) );
+    mon.addHistogram( new TH1F( "allpart_phi_metsigbeg6",    ";|#Delta#phi(hardObj,E^{miss}_{T})|;Events", 50,0,TMath::Pi()) );
 
 
 
+    for( unsigned int i = 0 ; i < 6 ; ++i){
 
+      mon.addHistogram( new TH1F( "allpart_phi_cat"+TString::Format("%d",i),    ";|#Delta#phi(hardObj,E^{miss}_{T})|;Events", 50,0,TMath::Pi()) );
+      mon.addHistogram( new TH1F( "pv_dist_cat"+TString::Format("%d",i),    ";z^{hardest}_{PV} - z^{#gamma#gamma}_{PV} (mm);Events", 100,-1.5,1.5) );
+      mon.addHistogram( new TH1F( "diphoton_mass_bin"+TString::Format("%d",i),    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
+      mon.addHistogram( new TH1F( "dphiGamGamMET_bin"+TString::Format("%d",i),   ";#Delta#it{#phi}(#it{p}_{T}^{#gamma#gamma},E_{T}^{miss}) [rad];Events", 50,0,TMath::Pi()) );
+      mon.addHistogram( new TH1F( "metsig_bin"+TString::Format("%d",i),         ";E_{T}^{miss} Significance [GeV];Events", 100,0,10) );
+      mon.addHistogram( new TH1F( "balancedif_bin"+TString::Format("%d",i),     ";|E_{T}^{miss}-#it{p}_{T}^{#gamma#gamma}|/#it{p}_{T}^{#gamma#gamma};Events", 5,0,1.0) );
+      mon.addHistogram( new TH1F( "yields_diphoton_mass_bin"+TString::Format("%d",i),    ";#it{m}_{#gamma#gamma} [GeV];Events", 1,0,1) );
+
+
+    }
 
 
 
@@ -480,7 +591,7 @@ int main(int argc, char *argv[])
         h1->GetXaxis()->SetBinLabel(ibin,label);
     }
 
-    h1 = (TH1F*) mon.addHistogram( new TH1F( "yields_finalsel",";;Events", 16,0,16) );
+    h1 = (TH1F*) mon.addHistogram( new TH1F( "yields_finalsel",";;Events", 17,0,17) );
     h1->GetXaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
     h1->GetXaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
     h1->GetXaxis()->SetBinLabel(3,"Intermediate #it{E}_{T}^{miss}");
@@ -498,18 +609,19 @@ int main(int argc, char *argv[])
     h1->GetXaxis()->SetBinLabel(14,"#it{E}_{T}^{miss} > 100, #it{p}_{T}^{#gamma#gamma} > 100");
     h1->GetXaxis()->SetBinLabel(15,"#it{E}_{T}^{miss} > 110, #it{p}_{T}^{#gamma#gamma} > 110");
     h1->GetXaxis()->SetBinLabel(16,"#it{E}_{T}^{miss} > 120, #it{p}_{T}^{#gamma#gamma} > 120");
+    h1->GetXaxis()->SetBinLabel(17,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}, N_{e^{-}} = 0");
 
-
-    h1 = (TH1F*) mon.addHistogram( new TH1F( "yields_finalsel4cat",";;Events", 4,0,4) );
+    h1 = (TH1F*) mon.addHistogram( new TH1F( "yields_finalsel5cat",";;Events", 5,0,5) );
     h1->GetXaxis()->SetBinLabel(1,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}");
     h1->GetXaxis()->SetBinLabel(2,"High #it{E}_{T}^{miss}, low #it{p}_{T}^{#gamma#gamma}");
     h1->GetXaxis()->SetBinLabel(3,"Intermediate #it{E}_{T}^{miss}");
     h1->GetXaxis()->SetBinLabel(4,"Rest category");
+    h1->GetXaxis()->SetBinLabel(5,"High #it{E}_{T}^{miss}, high #it{p}_{T}^{#gamma#gamma}, N_{e^{-}} = 0");
 
 
 
     //Gen plot
-    TH1F* Nevent_gen = (TH1F*) mon.addHistogram( new TH1F( "Nevent_gen",            ";Gen;Events", 10,0,10) );
+    TH1F* Nevent_gen = (TH1F*) mon.addHistogram( new TH1F( "Nevent_gen",            ";Gen;Events", 12,0,12) );
     Nevent_gen->GetXaxis()->SetBinLabel(1,"Total event");
     Nevent_gen->GetXaxis()->SetBinLabel(2,"Acceptance Bin 1");
     Nevent_gen->GetXaxis()->SetBinLabel(3,"Efficiency Bin 1");
@@ -519,6 +631,8 @@ int main(int argc, char *argv[])
     Nevent_gen->GetXaxis()->SetBinLabel(7,"Efficiency Bin 3");
     Nevent_gen->GetXaxis()->SetBinLabel(8,"Acceptance Bin 4");
     Nevent_gen->GetXaxis()->SetBinLabel(9,"Efficiency Bin 4");
+    Nevent_gen->GetXaxis()->SetBinLabel(10,"Acceptance Bin 5");
+    Nevent_gen->GetXaxis()->SetBinLabel(11,"Efficiency Bin 5");
 
 
 
@@ -528,6 +642,7 @@ int main(int argc, char *argv[])
     mon.addHistogram( new TH1F( "diphoton_mass_gen",    ";#it{m}_{#gamma#gamma} [GeV];Events", 62,105,160) );
     mon.addHistogram( new TH1F( "diphoton_pt_gen",    ";#it{p}_{T}^{#gamma#gamma} [GeV];Events", 100,0,600) );
     mon.addHistogram( new TH1F( "met_gen",            ";#it{E}_{T}^{miss} [GeV];Events", 100,0,600) );
+    mon.addHistogram( new TH1F( "met_gen_dmPart",            ";#it{E}_{T}^{miss} [GeV];Events", 100,0,600) );
     mon.addHistogram( new TH1F( "sumet_gen",            ";sumE_{T} [GeV];Events", 100,50,1050) );
     mon.addHistogram( new TH1F( "metsig_gen",         ";E_{T}^{miss} Significance [GeV];Events", 100,0,10) );
 
@@ -541,27 +656,51 @@ int main(int argc, char *argv[])
     //MC normalization (to 1/pb)
     double sumInitialEvents=1.0;
     double skim_eff=1.0;
-    if(isMC) {
-        TH1F* H_noDalitz_weighted = (TH1F *) inputFile->Get("CutFlow_noDalitz_weighted");
-        TH1F* H_weighted 	  = (TH1F *) inputFile->Get("CutFlow_weighted");
-        sumInitialEvents = H_noDalitz_weighted->GetBinContent(3);
+    if(isMC && !inputUrl.Contains("_reweighting") ) {
+
+      TList* listObjInFile = inputFile->GetListOfKeys();
+      bool match = false;
+      int countHistos = 0 ;  
+      for( TObject* obj : *listObjInFile){
+	TString objName = obj->GetName();
+	if( objName.Contains("CutFlow_noDalitz_weighted")){
+	  std::cout << "Input file contains CutFlow_noDalitz_weighted" << std::endl;
+	  ++countHistos;
+	}else if( objName.Contains("CutFlow_weighted")){
+	  std::cout << "Input file contains CutFlow_weighted" << std::endl;
+	  ++countHistos;
+	}
+
+      }
+	if( countHistos == 2 )
+	  match = true;
+	else
+	  std::cout << "File doens't contain needed histograms. Please check your input File production." << std::endl;
+
+	TH1F* H_noDalitz_weighted = match ? (TH1F *) inputFile->Get("CutFlow_noDalitz_weighted") : nullptr;
+	TH1F* H_weighted 	  = match ? (TH1F *) inputFile->Get("CutFlow_weighted") : nullptr ;
+	sumInitialEvents = match ? H_noDalitz_weighted->GetBinContent(3) : 1.0 ;
 
         // Hard-coding to bin number 1,2
-        double NxAOD      = H_weighted->GetBinContent(1);
-        double NDxAOD     = H_weighted->GetBinContent(2);
-        skim_eff = NDxAOD / NxAOD;
+	double NxAOD      = match ? H_weighted->GetBinContent(1) : 1;
+	double NDxAOD     = match ? H_weighted->GetBinContent(2) : 1;
+	skim_eff = NDxAOD / NxAOD;
 
         //printf("sumInitialEvents = %f, DxAOD skimming efficiency = %f\n",sumInitialEvents, skim_eff);
 
 
         for(int bin=1; bin < Heventflow->GetNbinsX()+1; bin++) {
-            if(bin<16) {
-                Heventflow -> SetBinContent(bin, H_noDalitz_weighted->GetBinContent(bin));
-                Heventflow -> GetXaxis()->SetBinLabel(bin,H_noDalitz_weighted->GetXaxis()->GetBinLabel(bin));
+	  if(bin<16) {
+	    Heventflow -> SetBinContent(bin, match ? H_noDalitz_weighted->GetBinContent(bin) : 1);
+	    //  Heventflow -> SetBinContent(bin, H_weighted->GetBinContent(bin));
+	    Heventflow -> GetXaxis()->SetBinLabel(bin,match ? H_noDalitz_weighted->GetXaxis()->GetBinLabel(bin) : "");
+	    //  Heventflow -> GetXaxis()->SetBinLabel(bin,H_weighted->GetXaxis()->GetBinLabel(bin));
 
-                Heventflow_raw -> SetBinContent(bin, H_noDalitz_weighted->GetBinContent(bin));
-                Heventflow_raw -> GetXaxis()->SetBinLabel(bin,H_noDalitz_weighted->GetXaxis()->GetBinLabel(bin));
-            }
+	    Heventflow_raw -> SetBinContent(bin, match ? H_noDalitz_weighted->GetBinContent(bin) : 1);
+	    Heventflow_raw -> GetXaxis()->SetBinLabel(bin,match ? H_noDalitz_weighted->GetXaxis()->GetBinLabel(bin) : "" );
+	    //  Heventflow_raw -> SetBinContent(bin, H_weighted->GetBinContent(bin));
+	    //  Heventflow_raw -> GetXaxis()->SetBinLabel(bin,H_weighted->GetXaxis()->GetBinLabel(bin));
+	  }
         }
 
         Heventflow->GetXaxis()->SetBinLabel(16+1,"m_{#gamma#gamma}");
@@ -576,18 +715,19 @@ int main(int argc, char *argv[])
         Heventflow_raw->GetXaxis()->SetBinLabel(18+2,"Intermediate #it{E}_{T}^{miss}");
         Heventflow_raw->GetXaxis()->SetBinLabel(19+2,"Rest category");
         //
-        if(isSignal) Nevent_gen -> SetBinContent(1, H_noDalitz_weighted->GetBinContent(1));
-    }
+        if(isSignal) Nevent_gen -> SetBinContent(1,match ?  H_noDalitz_weighted->GetBinContent(1) : 1 );
+        //if(isSignal) Nevent_gen -> SetBinContent(1, H_weighted->GetBinContent(1));
+      }
 
-    Hcutflow->SetBinContent(1,sumInitialEvents/skim_eff);
+      Hcutflow->SetBinContent(1,sumInitialEvents/skim_eff);
 
-    //
-    TFile *GamjetsWeights_File = TFile::Open("/afs/cern.ch/work/r/rewang/monoHiggs/h013/DMHiggsAnalysis/data/etmissSigWeights.root");
-    TH1F* h_gamjetweights = NULL;
-    if(isMC_gamjet)  h_gamjetweights = (TH1F *) GamjetsWeights_File->Get("etmissSigWeights");
+      //
+      TFile *GamjetsWeights_File = TFile::Open("/afs/cern.ch/work/a/alopezso/private/DMAnalysis20.7/DMHiggsAnalysis/data/etmissSigWeights.root");
+      TH1F* h_gamjetweights = NULL;
+      if(isMC_gamjet)  h_gamjetweights = (TH1F *) GamjetsWeights_File->Get("etmissSigWeights");
 
-    //
-    TFile *GamGamWeights_File = TFile::Open("/afs/cern.ch/work/r/rewang/monoHiggs/h013pre4_hgam0253/DMHiggsAnalysis/data/wgt_yymass_shape.root");
+      //
+    TFile *GamGamWeights_File = TFile::Open("/afs/cern.ch/work/a/alopezso/private/DMAnalysis20.7/DMHiggsAnalysis/data/wgt_yymass_shape.root");
     TH1F* h_gamgamweights = NULL;
     if(isMC_gamgam)  h_gamgamweights = (TH1F *) GamGamWeights_File->Get("wgt_yymass_shape");
 
@@ -627,7 +767,7 @@ int main(int argc, char *argv[])
 
         if(isMC) weight *= ev.totWeight;
         if(isMC) lumiXsecWeight = ev.lumiXsecWeight;
-        if(isMC) weight *= 13.3; //13.783; //lumi weight, from h013, ntuple is done with 1fb-1
+        if(isMC) weight *= 15.365; //13.783; //lumi weight, from h013, ntuple is done with 1fb-1
 
         //remove the pileup weights
         //float pileupWeight = ev.pileupWeight;
@@ -642,7 +782,8 @@ int main(int argc, char *argv[])
             weight = 1.0;
             weight *= ev.evtWeight;
 
-            weight *= 122956*0.8;
+	    //            weight *= 122956*0.8;
+            weight *= 136806*0.8;
             weight /= 3.1000714e+07;
         }
 
@@ -650,7 +791,7 @@ int main(int argc, char *argv[])
             weight = 1.0;
             weight *= ev.evtWeight;
 
-            weight *= 122956*0.2;
+            weight *= 136806*0.2;
             weight /= 3.0740822e+07;
         }
 
@@ -683,32 +824,45 @@ int main(int argc, char *argv[])
         bool passGencuts_bin2(true);
         bool passGencuts_bin3(true);
         bool passGencuts_bin4(true);
+        bool passGencuts_bin5(true);
 
-
-        if(isSignal || isMC_H125) {
+        if( isSignal || isMC_H125 ) {
 
             LorentzVector P4yy(0,0,0,0);
             LorentzVector P4met(0,0,0,0);
 
             std::vector<LorentzVector> GenPhotons;
+            std::vector<LorentzVector> GenElectrons;
+
             for(int igen=0; igen<ev.nmcparticles; igen++) {
-                if(ev.mc_id[igen] != 22) continue;
+	      if(ev.mc_id[igen] != 22 || fabs(ev.mc_id[igen]) != 11 ) continue;
+	      if( ev.mc_id[igen] == 22 ){
                 LorentzVector P4(ev.mc_px[igen],ev.mc_py[igen],ev.mc_pz[igen],ev.mc_en[igen]);
                 GenPhotons.push_back(P4);
                 P4yy += P4;
+	      } 
+	      if(fabs( ev.mc_id[igen] ) == 11 ){
+                LorentzVector P4(ev.mc_px[igen],ev.mc_py[igen],ev.mc_pz[igen],ev.mc_en[igen]);
+                GenElectrons.push_back(P4);
+	      }
             }
 
-
-            for(int igen=0; igen<ev.nmcparticles; igen++) {
+	    if( ev.ntruthDarkMatters  < 2 ){
+	      for(int igen=0; igen<ev.nmcparticles; igen++) {
                 if(ev.mc_id[igen] != 0) continue; // met
                 LorentzVector P4(ev.mc_px[igen],ev.mc_py[igen],ev.mc_pz[igen],ev.mc_en[igen]);
                 P4met += P4;
-            }
+	      }
+	    }else{
+	      for(int igen=0; igen<ev.ntruthDarkMatters; igen++) {
+                LorentzVector P4(ev.DarkMatterTruth_Px[igen]/1000,ev.DarkMatterTruth_Py[igen]/1000,ev.DarkMatterTruth_Pz[igen]/1000,ev.DarkMatterTruth_E[igen]/1000);
+                P4met += P4;
+	      }
+	    }
 
             gen_met = P4met.pt();
             gen_yypt = P4yy.pt();
-            if(gen_sumet!=0) gen_metsig = gen_met/sqrt(gen_sumet);
-
+            if(gen_sumet!=0) gen_metsig =  gen_met/sqrt(gen_sumet) ;
 
             mon.fillHisto("diphoton_mass_gen", tags, P4yy.mass(), 1.);
             mon.fillHisto("diphoton_pt_gen", tags, P4yy.pt(), 1.);
@@ -716,44 +870,46 @@ int main(int argc, char *argv[])
             mon.fillHisto("sumet_gen", tags, gen_sumet, 1.);
             mon.fillHisto("metsig_gen", tags, gen_metsig, 1.);
 
-
             bool passGencuts(true);
             passGencuts &= (GenPhotons.size()==2);
             passGencuts &= (P4yy.mass()>124 && P4yy.mass() <126);
 
-            double leading_ypt = GenPhotons[0].pt();
-            double trailing_ypt = GenPhotons[1].pt();
-            if(trailing_ypt>leading_ypt) {
+	    if( GenPhotons.size() >= 2 ){
+	      double leading_ypt = GenPhotons[0].pt();
+	      double trailing_ypt = GenPhotons[1].pt();
+	      if(trailing_ypt>leading_ypt) {
                 double tmp = leading_ypt;
                 leading_ypt = trailing_ypt;
                 trailing_ypt = tmp;
-            }
+	      }
 
-            passGencuts &= (leading_ypt/P4yy.mass() > 0.35);
-            passGencuts &= (trailing_ypt/P4yy.mass() > 0.25);
+	      passGencuts &= P4yy.mass() != 0 ? (leading_ypt/P4yy.mass() > 0.35) : false ;
+	      passGencuts &= P4yy.mass() != 0 ? (trailing_ypt/P4yy.mass() > 0.25) : false ;
 
-            passGencuts_bin1 &= (passGencuts && gen_metsig>7 && P4yy.pt()>90);
-            passGencuts_bin2 &= (passGencuts && gen_metsig>7 && P4yy.pt()<90);
-            passGencuts_bin3 &= (passGencuts && gen_metsig<7 && (P4yy.pt()>25 && gen_metsig>4) );
-            passGencuts_bin4 &= (passGencuts && gen_metsig<7 && P4yy.pt()>15 && (P4yy.pt()<25 || gen_metsig<4) );
+	      passGencuts_bin1 &= (passGencuts && gen_metsig>7 && P4yy.pt()>90);
+	      passGencuts_bin2 &= (passGencuts && gen_metsig>7 && P4yy.pt()<90);
+	      passGencuts_bin3 &= (passGencuts && gen_metsig<7 && (P4yy.pt()>25 && gen_metsig>4) );
+	      passGencuts_bin4 &= (passGencuts && gen_metsig<7 && P4yy.pt()>15 && (P4yy.pt()<25 || gen_metsig<4) );
+	      passGencuts_bin5 &= (passGencuts_bin1 && GenElectrons.size() == 0 );
 
-            if(passGencuts_bin1) mon.fillHisto("Nevent_gen",tags, 1, 1);
-            if(passGencuts_bin2) mon.fillHisto("Nevent_gen",tags, 3, 1);
-            if(passGencuts_bin3) mon.fillHisto("Nevent_gen",tags, 5, 1);
-            if(passGencuts_bin4) mon.fillHisto("Nevent_gen",tags, 7, 1);
-
-
-
-
-
+	      if(passGencuts) mon.fillHisto("Nevent_gen",tags, 1, 1);
+	      if(passGencuts_bin1) mon.fillHisto("Nevent_gen",tags, 3, 1);
+	      if(passGencuts_bin2) mon.fillHisto("Nevent_gen",tags, 5, 1);
+	      if(passGencuts_bin3) mon.fillHisto("Nevent_gen",tags, 7, 1);
+	      if(passGencuts_bin4) mon.fillHisto("Nevent_gen",tags, 9, 1);
+	      if(passGencuts_bin5) mon.fillHisto("Nevent_gen",tags, 11, 1);
+	      // if(passGencuts_bin1) mon.fillHisto("Nevent_gen",tags, 1, 1);
+	      // if(passGencuts_bin2) mon.fillHisto("Nevent_gen",tags, 3, 1);
+	      // if(passGencuts_bin3) mon.fillHisto("Nevent_gen",tags, 5, 1);
+	      // if(passGencuts_bin4) mon.fillHisto("Nevent_gen",tags, 7, 1);
+	      // if(passGencuts_bin5) mon.fillHisto("Nevent_gen",tags, 11, 1);
+	    }
 
         }
 
 
-
         // add PhysicsEvent_t class, get all tree to physics objects
         PhysicsEvent_t phys=getPhysicsEventFrom(ev);
-
 
 
 
@@ -944,6 +1100,15 @@ int main(int argc, char *argv[])
         if(met_sig>5) mon.fillHisto("diphoton_pt_metsigbeg5", tags, diphoton.pt(), weight);
         if(met_sig>6) mon.fillHisto("diphoton_pt_metsigbeg6", tags, diphoton.pt(), weight);
 
+	mon.fillHisto("pv_dist", tags, phys.pv_hard_z-phys.pv_diphot_z, weight);
+	mon.fillHisto("pv_dist_vs_met_sig", tags, phys.pv_hard_z-phys.pv_diphot_z, met_sig, weight);
+
+        if(met_sig>1) mon.fillHisto("pv_dist_metsigbeg1", tags, phys.pv_hard_z-phys.pv_diphot_z, weight);
+        if(met_sig>2) mon.fillHisto("pv_dist_metsigbeg2", tags, phys.pv_hard_z-phys.pv_diphot_z, weight);
+        if(met_sig>3) mon.fillHisto("pv_dist_metsigbeg3", tags, phys.pv_hard_z-phys.pv_diphot_z, weight);
+        if(met_sig>4) mon.fillHisto("pv_dist_metsigbeg4", tags, phys.pv_hard_z-phys.pv_diphot_z, weight);
+        if(met_sig>5) mon.fillHisto("pv_dist_metsigbeg5", tags, phys.pv_hard_z-phys.pv_diphot_z, weight);
+        if(met_sig>6) mon.fillHisto("pv_dist_metsigbeg6", tags, phys.pv_hard_z-phys.pv_diphot_z, weight);
 
 
 
@@ -951,7 +1116,6 @@ int main(int argc, char *argv[])
 
 
         mon.fillHisto("Nevent",   tags, 0, weight);
-
         mon.fillHisto("diphoton_mass_sel", tags, diphoton.mass(), weight);
 
 //        if(diphoton.mass()>122 && diphoton.mass()<128) {
@@ -996,26 +1160,40 @@ int main(int argc, char *argv[])
         mon.fillHisto("yields_diphoton_mass_bin0", tags, 0, weight);
         if(met_sig>7) {
             if(diphoton.pt()>90) {
-                if(isSignal && passGencuts_bin1) mon.fillHisto("Nevent_gen",tags, 2, 1);
-                mon.fillHisto("diphoton_mass_bin1", tags, diphoton.mass(), weight);
-                mon.fillHisto("yields_diphoton_mass_bin1", tags, 0, weight);
-                mon.fillHisto("yields_finalsel",tags, 0, weight);
-                mon.fillHisto("yields_finalsel4cat",tags, 0, weight);
-                mon.fillHisto("eventflow",tags, 15+2, weight);
-                mon.fillHisto("eventflow_raw",tags, 15+2, 1);
+	      if( GoodElectrons.size() == 0 ){
+                if(isSignal && passGencuts_bin5) mon.fillHisto("Nevent_gen",tags, 2, 1);
+                mon.fillHisto("diphoton_mass_bin5", tags, diphoton.mass(), weight);
+                mon.fillHisto("yields_diphoton_mass_bin5", tags, 0, weight);
+                mon.fillHisto("yields_finalsel",tags, 16, weight);
+		mon.fillHisto("yields_finalsel5cat",tags, 4, weight);
+                mon.fillHisto("eventflow",tags, 19+2, weight);
+                mon.fillHisto("eventflow_raw",tags, 19+2, 1);
 
 
 
-                mon.fillHisto("metsig_bin1", tags, met_sig, weight);
-                mon.fillHisto("balancedif_bin1", tags, balanceDif, weight);
-                mon.fillHisto("dphiGamGamMET_bin1",tags, dphiGamGamMET, weight);
+                mon.fillHisto("metsig_bin5", tags, met_sig, weight);
+                mon.fillHisto("balancedif_bin5", tags, balanceDif, weight);
+                mon.fillHisto("dphiGamGamMET_bin5",tags, dphiGamGamMET, weight);
+	      }
+	      if(isSignal && passGencuts_bin1) mon.fillHisto("Nevent_gen",tags, 2, 1);
+	      mon.fillHisto("diphoton_mass_bin1", tags, diphoton.mass(), weight);
+	      mon.fillHisto("yields_diphoton_mass_bin1", tags, 0, weight);
+	      mon.fillHisto("yields_finalsel",tags, 0, weight);
+	      mon.fillHisto("yields_finalsel5cat",tags, 0, weight);
+	      mon.fillHisto("eventflow",tags, 15+2, weight);
+	      mon.fillHisto("eventflow_raw",tags, 15+2, 1);
 
+
+
+	      mon.fillHisto("metsig_bin1", tags, met_sig, weight);
+	      mon.fillHisto("balancedif_bin1", tags, balanceDif, weight);
+	      mon.fillHisto("dphiGamGamMET_bin1",tags, dphiGamGamMET, weight);
             } else {
                 if(isSignal && passGencuts_bin2) mon.fillHisto("Nevent_gen",tags, 4, 1);
                 mon.fillHisto("diphoton_mass_bin2", tags, diphoton.mass(), weight);
                 mon.fillHisto("yields_diphoton_mass_bin2", tags, 0, weight);
                 mon.fillHisto("yields_finalsel",tags, 1, weight);
-                mon.fillHisto("yields_finalsel4cat",tags, 1, weight);
+                mon.fillHisto("yields_finalsel5cat",tags, 1, weight);
                 mon.fillHisto("eventflow",tags, 16+2, weight);
                 mon.fillHisto("eventflow_raw",tags, 16+2, 1);
 
@@ -1027,7 +1205,7 @@ int main(int argc, char *argv[])
             mon.fillHisto("diphoton_mass_bin3", tags, diphoton.mass(), weight);
             mon.fillHisto("yields_diphoton_mass_bin3", tags, 0, weight);
             mon.fillHisto("yields_finalsel",tags, 2, weight);
-            mon.fillHisto("yields_finalsel4cat",tags, 2, weight);
+            mon.fillHisto("yields_finalsel5cat",tags, 2, weight);
             mon.fillHisto("eventflow",tags, 17+2, weight);
             mon.fillHisto("eventflow_raw",tags, 17+2, 1);
 
@@ -1038,7 +1216,7 @@ int main(int argc, char *argv[])
             mon.fillHisto("diphoton_mass_bin4", tags, diphoton.mass(), weight);
             mon.fillHisto("yields_diphoton_mass_bin4", tags, 0, weight);
             mon.fillHisto("yields_finalsel",tags, 3, weight);
-            mon.fillHisto("yields_finalsel4cat",tags, 3, weight);
+            mon.fillHisto("yields_finalsel5cat",tags, 3, weight);
             mon.fillHisto("eventflow",tags, 18+2, weight);
             mon.fillHisto("eventflow_raw",tags, 18+2, 1);
 
@@ -1061,21 +1239,47 @@ int main(int argc, char *argv[])
 
 
 
+	LorentzVector allpart;
+
+	for( auto photon : GoodPhotons)
+	  allpart += photon.second;
+	for( auto jet : GoodJets)
+	  allpart += jet;
+	for( auto electron : GoodElectrons)
+	  allpart += electron.second;
+	for( auto muon : GoodMuons)
+	  allpart += muon.second;
+
+	mon.fillHisto("allpart_phi", tags, fabs(deltaPhi(allpart.phi(),met.phi())), weight);
+	mon.fillHisto("allpart_phi_vs_met_sig", tags, fabs(deltaPhi(allpart.phi(),met.phi())),met_sig, weight);
+
+
+
+	if(met_sig>1) mon.fillHisto("allpart_phi_metsigbeg1", tags, fabs(deltaPhi(allpart.phi(),met.phi())), weight);
+        if(met_sig>2) mon.fillHisto("allpart_phi_metsigbeg2", tags, fabs(deltaPhi(allpart.phi(),met.phi())), weight);
+        if(met_sig>3) mon.fillHisto("allpart_phi_metsigbeg3", tags, fabs(deltaPhi(allpart.phi(),met.phi())), weight);
+        if(met_sig>4) mon.fillHisto("allpart_phi_metsigbeg4", tags, fabs(deltaPhi(allpart.phi(),met.phi())), weight);
+        if(met_sig>5) mon.fillHisto("allpart_phi_metsigbeg5", tags, fabs(deltaPhi(allpart.phi(),met.phi())), weight);
+        if(met_sig>6) mon.fillHisto("allpart_phi_metsigbeg6", tags, fabs(deltaPhi(allpart.phi(),met.phi())), weight);
+	
 
 
 
 
+	for( unsigned int i = 0 ; i < 5 ; ++i ){
 
+	  std::vector<double> var;
+	  var.push_back(met_sig);
+	  var.push_back(diphoton.pt());
+	  var.push_back(0);
+	  var.push_back(GoodElectrons.size());
 
+	  if(Categorisation(var,i)){
+	    mon.fillHisto("allpart_phi_cat"+TString::Format("%d",i), tags, fabs(deltaPhi(allpart.phi(),met.phi())), weight);
+	    mon.fillHisto("pv_dist_cat"+TString::Format("%d",i), tags, phys.pv_hard_z-phys.pv_diphot_z, weight);
+	  }
 
-
-
-
-
-
-
-
-
+	}
 
 
         if( ifsaveEvents /*&& (diphoton.mass()<120 || diphoton.mass()>130)*/ ) {

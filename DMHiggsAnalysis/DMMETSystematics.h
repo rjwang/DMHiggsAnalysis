@@ -1,5 +1,5 @@
-#ifndef DMHiggsAnalysis_DMHiggsAnalysis_H
-#define DMHiggsAnalysis_DMHiggsAnalysis_H
+#ifndef DMMETSystematics_DMMETSystematics_H
+#define DMMETSystematics_DMMETSystematics_H
 
 #include "HGamAnalysisFramework/HgammaAnalysis.h"
 
@@ -7,7 +7,26 @@
 
 #define MAXPARTICLES 99
 
-class DMHiggsAnalysis : public HgammaAnalysis {
+
+#include <iostream>
+#include <map>
+
+#include "TSystem.h"
+#include "TFile.h"
+#include "TTree.h"
+#include "TCanvas.h"
+#include "TH1F.h"
+#include "TH2F.h"
+#include "TProfile.h"
+#include "TEventList.h"
+#include "TROOT.h"
+#include "TMath.h"
+#include "TString.h"
+
+
+
+
+class DMMETSystematics : public HgammaAnalysis {
     // put your configuration variables here as public variables.
     // that way they can be set directly from CINT and python.
 public:
@@ -20,11 +39,8 @@ public:
     // node (done by the //!)
 private:
 
-    TFile* m_outputFile;//!
-    TH1F *CutFlow_; //!
-    TH1F *CutFlow_noDalitz_; //!
-    TH1F *CutFlow_weighted_; //!
-    TH1F *CutFlow_noDalitz_weighted_; //!
+    TFile* m_outputHistFile;//!
+    TFile* m_outputTreeFile;//!
     TTree *myEvents; //!
 
     //  ===========================  General sample information  =========================== //
@@ -36,19 +52,9 @@ private:
     int NPV_var;
     float mu_var;
 //  int isMC_var;
-    float totWeight_var;
-    float lumiXsecWeight_var;
-    float evtWeight_var;
-    float mcWeight_var;
-    float pileupWeight_var;
-    float vertexWeight_var;
-
-
-    float qscale, x1,x2;
-    int id1,id2;
-
+    float initWeight_var;
 //  float xsecBrFilterEff_var;
-    float myy_var;
+    //float myy_var;
     /* float phi_yy_met_var; */
     /* float phi_yyj_met_var; */
     /* float phi_jj_met_var; */
@@ -80,7 +86,7 @@ private:
     float photon_Py[MAXPARTICLES];
     float photon_Pz[MAXPARTICLES];
     float photon_E[MAXPARTICLES];
-
+    //int photon_Author[MAXPARTICLES];
     /*
       float photon_Eps[MAXPARTICLES];
       float photon_E1[MAXPARTICLES];
@@ -109,13 +115,13 @@ private:
     float electron_Py[MAXPARTICLES];
     float electron_Pz[MAXPARTICLES];
     float electron_E[MAXPARTICLES];
-    int electron_charge[MAXPARTICLES];
     /*
       int electron_Author[MAXPARTICLES];
       float electron_Eps[MAXPARTICLES];
       float electron_E1[MAXPARTICLES];
       float electron_E2[MAXPARTICLES];
       float electron_E3[MAXPARTICLES];
+      float electron_charge[MAXPARTICLES];
       int electron_isTight[MAXPARTICLES];
       int electron_isMedium[MAXPARTICLES];
       int electron_isIsoLoose[MAXPARTICLES];
@@ -129,13 +135,12 @@ private:
     float muon_Py[MAXPARTICLES];
     float muon_Pz[MAXPARTICLES];
     float muon_E[MAXPARTICLES];
-    int muon_charge[MAXPARTICLES];
-
     /*
       float muon_Eps[MAXPARTICLES];
       float muon_E1[MAXPARTICLES];
       float muon_E2[MAXPARTICLES];
       float muon_E3[MAXPARTICLES];
+      float muon_charge[MAXPARTICLES];
       int   muon_passIPcut[MAXPARTICLES];
       float muon_topoCone20[MAXPARTICLES];
       float muon_ptvarCone20[MAXPARTICLES];
@@ -164,25 +169,12 @@ private:
     float met;
     float sumet;
     float phi_met;
-
-    float met_hv;
-    float sumet_hv;
-    float phi_met_hv;
-
-    float mc_sumet;
-//float metSig_var;
+//  float metSig_var;
 
 
-    float vertexZ;
-    float vertexZ_hv;
 
 
     // ===========================  Truth information  =========================== //
-    //gen level event
-    int nmcparticles;
-    float mc_px[MAXPARTICLES],mc_py[MAXPARTICLES],mc_pz[MAXPARTICLES],mc_en[MAXPARTICLES];
-    int mc_id[MAXPARTICLES], mc_type[MAXPARTICLES], mc_origin[MAXPARTICLES];
-
 
     // Photons
 
@@ -236,16 +228,13 @@ private:
     float metTruthNonInt;
     float sumetTruthNonInt;
 
-    float metPhiTruthInt ;
-    float metPhiTruthNonInt ;
+    std::vector<TString> syslist;
+    int SYSHIST;
+    TH2F *myhisto[1000]; //!
 
-    int ntruthDarkMatters;
-    float DarkMatterTruthPx[MAXPARTICLES];
-    float DarkMatterTruthPy[MAXPARTICLES];
-    float DarkMatterTruthPz[MAXPARTICLES];
-    float DarkMatterTruthE[MAXPARTICLES];
-
-
+    double m_metSig;
+    double m_met;
+    double m_pTyy;
 
     //std::map<std::string,TH1F*> m_histCutFlow; //!
     /* std::map<std::string,TFile*> m_outputFiles; //! */
@@ -259,21 +248,18 @@ private:
       CP::MuonSelectionTool              *m_muonTightSelectionTool; //!
     */
 
+    std::map<std::string,double> sys_weights;
+
 public:
     // this is a standard constructor
-    DMHiggsAnalysis() { }
-    DMHiggsAnalysis(const char *name);
-    virtual ~DMHiggsAnalysis();
+    DMMETSystematics() { }
+    DMMETSystematics(const char *name);
+    virtual ~DMMETSystematics();
 
     // these are the functions inherited from HgammaAnalysis
 
-    void declareVariables();
+    void declareBranches();
 
-    bool isTruthPhoton(const xAOD::TruthParticle* truth);
-    bool isTruthHiggsPhoton(const xAOD::TruthParticle* truth);
-    bool isDarkMatter(const xAOD::TruthParticle* truth);
-
-    bool m_isMxAOD;
 
     virtual EL::StatusCode createOutput();
     virtual EL::StatusCode initialize();
@@ -282,7 +268,7 @@ public:
 
 
     // this is needed to distribute the algorithm to the workers
-    ClassDef(DMHiggsAnalysis, 1);
+    ClassDef(DMMETSystematics, 1);
 };
 
-#endif // DMHiggsAnalysis_DMHiggsAnalysis_H
+#endif // DMMETSystematics_DMMETSystematics_H
