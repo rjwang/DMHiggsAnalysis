@@ -58,10 +58,6 @@ bool DMHiggsAnalysis::isTruthPhoton(const xAOD::TruthParticle* truth){
     
 }
 
-bool DMHiggsAnalysis::isTruthHiggsPhoton(const xAOD::TruthParticle* truth){
-    
-  return true;    
-}
 
 bool DMHiggsAnalysis::isDarkMatter(const xAOD::TruthParticle* truth){
     

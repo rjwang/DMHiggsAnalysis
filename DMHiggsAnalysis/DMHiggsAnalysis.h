@@ -270,7 +270,6 @@ public:
     void declareVariables();
 
     bool isTruthPhoton(const xAOD::TruthParticle* truth);
-    bool isTruthHiggsPhoton(const xAOD::TruthParticle* truth);
     bool isDarkMatter(const xAOD::TruthParticle* truth);
 
     bool m_isMxAOD;
