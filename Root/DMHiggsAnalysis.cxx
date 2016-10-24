@@ -58,6 +58,10 @@ bool DMHiggsAnalysis::isTruthPhoton(const xAOD::TruthParticle* truth){
     
 }
 
+bool DMHiggsAnalysis::isTruthHiggsPhoton(const xAOD::TruthParticle* truth){
+    
+  return true;    
+}
 
 bool DMHiggsAnalysis::isDarkMatter(const xAOD::TruthParticle* truth){
     
@@ -176,6 +180,7 @@ void DMHiggsAnalysis::declareVariables()
   myEvents->Branch("mc_type",       mc_type,         "mc_type[nmcparticles]/I");
   myEvents->Branch("mc_origin",     mc_origin,       "mc_origin[nmcparticles]/I");
 
+  myEvents->Branch("metTruthDMParticles",     &metTruthDMParticles,       "metTruthDMParticles/F");
 
 }
 
@@ -570,14 +575,18 @@ EL::StatusCode DMHiggsAnalysis::execute()
     }
 
     ntruthPhotons = 0 ;
+    metTruthDMParticles = 0 ;
+    ntruthDarkMatters = 0 ;
 
+    TLorentzVector dmparticleP4(0,0,0,0);
     if( !m_isMxAOD ){
 
       for( const xAOD::TruthParticle* truthpart : *truthParticles){
  
 	if( !truthpart ) continue;
-	//      if( truthpart->status() != 1 ) continue;
+	if( truthpart->status() != 1 ) continue;
 	if( fabs(truthpart->pdgId()) != 1000022 ) continue;
+	//	metTruthDMParticles = truthpart->pt()/1000;
 	DarkMatterTruthPx[ntruthDarkMatters] = truthpart->p4().Px();
 	DarkMatterTruthPy[ntruthDarkMatters] = truthpart->p4().Py();
 	DarkMatterTruthPz[ntruthDarkMatters] = truthpart->p4().Pz();
@@ -585,8 +594,22 @@ EL::StatusCode DMHiggsAnalysis::execute()
 	++ntruthDarkMatters;
 
       }
+      if( ntruthDarkMatters == 2 ){
+
+	for( const xAOD::TruthParticle* truthpart : *truthParticles){
+ 
+	  if( !truthpart ) continue;
+	  if( truthpart->status() != 1 ) continue;
+	  if( fabs(truthpart->pdgId()) != 1000022 ) continue;
+
+	  dmparticleP4 += truthpart->p4();
+
+
+	}
+      }
 
     }
+    metTruthDMParticles += dmparticleP4.Pt()/1000;
     mc_sumet = truthMET["NonInt"]->sumet()/1000.;
     mc_px[nmcparticles] = truthMET["NonInt"]->mpx()/1000.;
     mc_py[nmcparticles] = truthMET["NonInt"]->mpy()/1000.;

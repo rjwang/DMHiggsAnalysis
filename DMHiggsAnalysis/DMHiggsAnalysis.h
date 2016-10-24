@@ -246,6 +246,7 @@ private:
     float DarkMatterTruthE[MAXPARTICLES];
 
 
+    float metTruthDMParticles;
 
     //std::map<std::string,TH1F*> m_histCutFlow; //!
     /* std::map<std::string,TFile*> m_outputFiles; //! */
@@ -270,6 +271,7 @@ public:
     void declareVariables();
 
     bool isTruthPhoton(const xAOD::TruthParticle* truth);
+    bool isTruthHiggsPhoton(const xAOD::TruthParticle* truth);
     bool isDarkMatter(const xAOD::TruthParticle* truth);
 
     bool m_isMxAOD;
