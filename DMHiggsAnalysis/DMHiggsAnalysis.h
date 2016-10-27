@@ -171,7 +171,8 @@ private:
 
     float mc_sumet;
 //float metSig_var;
-
+    float mc_truthNonInt_met;
+    float mc_truthNonInt_phi;
 
     float vertexZ;
     float vertexZ_hv;
