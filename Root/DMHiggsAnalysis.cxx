@@ -146,6 +146,8 @@ void DMHiggsAnalysis::declareVariables()
     myEvents->Branch("mc_origin",     mc_origin,       "mc_origin[nmcparticles]/I");
 
 
+    myEvents->Branch("met_truth", &mc_truthNonInt_met,"mc_truthNonInt_met/F");
+    myEvents->Branch("met_phi_truth",&mc_truthNonInt_phi,"mc_truthNonInt_phi/F")
 }
 
 
@@ -471,6 +473,10 @@ EL::StatusCode DMHiggsAnalysis::execute()
         mc_origin[nmcparticles] = -1;
         mc_type[nmcparticles] = -1;
         mc_id[nmcparticles] = 0; //met pdgid assgined as 0
+
+        mc_truthNonInt_met = truthMET["NonInt"]->met()/1000.;
+        mc_truthNonInt_phi = truthMET["NonInt"]->phi();
+
         nmcparticles++;
 
 
